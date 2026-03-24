@@ -33,6 +33,14 @@ function destroyHowl(id: string) {
   }
 }
 
+const DEFAULT_SOUNDS: Sound[] = [
+  { id: 'default-wolf',    name: 'Wolf Howl',    url: '/sounds/wolf-howl.mp3',    type: 'oneshot', emoji: '🐺', volume: 80, isActive: false },
+  { id: 'default-thunder', name: 'Thunder Crack', url: '/sounds/thunder-crack.mp3', type: 'oneshot', emoji: '⚡', volume: 80, isActive: false },
+  { id: 'default-sword',   name: 'Sword Clash',  url: '/sounds/sword-clash.mp3',  type: 'oneshot', emoji: '⚔️', volume: 80, isActive: false },
+  { id: 'default-door',    name: 'Door Creak',   url: '/sounds/door-creak.mp3',   type: 'oneshot', emoji: '🚪', volume: 80, isActive: false },
+  { id: 'default-dragon',  name: 'Dragon Roar',  url: '/sounds/dragon-roar.mp3',  type: 'oneshot', emoji: '🐉', volume: 80, isActive: false },
+];
+
 interface SoundState {
   sounds: Sound[];
 
@@ -48,7 +56,7 @@ interface SoundState {
 export const useSoundStore = create<SoundState>()(
   persist(
     (set, get) => ({
-      sounds: [],
+      sounds: DEFAULT_SOUNDS,
 
       addSound: (sound) =>
         set((state) => ({
@@ -135,6 +143,17 @@ export const useSoundStore = create<SoundState>()(
       partialize: (state) => ({
         sounds: state.sounds.map((s) => ({ ...s, isActive: false })),
       }),
+      // Merge persisted state, but always ensure default sounds exist
+      merge: (persisted, current) => {
+        const persistedState = persisted as Partial<SoundState>;
+        const existingIds = new Set((persistedState.sounds ?? []).map((s) => s.id));
+        const missingDefaults = DEFAULT_SOUNDS.filter((d) => !existingIds.has(d.id));
+        return {
+          ...current,
+          ...persistedState,
+          sounds: [...(persistedState.sounds ?? []), ...missingDefaults],
+        };
+      },
     }
   )
 );
