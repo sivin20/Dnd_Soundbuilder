@@ -1,106 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
-import { Howl } from 'howler';
+import { useState } from 'react';
 import type { Sound } from '../../types';
 import { useSoundStore } from '../../store/soundStore';
 import VolumeSlider from '../shared/VolumeSlider';
+import { useOneShotPlayer, formatTime } from '../../hooks/useOneShotPlayer';
 
 interface Props {
   sound: Sound;
 }
 
-function formatTime(seconds: number): string {
-  if (!isFinite(seconds) || seconds < 0) return '0:00';
-  const m = Math.floor(seconds / 60);
-  const s = Math.floor(seconds % 60);
-  return `${m}:${s.toString().padStart(2, '0')}`;
-}
-
 export default function OneShotSound({ sound }: Props) {
   const { setVolume, removeSound, renameSound } = useSoundStore();
-
   const [editing, setEditing] = useState(false);
   const [editName, setEditName] = useState(sound.name);
-  const [playing, setPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);   // 0–100
-  const [elapsed, setElapsed] = useState(0);      // seconds
-  const [duration, setDuration] = useState(0);    // seconds
 
-  const howlRef = useRef<Howl | null>(null);
-  const rafRef  = useRef<number>(0);
-
-  // Preload on mount to grab duration
-  useEffect(() => {
-    const h = new Howl({
-      src: [sound.url],
-      loop: false,
-      preload: true,
-      onload: () => setDuration(h.duration()),
-    });
-    howlRef.current = h;
-    return () => {
-      cancelAnimationFrame(rafRef.current);
-      h.stop();
-      h.unload();
-    };
-  }, [sound.url]);
-
-  // Keep volume in sync without reloading
-  useEffect(() => {
-    if (howlRef.current && !playing) {
-      howlRef.current.volume(sound.volume / 100);
-    }
-  }, [sound.volume, playing]);
-
-  const tick = () => {
-    const h = howlRef.current;
-    if (!h || !h.playing()) return;
-    const seek = h.seek() as number;
-    const dur  = h.duration();
-    setElapsed(seek);
-    setProgress(dur > 0 ? (seek / dur) * 100 : 0);
-    rafRef.current = requestAnimationFrame(tick);
-  };
-
-  const handleTrigger = () => {
-    cancelAnimationFrame(rafRef.current);
-
-    // Rebuild Howl so clicking again restarts cleanly
-    if (howlRef.current) {
-      howlRef.current.stop();
-      howlRef.current.unload();
-    }
-
-    const h = new Howl({
-      src: [sound.url],
-      loop: false,
-      volume: sound.volume / 100,
-      onload: () => setDuration(h.duration()),
-      onplay: () => {
-        setPlaying(true);
-        rafRef.current = requestAnimationFrame(tick);
-      },
-      onend: () => {
-        setPlaying(false);
-        setProgress(100);
-        setElapsed(h.duration());
-        cancelAnimationFrame(rafRef.current);
-      },
-      onstop: () => {
-        setPlaying(false);
-        setProgress(0);
-        setElapsed(0);
-        cancelAnimationFrame(rafRef.current);
-      },
-    });
-
-    howlRef.current = h;
-    h.play();
-  };
-
-  const handleStop = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    howlRef.current?.stop();
-  };
+  const { playing, progress, elapsed, duration, trigger, stop } =
+    useOneShotPlayer(sound.url, sound.volume);
 
   const handleRename = () => {
     if (editName.trim()) renameSound(sound.id, editName.trim());
@@ -112,7 +26,7 @@ export default function OneShotSound({ sound }: Props) {
 
       {/* Trigger button */}
       <button
-        onClick={handleTrigger}
+        onClick={trigger}
         className={`relative w-full h-16 rounded-lg mb-2 flex items-center justify-center text-3xl transition-all duration-150 overflow-hidden ${
           playing
             ? 'bg-amber-900/40 border border-amber-700/50'
@@ -120,19 +34,16 @@ export default function OneShotSound({ sound }: Props) {
         }`}
         title={playing ? 'Click to restart' : `Play: ${sound.name}`}
       >
-        {/* Progress fill */}
         {playing && (
           <div
-            className="absolute inset-0 bg-amber-700/20 transition-none origin-left"
-            style={{ transform: `scaleX(${progress / 100})`, transformOrigin: 'left' }}
+            className="absolute inset-0 bg-amber-700/20 origin-left transition-none"
+            style={{ transform: `scaleX(${progress / 100})` }}
           />
         )}
         <span className="relative z-10">{sound.emoji}</span>
-
-        {/* Stop button — appears while playing */}
         {playing && (
           <span
-            onClick={handleStop}
+            onClick={(e) => { e.stopPropagation(); stop(); }}
             className="absolute right-2 top-1/2 -translate-y-1/2 z-20 text-xs bg-stone-900/80 hover:bg-red-900/60 text-stone-400 hover:text-red-400 rounded px-1.5 py-0.5 font-sans transition-all"
             title="Stop"
           >
@@ -142,15 +53,12 @@ export default function OneShotSound({ sound }: Props) {
       </button>
 
       {/* Progress bar */}
-      <div className="w-full h-1 bg-stone-800 rounded-full mb-2 overflow-hidden">
-        <div
-          className="h-full bg-amber-600 rounded-full transition-none"
-          style={{ width: `${progress}%` }}
-        />
+      <div className="w-full h-1 bg-stone-800 rounded-full mb-1 overflow-hidden">
+        <div className="h-full bg-amber-600 rounded-full transition-none" style={{ width: `${progress}%` }} />
       </div>
 
-      {/* Time display */}
-      <div className="flex justify-between items-center mb-2 font-sans tabular-nums">
+      {/* Time */}
+      <div className="flex justify-between mb-2 font-sans tabular-nums">
         <span className="text-xs text-stone-500">{formatTime(elapsed)}</span>
         <span className="text-xs text-stone-600">{duration > 0 ? formatTime(duration) : '—'}</span>
       </div>
@@ -169,16 +77,10 @@ export default function OneShotSound({ sound }: Props) {
           className="w-full bg-stone-800 border border-amber-700 text-parchment rounded px-2 py-1 text-xs font-serif focus:outline-none mb-2"
         />
       ) : (
-        <p className="text-parchment font-serif text-sm text-center truncate mb-2">
-          {sound.name}
-        </p>
+        <p className="text-parchment font-serif text-sm text-center truncate mb-2">{sound.name}</p>
       )}
 
-      <VolumeSlider
-        value={sound.volume}
-        onChange={(v) => setVolume(sound.id, v)}
-        label={`${sound.name} volume`}
-      />
+      <VolumeSlider value={sound.volume} onChange={(v) => setVolume(sound.id, v)} label={`${sound.name} volume`} />
 
       {/* Actions */}
       <div className="flex gap-1 mt-2 justify-center opacity-0 group-hover:opacity-100 transition-opacity">
