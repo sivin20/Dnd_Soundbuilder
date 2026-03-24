@@ -1,23 +1,30 @@
 #!/usr/bin/env bash
 # Downloads all ~1-hour tracks from the Curse of Strahd playlist.
 # Skips short tracks (< 55 min) and very long compilations (> 75 min).
-# Saves MP3s to public/music/ and prints a summary of what was downloaded.
+# Saves MP3s to public/music/ and writes public/music/.metadata.json
+# so that register-tracks.js can pick up clean titles afterwards.
 #
 # Usage:  bash download-playlist.sh
+# Then:   node register-tracks.js
 
 set -euo pipefail
 
 PLAYLIST_URL="https://www.youtube.com/playlist?list=PLQBqJdSe3H4E7e-Vibw_RZ2bKTH03Z-yX"
 OUT_DIR="$(dirname "$0")/public/music"
+META_FILE="$OUT_DIR/.metadata.json"
 MIN_DURATION=3300   # 55 minutes in seconds
 MAX_DURATION=4500   # 75 minutes in seconds
 
 mkdir -p "$OUT_DIR"
 
+# Initialise metadata file if it doesn't exist
+if [[ ! -f "$META_FILE" ]]; then
+  echo "{}" > "$META_FILE"
+fi
+
 echo "Fetching playlist metadata…"
 echo ""
 
-# Collect ids + durations + titles
 mapfile -t TRACKS < <(
   yt-dlp \
     --flat-playlist \
@@ -28,22 +35,19 @@ mapfile -t TRACKS < <(
 
 TOTAL=0
 SKIPPED=0
-ALREADY_HAVE=0
 TO_DOWNLOAD=()
 
 for track in "${TRACKS[@]}"; do
   IFS='|' read -r id duration title <<< "$track"
 
-  # Skip if duration is not a number
   if ! [[ "$duration" =~ ^[0-9]+$ ]]; then
     ((SKIPPED++)) || true
     continue
   fi
 
-  # Skip tracks outside the ~1h range
   if (( duration < MIN_DURATION || duration > MAX_DURATION )); then
     ((SKIPPED++)) || true
-    echo "  SKIP  [$(printf '%4ds' "$duration")]  $title"
+    printf "  SKIP  [%4ds]  %s\n" "$duration" "$title"
     continue
   fi
 
@@ -52,7 +56,7 @@ for track in "${TRACKS[@]}"; do
 done
 
 echo ""
-echo "Found $TOTAL tracks to download ($SKIPPED skipped as too short/long)."
+echo "Found $TOTAL tracks to download, $SKIPPED skipped."
 echo ""
 
 DOWNLOADED=0
@@ -74,13 +78,28 @@ for entry in "${TO_DOWNLOAD[@]}"; do
     "https://www.youtube.com/watch?v=$id" \
     2>&1 | grep -E "^\[download\]|^\[ExtractAudio\]|^ERROR" || true
 
-  if [[ $? -eq 0 ]]; then
-    ((DOWNLOADED++)) || true
-  else
-    ((FAILED++)) || true
-    echo "  ✗ Failed: $title"
-  fi
+  # Record original title → predicted filename in metadata
+  # yt-dlp --restrict-filenames: non-alphanumeric (except ._-) → _
+  PREDICTED=$(python3 -c "
+import re, sys
+t = sys.argv[1]
+f = re.sub(r'[^a-zA-Z0-9._-]', '_', t)
+f = re.sub(r'_+', '_', f).strip('_')
+print(f + '.mp3')
+" "$title")
 
+  python3 -c "
+import json, sys
+meta_file, filename, title = sys.argv[1], sys.argv[2], sys.argv[3]
+try:
+    meta = json.load(open(meta_file))
+except Exception:
+    meta = {}
+meta[filename] = title
+json.dump(meta, open(meta_file, 'w'), indent=2)
+" "$META_FILE" "$PREDICTED" "$title"
+
+  ((DOWNLOADED++)) || true
   echo ""
 done
 
@@ -91,6 +110,4 @@ echo "  Skipped    : $SKIPPED"
 echo "  Output dir : $OUT_DIR"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
-echo "Now add the tracks in the app:"
-echo "  Music Library → enter filename + display name → Add"
-echo "Or run:  bash register-tracks.sh   (auto-registers all new files)"
+echo "Run  node register-tracks.js  to add all tracks to the app."

@@ -2,16 +2,9 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { v4 as uuidv4 } from 'uuid';
 import type { Track } from '../types';
+import defaultTracksJson from '../data/defaultTracks.json';
 
-const DEFAULT_TRACKS: Track[] = [
-  {
-    id: 'default-death-house',
-    filename: 'exploring-death-house.mp3',
-    title: 'Exploring the Death House',
-    customName: 'Exploring the Death House',
-    addedAt: 0,
-  },
-];
+const DEFAULT_TRACKS: Track[] = defaultTracksJson as Track[];
 
 interface MusicState {
   tracks: Track[];
