@@ -1,7 +1,6 @@
 export interface Track {
   id: string;
-  url: string;
-  videoId: string;
+  filename: string;   // e.g. "exploring-death-house.mp3" — file lives in public/music/
   title: string;
   customName: string;
   addedAt: number;
@@ -16,7 +15,7 @@ export interface Sound {
   type: SoundType;
   volume: number;
   emoji: string;
-  isActive: boolean; // for ambient; ignored for oneshot
+  isActive: boolean;
 }
 
 export type View = 'dashboard' | 'music' | 'soundboard';
