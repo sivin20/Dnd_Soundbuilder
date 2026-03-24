@@ -14,9 +14,9 @@ function QuickShotButton({ sound }: { sound: Sound }) {
 
       {/* Main trigger button */}
       <button
-        onClick={trigger}
+        onClick={playing ? stop : trigger}
         className="relative w-full flex items-center gap-3 px-3 py-3 group"
-        title={playing ? 'Click to restart' : `Play: ${sound.name}`}
+        title={playing ? 'Click to stop' : `Play: ${sound.name}`}
       >
         {/* Progress fill behind content */}
         {playing && (
@@ -44,23 +44,10 @@ function QuickShotButton({ sound }: { sound: Sound }) {
           </p>
         </div>
 
-        {/* Stop button */}
-        {playing && (
-          <span
-            onClick={(e) => { e.stopPropagation(); stop(); }}
-            className="relative z-10 flex-shrink-0 text-xs bg-stone-900/80 hover:bg-red-900/60 text-stone-400 hover:text-red-400 rounded px-1.5 py-1 font-sans transition-all"
-            title="Stop"
-          >
-            ⏹
-          </span>
-        )}
-
-        {/* Play indicator */}
-        {!playing && (
-          <span className="relative z-10 flex-shrink-0 text-stone-600 group-hover:text-amber-600 text-xs transition-colors">
-            ▶
-          </span>
-        )}
+        {/* Play / Stop indicator */}
+        <span className={`relative z-10 flex-shrink-0 text-xs transition-colors ${playing ? 'text-amber-500' : 'text-stone-600 group-hover:text-amber-600'}`}>
+          {playing ? '⏹' : '▶'}
+        </span>
       </button>
 
       {/* Progress bar */}

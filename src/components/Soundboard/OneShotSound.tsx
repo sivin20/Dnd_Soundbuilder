@@ -26,13 +26,13 @@ export default function OneShotSound({ sound }: Props) {
 
       {/* Trigger button */}
       <button
-        onClick={trigger}
+        onClick={playing ? stop : trigger}
         className={`relative w-full h-16 rounded-lg mb-2 flex items-center justify-center text-3xl transition-all duration-150 overflow-hidden ${
           playing
-            ? 'bg-amber-900/40 border border-amber-700/50'
+            ? 'bg-amber-900/40 border border-amber-700/50 hover:bg-red-900/30 hover:border-red-700/50'
             : 'bg-stone-800 hover:bg-stone-700 active:bg-amber-800 active:scale-95'
         }`}
-        title={playing ? 'Click to restart' : `Play: ${sound.name}`}
+        title={playing ? 'Click to stop' : `Play: ${sound.name}`}
       >
         {playing && (
           <div
@@ -40,16 +40,7 @@ export default function OneShotSound({ sound }: Props) {
             style={{ transform: `scaleX(${progress / 100})` }}
           />
         )}
-        <span className="relative z-10">{sound.emoji}</span>
-        {playing && (
-          <span
-            onClick={(e) => { e.stopPropagation(); stop(); }}
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 text-xs bg-stone-900/80 hover:bg-red-900/60 text-stone-400 hover:text-red-400 rounded px-1.5 py-0.5 font-sans transition-all"
-            title="Stop"
-          >
-            ⏹
-          </span>
-        )}
+        <span className="relative z-10">{playing ? '⏹' : sound.emoji}</span>
       </button>
 
       {/* Progress bar */}
