@@ -112,12 +112,11 @@ export const useSoundStore = create<SoundState>()(
         const state = get();
         const sound = state.sounds.find((s) => s.id === id);
         if (!sound || sound.type !== 'oneshot') return;
-        // Always create a fresh Howl for one-shots so multiple can overlap
+        // Fresh Howl each time — no html5 flag so Web Audio is used (more reliable, no loop quirks)
         const howl = new Howl({
           src: [sound.url],
           loop: false,
           volume: sound.volume / 100,
-          html5: true,
         });
         howl.play();
       },
