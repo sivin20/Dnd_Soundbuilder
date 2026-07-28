@@ -7,8 +7,11 @@
  *   node register-tracks.js
  */
 
-const fs   = require('fs');
-const path = require('path');
+import fs   from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const MUSIC_DIR   = path.join(__dirname, 'public', 'music');
 const META_FILE   = path.join(MUSIC_DIR, '.metadata.json');

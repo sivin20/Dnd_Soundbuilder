@@ -25,35 +25,31 @@ fi
 echo "Fetching playlist metadata…"
 echo ""
 
-mapfile -t TRACKS < <(
+TOTAL=0
+SKIPPED=0
+TO_DOWNLOAD=()
+
+while IFS='|' read -r id duration title; do
+  if ! [[ "$duration" =~ ^[0-9]+$ ]]; then
+    SKIPPED=$((SKIPPED + 1))
+    continue
+  fi
+
+  if (( duration < MIN_DURATION || duration > MAX_DURATION )); then
+    SKIPPED=$((SKIPPED + 1))
+    printf "  SKIP  [%4ds]  %s\n" "$duration" "$title"
+    continue
+  fi
+
+  TOTAL=$((TOTAL + 1))
+  TO_DOWNLOAD+=("$id|$title")
+done < <(
   yt-dlp \
     --flat-playlist \
     --ignore-errors \
     --print "%(id)s|%(duration)s|%(title)s" \
     "$PLAYLIST_URL" 2>/dev/null
 )
-
-TOTAL=0
-SKIPPED=0
-TO_DOWNLOAD=()
-
-for track in "${TRACKS[@]}"; do
-  IFS='|' read -r id duration title <<< "$track"
-
-  if ! [[ "$duration" =~ ^[0-9]+$ ]]; then
-    ((SKIPPED++)) || true
-    continue
-  fi
-
-  if (( duration < MIN_DURATION || duration > MAX_DURATION )); then
-    ((SKIPPED++)) || true
-    printf "  SKIP  [%4ds]  %s\n" "$duration" "$title"
-    continue
-  fi
-
-  ((TOTAL++)) || true
-  TO_DOWNLOAD+=("$id|$title")
-done
 
 echo ""
 echo "Found $TOTAL tracks to download, $SKIPPED skipped."
@@ -99,7 +95,7 @@ meta[filename] = title
 json.dump(meta, open(meta_file, 'w'), indent=2)
 " "$META_FILE" "$PREDICTED" "$title"
 
-  ((DOWNLOADED++)) || true
+  DOWNLOADED=$((DOWNLOADED + 1))
   echo ""
 done
 

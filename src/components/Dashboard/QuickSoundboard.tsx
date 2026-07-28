@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSoundStore } from '../../store/soundStore';
 import type { Sound } from '../../types';
 import { useOneShotPlayer, formatTime } from '../../hooks/useOneShotPlayer';
@@ -78,20 +79,53 @@ function QuickShotButton({ sound }: { sound: Sound }) {
 
 export default function QuickSoundboard() {
   const { sounds } = useSoundStore();
+  const [query, setQuery] = useState('');
+
   const oneshots = sounds.filter((s) => s.type === 'oneshot');
 
   if (oneshots.length === 0) return null;
 
+  const filtered = query.trim()
+    ? oneshots.filter((s) => s.name.toLowerCase().includes(query.toLowerCase()))
+    : oneshots;
+
   return (
     <div className="bg-stone-900 border border-amber-900/30 rounded-xl p-5 shadow-xl">
-      <h2 className="text-xs uppercase tracking-widest text-amber-600 font-sans mb-3">
-        Quick SFX
-      </h2>
-      <div className="flex flex-col gap-2">
-        {oneshots.map((s) => (
-          <QuickShotButton key={s.id} sound={s} />
-        ))}
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-xs uppercase tracking-widest text-amber-600 font-sans">
+          Quick SFX
+        </h2>
+        <span className="text-xs text-stone-600 font-sans">{oneshots.length} sounds</span>
       </div>
+
+      {/* Search */}
+      <div className="flex items-center gap-2 bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 mb-3 focus-within:border-amber-700/60 transition-colors">
+        <span className="text-stone-500 text-xs">🔍</span>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Filter sounds…"
+          className="flex-1 bg-transparent text-parchment placeholder-stone-600 text-sm font-sans focus:outline-none"
+        />
+        {query && (
+          <button onClick={() => setQuery('')} className="text-stone-600 hover:text-stone-400 text-xs transition-colors">
+            ✕
+          </button>
+        )}
+      </div>
+
+      {filtered.length > 0 ? (
+        <div className="flex flex-col gap-2">
+          {filtered.map((s) => (
+            <QuickShotButton key={s.id} sound={s} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-stone-600 text-sm font-sans italic text-center py-3">
+          No sounds matching "{query}"
+        </p>
+      )}
     </div>
   );
 }

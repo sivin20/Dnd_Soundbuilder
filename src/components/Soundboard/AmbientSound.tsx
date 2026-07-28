@@ -1,32 +1,27 @@
-import { useState } from 'react';
 import type { Sound } from '../../types';
 import { useSoundStore } from '../../store/soundStore';
 import VolumeSlider from '../shared/VolumeSlider';
 
-interface Props {
-  sound: Sound;
-}
+interface Props { sound: Sound; }
+
+const LEVEL_LABELS = ['I', 'II', 'III'];
+const LEVEL_TITLES = ['Gentle', 'Moderate', 'Intense'];
 
 export default function AmbientSound({ sound }: Props) {
-  const { toggleAmbient, setVolume, removeSound, renameSound } = useSoundStore();
-  const [editing, setEditing] = useState(false);
-  const [editName, setEditName] = useState(sound.name);
+  const { toggleAmbient, setAmbientLevel, setVolume } = useSoundStore();
 
-  const handleRename = () => {
-    if (editName.trim()) renameSound(sound.id, editName.trim());
-    setEditing(false);
-  };
+  const numLevels    = sound.levels?.length ?? 1;
+  const currentLevel = sound.currentLevel ?? 0;
 
   return (
-    <div
-      className={`group rounded-xl border p-4 transition-all ${
-        sound.isActive
-          ? 'bg-amber-900/20 border-amber-700/50 shadow-lg shadow-amber-900/10'
-          : 'bg-stone-900 border-stone-800 hover:border-stone-700'
-      }`}
-    >
-      <div className="flex items-center gap-3 mb-3">
-        {/* Toggle button */}
+    <div className={`rounded-xl border p-4 transition-all ${
+      sound.isActive
+        ? 'bg-amber-900/20 border-amber-700/50 shadow-lg shadow-amber-900/10'
+        : 'bg-stone-900 border-stone-800 hover:border-stone-700'
+    }`}>
+
+      {/* Toggle icon + inline level buttons */}
+      <div className="flex items-center gap-2 mb-3">
         <button
           onClick={() => toggleAmbient(sound.id)}
           className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-all flex-shrink-0 ${
@@ -34,59 +29,48 @@ export default function AmbientSound({ sound }: Props) {
               ? 'bg-amber-700 shadow-md shadow-amber-900/50 scale-105'
               : 'bg-stone-800 hover:bg-stone-700'
           }`}
-          title={sound.isActive ? 'Stop' : 'Start looping'}
+          title={sound.isActive ? 'Fade out & stop' : 'Start looping'}
         >
           {sound.emoji}
         </button>
 
-        {/* Name */}
-        <div className="flex-1 min-w-0">
-          {editing ? (
-            <input
-              autoFocus
-              value={editName}
-              onChange={(e) => setEditName(e.target.value)}
-              onBlur={handleRename}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') handleRename();
-                if (e.key === 'Escape') { setEditName(sound.name); setEditing(false); }
-              }}
-              className="w-full bg-stone-800 border border-amber-700 text-parchment rounded px-2 py-1 text-sm font-serif focus:outline-none"
-            />
-          ) : (
-            <p className={`font-serif font-semibold truncate ${sound.isActive ? 'text-amber-300' : 'text-parchment'}`}>
-              {sound.name}
-            </p>
-          )}
-          {sound.isActive && (
-            <p className="text-xs text-amber-600/80 font-sans playing-pulse">● looping</p>
-          )}
-        </div>
-
-        {/* Actions */}
-        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button
-            onClick={() => { setEditName(sound.name); setEditing(true); }}
-            className="w-7 h-7 rounded bg-stone-800 hover:bg-stone-700 text-stone-500 hover:text-stone-300 flex items-center justify-center text-xs transition-all"
-            title="Rename"
-          >
-            ✏️
-          </button>
-          <button
-            onClick={() => removeSound(sound.id)}
-            className="w-7 h-7 rounded bg-stone-800 hover:bg-red-900/60 text-stone-500 hover:text-red-400 flex items-center justify-center text-xs transition-all"
-            title="Remove"
-          >
-            🗑
-          </button>
+        {/* Level buttons — always 3, disabled if no URL at that index */}
+        <div className="flex gap-1 flex-1">
+          {LEVEL_LABELS.map((label, i) => {
+            const hasLevel = i < numLevels;
+            const isSelected = hasLevel && currentLevel === i;
+            return (
+              <button
+                key={i}
+                onClick={() => { if (hasLevel) setAmbientLevel(sound.id, i); }}
+                disabled={!hasLevel}
+                title={hasLevel ? (LEVEL_TITLES[i] ?? `Level ${i + 1}`) : 'Not available'}
+                className={`flex-1 h-10 rounded-md text-xs font-sans transition-all ${
+                  !hasLevel
+                    ? 'bg-stone-800 text-stone-700 cursor-not-allowed opacity-40'
+                    : isSelected
+                      ? 'bg-amber-700 text-amber-100 shadow-sm'
+                      : 'bg-stone-800 text-stone-500 hover:bg-stone-700 hover:text-stone-300'
+                }`}
+              >
+                {label}
+                <span className="ml-1 opacity-60">{'·'.repeat(i + 1)}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      <VolumeSlider
-        value={sound.volume}
-        onChange={(v) => setVolume(sound.id, v)}
-        label={`${sound.name} volume`}
-      />
+      {/* Name + status */}
+      <p className={`font-serif font-semibold truncate mb-0.5 ${sound.isActive ? 'text-amber-300' : 'text-parchment'}`}>
+        {sound.name}
+      </p>
+      {sound.isActive
+        ? <p className="text-xs text-amber-600/80 font-sans playing-pulse mb-3">● looping</p>
+        : <p className="text-xs text-stone-600 font-sans mb-3">🔁 loops automatically</p>
+      }
+
+      <VolumeSlider value={sound.volume} onChange={(v) => setVolume(sound.id, v)} label={`${sound.name} volume`} />
     </div>
   );
 }

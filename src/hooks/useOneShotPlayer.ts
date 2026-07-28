@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Howl } from 'howler';
+import { duckTransient } from '../audio/duckBus';
 
 export function formatTime(seconds: number): string {
   if (!isFinite(seconds) || seconds < 0) return '0:00';
@@ -64,6 +65,8 @@ export function useOneShotPlayer(url: string, volume: number) {
       onload: () => setDuration(h.duration()),
       onplay: () => {
         setPlaying(true);
+        // Dip music + ambience while the effect plays so it cuts through
+        duckTransient(0.4, Math.min(h.duration(), 5) * 1000);
         rafRef.current = requestAnimationFrame(tick);
       },
       onend: () => {

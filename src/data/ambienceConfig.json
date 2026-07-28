@@ -1,0 +1,20 @@
+[
+  {
+    "id": "rain",
+    "name": "Rain",
+    "emoji": "🌧️",
+    "type": "ambient",
+    "url": "/ambience/rain-gentle.mp3",
+    "levels": ["/ambience/rain-gentle.mp3", "/ambience/rain-heavy.mp3"],
+    "volume": 80,
+    "sprinkles": ["/sounds/thunder-crack.mp3"]
+  },
+  {
+    "id": "thunder",
+    "name": "Thunder",
+    "emoji": "⛈️",
+    "type": "ambient",
+    "url": "/ambience/thunder.mp3",
+    "volume": 80
+  }
+]

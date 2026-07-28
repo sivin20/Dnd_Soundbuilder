@@ -1,19 +1,23 @@
 import { useState } from 'react';
 import Header from './components/Layout/Header';
 import Dashboard from './components/Dashboard/Dashboard';
+import CampaignView from './components/Campaign/CampaignView';
 import MusicLibrary from './components/MusicLibrary/MusicLibrary';
 import Soundboard from './components/Soundboard/Soundboard';
 import type { View } from './types';
+import { MusicEngine } from './hooks/useMusicPlayer';
 
 export default function App() {
   const [view, setView] = useState<View>('dashboard');
 
   return (
-    <div className="min-h-screen bg-stone-950 flex flex-col">
+    <div className="h-screen bg-stone-950 flex flex-col">
+      <MusicEngine />
       <Header currentView={view} onViewChange={setView} />
 
       <main className="flex-1 overflow-y-auto">
-        {view === 'dashboard' && <Dashboard />}
+        {view === 'dashboard' && <Dashboard onOpenCampaign={() => setView('campaign')} />}
+        {view === 'campaign' && <CampaignView />}
         {view === 'music' && <MusicLibrary />}
         {view === 'soundboard' && <Soundboard />}
       </main>

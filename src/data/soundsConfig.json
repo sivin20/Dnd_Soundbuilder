@@ -1,0 +1,42 @@
+[
+  {
+    "id": "wolf-howl",
+    "name": "Wolf Howl",
+    "emoji": "🐺",
+    "type": "oneshot",
+    "url": "/sounds/wolf-howl.mp3",
+    "volume": 80
+  },
+  {
+    "id": "thunder-crack",
+    "name": "Thunder Crack",
+    "emoji": "⚡",
+    "type": "oneshot",
+    "url": "/sounds/thunder-crack.mp3",
+    "volume": 80
+  },
+  {
+    "id": "sword-clash",
+    "name": "Sword Clash",
+    "emoji": "⚔️",
+    "type": "oneshot",
+    "url": "/sounds/sword-clash.mp3",
+    "volume": 80
+  },
+  {
+    "id": "door-creak",
+    "name": "Door Creak",
+    "emoji": "🚪",
+    "type": "oneshot",
+    "url": "/sounds/door-creak.mp3",
+    "volume": 80
+  },
+  {
+    "id": "dragon-roar",
+    "name": "Dragon Roar",
+    "emoji": "🐉",
+    "type": "oneshot",
+    "url": "/sounds/dragon-roar.mp3",
+    "volume": 80
+  }
+]

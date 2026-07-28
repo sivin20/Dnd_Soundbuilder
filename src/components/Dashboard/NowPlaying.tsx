@@ -3,8 +3,10 @@ import { useMusicPlayer } from '../../hooks/useMusicPlayer';
 import VolumeSlider from '../shared/VolumeSlider';
 
 export default function NowPlaying() {
-  const { tracks, currentTrackId, isPlaying, volume, setIsPlaying, setVolume, stopPlayback, playTrack } =
-    useMusicStore();
+  const {
+    tracks, currentTrackId, isPlaying, volume, loop, playlistMood, combatActive,
+    setIsPlaying, setVolume, stopPlayback, playTrack, toggleLoop, setPlaylistMood,
+  } = useMusicStore();
   const { elapsed, duration, progress, seekTo, formatTime } = useMusicPlayer();
 
   const currentTrack = tracks.find((t) => t.id === currentTrackId) ?? null;
@@ -52,6 +54,25 @@ export default function NowPlaying() {
                   {currentTrack.title}
                 </p>
               )}
+              <div className="flex items-center gap-2 mt-0.5">
+                {currentTrack.section && (
+                  <p className="text-amber-800 text-xs font-sans truncate">{currentTrack.section}</p>
+                )}
+                {combatActive && (
+                  <span className="text-xs font-sans bg-red-900/50 text-red-300 px-1.5 py-0.5 rounded-full">
+                    ⚔️ combat
+                  </span>
+                )}
+                {playlistMood && (
+                  <button
+                    onClick={() => setPlaylistMood(null)}
+                    className="text-xs font-sans bg-amber-900/40 text-amber-400 px-1.5 py-0.5 rounded-full hover:bg-amber-900/60 transition-colors"
+                    title="Mood playlist on — auto-advances to another track of this mood. Click to turn off."
+                  >
+                    🔀 {playlistMood} ✕
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
@@ -100,6 +121,17 @@ export default function NowPlaying() {
               title="Next"
             >
               ⏭
+            </button>
+            <button
+              onClick={toggleLoop}
+              title={loop ? 'Loop on — click to disable' : 'Loop off — click to enable'}
+              className={`w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all ${
+                loop
+                  ? 'bg-amber-700/60 text-amber-300 border border-amber-600/50'
+                  : 'bg-stone-800 text-stone-500 hover:bg-stone-700 hover:text-stone-300'
+              }`}
+            >
+              🔁
             </button>
           </div>
 

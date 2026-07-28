@@ -1,10 +1,24 @@
+import { useMemo } from 'react';
 import { useMusicStore } from '../../store/musicStore';
 import AddMusicForm from './AddMusicForm';
 import MusicCard from './MusicCard';
 import VolumeSlider from '../shared/VolumeSlider';
+import { sectionOrder } from '../../data/sections';
+import type { Track } from '../../types';
 
 export default function MusicLibrary() {
   const { tracks, volume, setVolume } = useMusicStore();
+
+  // Group tracks by campaign section, in campaign play order
+  const grouped = useMemo(() => {
+    const map = new Map<string, Track[]>();
+    for (const t of tracks) {
+      const key = t.section ?? 'Uncategorized';
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(t);
+    }
+    return [...map.entries()].sort((a, b) => sectionOrder(a[0]) - sectionOrder(b[0]));
+  }, [tracks]);
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
@@ -36,9 +50,21 @@ export default function MusicLibrary() {
             <p className="text-xs uppercase tracking-widest text-stone-600 font-sans mb-3">
               {tracks.length} track{tracks.length !== 1 ? 's' : ''}
             </p>
-            <div className="flex flex-col gap-2">
-              {tracks.map((track) => (
-                <MusicCard key={track.id} track={track} />
+            <div className="flex flex-col gap-6">
+              {grouped.map(([section, sectionTracks]) => (
+                <div key={section}>
+                  <h2 className="text-sm font-serif text-amber-500 border-b border-amber-900/30 pb-1.5 mb-3">
+                    {section}
+                    <span className="text-stone-600 text-xs font-sans ml-2">
+                      {sectionTracks.length}
+                    </span>
+                  </h2>
+                  <div className="flex flex-col gap-2">
+                    {sectionTracks.map((track) => (
+                      <MusicCard key={track.id} track={track} />
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>

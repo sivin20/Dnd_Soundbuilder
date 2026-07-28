@@ -94,3 +94,64 @@ input[type='range']::-moz-range-thumb {
 .playing-pulse {
   animation: playing-pulse 1.5s ease-in-out infinite;
 }
+
+/* --- Guide content (Curse of Strahd: Reloaded mirror) --- */
+.guide-content {
+  color: #d6d3d1;
+  font-size: 0.925rem;
+  line-height: 1.65;
+}
+.guide-content h1, .guide-content h2, .guide-content h3,
+.guide-content h4, .guide-content h5 {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: #fbbf24;
+  margin: 1.4em 0 0.5em;
+  line-height: 1.25;
+}
+.guide-content h1 { font-size: 1.5rem; }
+.guide-content h2 { font-size: 1.25rem; border-bottom: 1px solid rgba(180, 83, 9, 0.3); padding-bottom: 0.25em; }
+.guide-content h3 { font-size: 1.1rem; }
+.guide-content h4 { font-size: 1rem; color: #d97706; }
+.guide-content p { margin: 0.6em 0; }
+.guide-content a { color: #f59e0b; text-decoration: none; cursor: pointer; }
+.guide-content a:hover { text-decoration: underline; }
+.guide-content ul, .guide-content ol { margin: 0.6em 0; padding-left: 1.5em; }
+.guide-content li { margin: 0.25em 0; }
+.guide-content blockquote {
+  margin: 0.9em 0;
+  padding: 0.6em 1em;
+  background: rgba(41, 37, 36, 0.7);
+  border-left: 3px solid #b45309;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.guide-content blockquote blockquote {
+  background: rgba(28, 25, 23, 0.7);
+}
+.guide-content .callout-title { color: #fbbf24; display: block; margin-bottom: 0.2em; }
+.guide-content img {
+  max-width: 100%;
+  border-radius: 0.75rem;
+  margin: 0.75em 0;
+  border: 1px solid rgba(180, 83, 9, 0.25);
+}
+.guide-content table {
+  border-collapse: collapse;
+  margin: 0.9em 0;
+  font-size: 0.875rem;
+  width: 100%;
+}
+.guide-content th, .guide-content td {
+  border: 1px solid rgba(87, 83, 78, 0.6);
+  padding: 0.4em 0.7em;
+  text-align: left;
+}
+.guide-content th { background: rgba(41, 37, 36, 0.8); color: #fbbf24; }
+.guide-content tr:nth-child(even) { background: rgba(41, 37, 36, 0.4); }
+.guide-content hr { border: none; border-top: 1px solid rgba(87, 83, 78, 0.5); margin: 1.5em 0; }
+.guide-content code {
+  background: rgba(41, 37, 36, 0.9);
+  padding: 0.1em 0.35em;
+  border-radius: 0.25rem;
+  font-size: 0.85em;
+}
+.guide-content strong { color: #e7e5e4; }

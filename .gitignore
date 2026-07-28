@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Mirrored Curse of Strahd: Reloaded content (856MB) — re-download with: python3 mirror-reloaded.py
+public/reloaded/
+
+# Downloaded soundtrack MP3s (4.9GB) — re-download with: ./download-playlist.sh && node register-tracks.js
+public/music/*.mp3
+
+# Local Claude Code settings
+.claude/settings.local.json

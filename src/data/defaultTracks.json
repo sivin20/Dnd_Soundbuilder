@@ -4,6 +4,1052 @@
     "filename": "exploring-death-house.mp3",
     "title": "Exploring the Death House",
     "customName": "Exploring the Death House",
-    "addedAt": 0
+    "addedAt": 0,
+    "section": "Death House",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-abbey-of-saint-markovia-unofficial-curse-of-strahd-soundtrac",
+    "filename": "Abbey_of_Saint_Markovia_Unofficial_Curse_of_Strahd_Soundtrack_1h_Choral_Music_Loop.mp3",
+    "title": "Abbey of Saint Markovia",
+    "customName": "Abbey of Saint Markovia",
+    "addedAt": 0,
+    "section": "Krezk & the Abbey",
+    "moods": [
+      "exploration",
+      "sacred"
+    ]
+  },
+  {
+    "id": "track-amber-temple-encounter-unofficial-curse-of-strahd-soundtrack",
+    "filename": "Amber_Temple_Encounter_Unofficial_Curse_of_Strahd_Soundtrack_1h_Dark_Battle_Music_Loop.mp3",
+    "title": "Amber Temple Encounter",
+    "customName": "Amber Temple Encounter",
+    "addedAt": 0,
+    "section": "Tsolenka Pass & Amber Temple",
+    "moods": [
+      "combat",
+      "boss"
+    ]
+  },
+  {
+    "id": "track-amber-temple-unofficial-curse-of-strahd-soundtrack-1h-dark-a",
+    "filename": "Amber_Temple_Unofficial_Curse_of_Strahd_Soundtrack_1h_Dark_Ambient_Choral_Music_Loop.mp3",
+    "title": "Amber Temple",
+    "customName": "Amber Temple",
+    "addedAt": 0,
+    "section": "Tsolenka Pass & Amber Temple",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-baba-lysaga-s-wrath-unofficial-curse-of-strahd-soundtrack-1h",
+    "filename": "Baba_Lysaga_s_Wrath_Unofficial_Curse_of_Strahd_Soundtrack_1h_Epic_Battle_Music_Loop.mp3",
+    "title": "Baba Lysaga's Wrath",
+    "customName": "Baba Lysaga's Wrath",
+    "addedAt": 0,
+    "section": "Berez",
+    "moods": [
+      "combat",
+      "boss"
+    ]
+  },
+  {
+    "id": "track-baron-s-mansion-unofficial-curse-of-strahd-soundtrack-1h-ttr",
+    "filename": "Baron_s_Mansion_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Background_Music_Loop.mp3",
+    "title": "Baron's Mansion",
+    "customName": "Baron's Mansion",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "social",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-bats-rats-and-vermin-unofficial-curse-of-strahd-soundtrack-1",
+    "filename": "Bats_Rats_and_Vermin_Unofficial_Curse_of_Strahd_Soundtrack_1h_Combat_Music_Loop.mp3",
+    "title": "Bats, Rats and Vermin",
+    "customName": "Bats, Rats and Vermin",
+    "addedAt": 0,
+    "section": "General & Compilations",
+    "moods": [
+      "combat"
+    ]
+  },
+  {
+    "id": "track-blinsky-s-toystore-unofficial-curse-of-strahd-soundtrack-1h-",
+    "filename": "Blinsky_s_Toystore_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Background_Music_Loop.mp3",
+    "title": "Blinsky's Toystore",
+    "customName": "Blinsky's Toystore",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "social",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-blood-of-the-vine-tavern-unofficial-curse-of-strahd-soundtra",
+    "filename": "Blood_of_the_Vine_Tavern_Unofficial_Curse_of_Strahd_Soundtrack_1h_Barovia_Music_Ambience.mp3",
+    "title": "Blood of the Vine Tavern",
+    "customName": "Blood of the Vine Tavern",
+    "addedAt": 0,
+    "section": "Village of Barovia",
+    "moods": [
+      "tavern",
+      "social"
+    ]
+  },
+  {
+    "id": "track-blue-water-inn-unofficial-curse-of-strahd-soundtrack-1h-tave",
+    "filename": "Blue_Water_Inn_Unofficial_Curse_of_Strahd_Soundtrack_1h_Tavern_Music_Ambience.mp3",
+    "title": "Blue Water Inn",
+    "customName": "Blue Water Inn",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "tavern",
+      "social"
+    ]
+  },
+  {
+    "id": "track-carriage-to-castle-ravenloft-unofficial-curse-of-strahd-soun",
+    "filename": "Carriage_to_Castle_Ravenloft_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Music_Loop.mp3",
+    "title": "Carriage to Castle Ravenloft",
+    "customName": "Carriage to Castle Ravenloft",
+    "addedAt": 0,
+    "section": "Castle Ravenloft",
+    "moods": [
+      "mystery",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-clovin-s-viol-unofficial-curse-of-strahd-soundtrack-1h-solo-",
+    "filename": "Clovin_s_Viol_Unofficial_Curse_of_Strahd_Soundtrack_1h_Solo_Viola_Background_Music_Loop.mp3",
+    "title": "Clovin's Viol",
+    "customName": "Clovin's Viol",
+    "addedAt": 0,
+    "section": "Krezk & the Abbey",
+    "moods": [
+      "creepy",
+      "somber"
+    ]
+  },
+  {
+    "id": "track-crypts-unofficial-curse-of-strahd-soundtrack-dark-ambient-tt",
+    "filename": "Crypts_Unofficial_Curse_of_Strahd_Soundtrack_Dark_Ambient_TTRPG_Dungeon_Music_Loop.mp3",
+    "title": "Crypts",
+    "customName": "Crypts",
+    "addedAt": 0,
+    "section": "Castle Ravenloft",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-dark-gifts-unofficial-curse-of-strahd-soundtrack-1h-eerie-am",
+    "filename": "Dark_Gifts_Unofficial_Curse_of_Strahd_Soundtrack_1h_Eerie_Amber_Temple_Music_Loop.mp3",
+    "title": "Dark Gifts",
+    "customName": "Dark Gifts",
+    "addedAt": 0,
+    "section": "Tsolenka Pass & Amber Temple",
+    "moods": [
+      "creepy",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-darkness-remains-unofficial-curse-of-strahd-fan-ost-dark-got",
+    "filename": "Darkness_Remains_Unofficial_Curse_of_Strahd_Fan_OST_Dark_Gothic_Music_with_Solo_Violin_1h.mp3",
+    "title": "Darkness Remains",
+    "customName": "Darkness Remains",
+    "addedAt": 0,
+    "section": "General & Compilations",
+    "moods": [
+      "somber",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-death-house-fight-unofficial-curse-of-strahd-soundtrack-1h-d",
+    "filename": "Death_House_Fight_Unofficial_Curse_of_Strahd_Soundtrack_1h_D_D_Combat_Music_Loop.mp3",
+    "title": "Death House Fight",
+    "customName": "Death House Fight",
+    "addedAt": 0,
+    "section": "Death House",
+    "moods": [
+      "combat"
+    ]
+  },
+  {
+    "id": "track-deva-encounter-unofficial-curse-of-strahd-soundtrack-1h-epic",
+    "filename": "Deva_Encounter_Unofficial_Curse_of_Strahd_Soundtrack_1h_Epic_Battle_Music_for_the_Abbot_Loop.mp3",
+    "title": "Deva Encounter",
+    "customName": "Deva Encounter",
+    "addedAt": 0,
+    "section": "Krezk & the Abbey",
+    "moods": [
+      "combat",
+      "boss",
+      "epic"
+    ]
+  },
+  {
+    "id": "track-donavich-and-doru-unofficial-curse-of-strahd-soundtrack-1-h-",
+    "filename": "Donavich_and_Doru_Unofficial_Curse_of_Strahd_Soundtrack_1_h_D_D_Somber_Background_Music.mp3",
+    "title": "Donavich and Doru",
+    "customName": "Donavich and Doru",
+    "addedAt": 0,
+    "section": "Village of Barovia",
+    "moods": [
+      "somber"
+    ]
+  },
+  {
+    "id": "track-encounter-at-tsolenka-pass-unofficial-curse-of-strahd-soundt",
+    "filename": "Encounter_at_Tsolenka_Pass_Unofficial_Curse_of_Strahd_Soundtrack_1h_Epic_Battle_Music_Loop.mp3",
+    "title": "Encounter at Tsolenka Pass",
+    "customName": "Encounter at Tsolenka Pass",
+    "addedAt": 0,
+    "section": "Tsolenka Pass & Amber Temple",
+    "moods": [
+      "combat",
+      "epic"
+    ]
+  },
+  {
+    "id": "track-encounter-in-barovia-unofficial-curse-of-strahd-soundtrack-1",
+    "filename": "Encounter_in_Barovia_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Combat_Music_Loop.mp3",
+    "title": "Encounter in Barovia",
+    "customName": "Encounter in Barovia",
+    "addedAt": 0,
+    "section": "Village of Barovia",
+    "moods": [
+      "combat"
+    ]
+  },
+  {
+    "id": "track-encounter-in-berez-unofficial-curse-of-strahd-soundtrack-1h-",
+    "filename": "Encounter_in_Berez_Unofficial_Curse_of_Strahd_Soundtrack_1h_Weird_Encounter_Music_Loop.mp3",
+    "title": "Encounter in Berez",
+    "customName": "Encounter in Berez",
+    "addedAt": 0,
+    "section": "Berez",
+    "moods": [
+      "combat",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-encounter-in-vallaki-unofficial-curse-of-strahd-soundtrack-1",
+    "filename": "Encounter_in_Vallaki_Unofficial_Curse_of_Strahd_Soundtrack_1h_Combat_Music_Loop.mp3",
+    "title": "Encounter in Vallaki",
+    "customName": "Encounter in Vallaki",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "combat"
+    ]
+  },
+  {
+    "id": "track-exethanter-s-theme-unofficial-curse-of-strahd-soundtrack-1h-",
+    "filename": "Exethanter_s_Theme_Unofficial_Curse_of_Strahd_Soundtrack_1h_Dark_Ancient_Theme_Music_Loop.mp3",
+    "title": "Exethanter's Theme",
+    "customName": "Exethanter's Theme",
+    "addedAt": 0,
+    "section": "Tsolenka Pass & Amber Temple",
+    "moods": [
+      "theme",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-exploring-castle-ravenloft-unofficial-curse-of-strahd-soundt",
+    "filename": "Exploring_Castle_Ravenloft_Unofficial_Curse_of_Strahd_Soundtrack_1h_Dark_Background_Music_Loop.mp3",
+    "title": "Exploring Castle Ravenloft",
+    "customName": "Exploring Castle Ravenloft",
+    "addedAt": 0,
+    "section": "Castle Ravenloft",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-exploring-tsolenka-pass-unofficial-curse-of-strahd-soundtrac",
+    "filename": "Exploring_Tsolenka_Pass_Unofficial_Curse_of_Strahd_Soundtrack_1h_Background_Music_Loop.mp3",
+    "title": "Exploring Tsolenka Pass",
+    "customName": "Exploring Tsolenka Pass",
+    "addedAt": 0,
+    "section": "Tsolenka Pass & Amber Temple",
+    "moods": [
+      "exploration",
+      "epic"
+    ]
+  },
+  {
+    "id": "track-exploring-the-death-house-unofficial-curse-of-strahd-music-1",
+    "filename": "Exploring_the_Death_House_Unofficial_Curse_of_Strahd_Music_1h_D_D_Dark_Exploration_Music_Loop.mp3",
+    "title": "Exploring the Death House",
+    "customName": "Exploring the Death House",
+    "addedAt": 0,
+    "section": "Death House",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-ezmerelda-unofficial-curse-of-strahd-soundtrack-1h-theme-mus",
+    "filename": "Ezmerelda_Unofficial_Curse_of_Strahd_Soundtrack_1h_Theme_Music_Loop.mp3",
+    "title": "Ezmerelda",
+    "customName": "Ezmerelda",
+    "addedAt": 0,
+    "section": "Van Richten & Ezmerelda",
+    "moods": [
+      "theme"
+    ]
+  },
+  {
+    "id": "track-festival-of-the-blazing-sun-unofficial-curse-of-strahd-sound",
+    "filename": "Festival_of_the_Blazing_Sun_Unofficial_Curse_of_Strahd_Soundtrack_Ambience_Marching_Band_Loop.mp3",
+    "title": "Festival of the Blazing Sun",
+    "customName": "Festival of the Blazing Sun",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "festive",
+      "social"
+    ]
+  },
+  {
+    "id": "track-fighting-the-hags-unofficial-curse-of-strahd-soundtrack-dark",
+    "filename": "Fighting_the_Hags_Unofficial_Curse_of_Strahd_Soundtrack_Dark_TTRPG_Combat_Music_Loop.mp3",
+    "title": "Fighting the Hags",
+    "customName": "Fighting the Hags",
+    "addedAt": 0,
+    "section": "Old Bonegrinder",
+    "moods": [
+      "combat",
+      "boss"
+    ]
+  },
+  {
+    "id": "track-fighting-the-revenant-unofficial-curse-of-strahd-soundtrack-",
+    "filename": "Fighting_the_Revenant_Unofficial_Curse_of_Strahd_Soundtrack_1h_Epic_Battle_Music_Loop.mp3",
+    "title": "Fighting the Revenant",
+    "customName": "Fighting the Revenant",
+    "addedAt": 0,
+    "section": "Argynvostholt",
+    "moods": [
+      "combat",
+      "epic"
+    ]
+  },
+  {
+    "id": "track-into-the-mists-unofficial-curse-of-strahd-soundtrack-1h-ttrp",
+    "filename": "Into_the_Mists_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Background_Music_Loop.mp3",
+    "title": "Into the Mists",
+    "customName": "Into the Mists",
+    "addedAt": 0,
+    "section": "Roads & Travel",
+    "moods": [
+      "exploration",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-ireena-kolyana-theme-unofficial-curse-of-strahd-soundtrack-1",
+    "filename": "Ireena_Kolyana_Theme_Unofficial_Curse_of_Strahd_Soundtrack_1h_Theme_Loop.mp3",
+    "title": "Ireena Kolyana (Theme)",
+    "customName": "Ireena Kolyana (Theme)",
+    "addedAt": 0,
+    "section": "Village of Barovia",
+    "moods": [
+      "theme",
+      "somber"
+    ]
+  },
+  {
+    "id": "track-ireena-remembers-unofficial-curse-of-strahd-soundtrack-1h-tt",
+    "filename": "Ireena_Remembers_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Thematic_Background_Music_Loop.mp3",
+    "title": "Ireena Remembers",
+    "customName": "Ireena Remembers",
+    "addedAt": 0,
+    "section": "Village of Barovia",
+    "moods": [
+      "theme",
+      "somber"
+    ]
+  },
+  {
+    "id": "track-ismark-kolyanovich-heroic-deeds-theme-unofficial-curse-of-st",
+    "filename": "Ismark_Kolyanovich_Heroic_Deeds_Theme_Unofficial_Curse_of_Strahd_Soundtrack_1h_Loop.mp3",
+    "title": "Ismark Kolyanovich (Heroic Deeds Theme)",
+    "customName": "Ismark Kolyanovich (Heroic Deeds Theme)",
+    "addedAt": 0,
+    "section": "Village of Barovia",
+    "moods": [
+      "theme",
+      "epic"
+    ]
+  },
+  {
+    "id": "track-izek-strazni-theme-unofficial-curse-of-strahd-soundtrack-1h-",
+    "filename": "Izek_Strazni_Theme_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Theme_Loop.mp3",
+    "title": "Izek Strazni Theme",
+    "customName": "Izek Strazni Theme",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "theme",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-keepers-of-the-feather-unofficial-curse-of-strahd-soundtrack",
+    "filename": "Keepers_of_the_Feather_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Theme_Music_Loop.mp3",
+    "title": "Keepers of the Feather",
+    "customName": "Keepers of the Feather",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "theme",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-krezk-unofficial-curse-of-strahd-soundtrack-1h-orchestral-ba",
+    "filename": "Krezk_Unofficial_Curse_of_Strahd_Soundtrack_1h_Orchestral_Background_Music_Loop.mp3",
+    "title": "Krezk",
+    "customName": "Krezk",
+    "addedAt": 0,
+    "section": "Krezk & the Abbey",
+    "moods": [
+      "exploration",
+      "social"
+    ]
+  },
+  {
+    "id": "track-lands-of-barovia-unofficial-curse-of-strahd-soundtrack-1h-tt",
+    "filename": "Lands_of_Barovia_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Background_Music_Loop.mp3",
+    "title": "Lands of Barovia",
+    "customName": "Lands of Barovia",
+    "addedAt": 0,
+    "section": "Roads & Travel",
+    "moods": [
+      "exploration"
+    ]
+  },
+  {
+    "id": "track-lorgoth-the-decayer-unofficial-curse-of-strahd-soundtrack-de",
+    "filename": "Lorgoth_the_Decayer_Unofficial_Curse_of_Strahd_Soundtrack_Death_House_1h_D_D_Battle_Music.mp3",
+    "title": "Lorgoth the Decayer",
+    "customName": "Lorgoth the Decayer",
+    "addedAt": 0,
+    "section": "Death House",
+    "moods": [
+      "combat",
+      "boss"
+    ]
+  },
+  {
+    "id": "track-madhouse-unofficial-curse-of-strahd-ost-1h-creepy-ambience-f",
+    "filename": "Madhouse_Unofficial_Curse_of_Strahd_OST_1h_Creepy_Ambience_for_the_Mongrelfolk_Loop.mp3",
+    "title": "Madhouse",
+    "customName": "Madhouse",
+    "addedAt": 0,
+    "section": "Krezk & the Abbey",
+    "moods": [
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-march-of-the-dead-unofficial-curse-of-strahd-soundtrack-1h-t",
+    "filename": "March_of_the_Dead_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Background_Music_Loop.mp3",
+    "title": "March of the Dead",
+    "customName": "March of the Dead",
+    "addedAt": 0,
+    "section": "General & Compilations",
+    "moods": [
+      "creepy",
+      "epic"
+    ]
+  },
+  {
+    "id": "track-martikov-family-curse-of-strahd-unofficial-fan-soundtrack-1h",
+    "filename": "Martikov_Family_Curse_of_Strahd_Unofficial_Fan_Soundtrack_1h_Theme_Music_Loop.mp3",
+    "title": "Martikov Family",
+    "customName": "Martikov Family",
+    "addedAt": 0,
+    "section": "Wizard of Wines & Yester Hill",
+    "moods": [
+      "theme",
+      "social"
+    ]
+  },
+  {
+    "id": "track-music-inspired-part-iii-chapters-7-10",
+    "filename": "Music_inspired_by_Curse_of_Strahd_Unofficial_Soundtrack_Part_III_-_Chapters_7_to_10.mp3",
+    "title": "Suite: Chapters 7–10 (Part III)",
+    "customName": "Suite: Chapters 7–10 (Part III)",
+    "addedAt": 0,
+    "section": "General & Compilations",
+    "moods": [
+      "exploration"
+    ]
+  },
+  {
+    "id": "track-music-inspired-part-ii-chapters-4-6",
+    "filename": "Music_inspired_by_Curse_of_Strahd_Unofficial_Soundtrack_Part_II_-_Chapters_4_to_6.mp3",
+    "title": "Suite: Chapters 4–6 (Part II)",
+    "customName": "Suite: Chapters 4–6 (Part II)",
+    "addedAt": 0,
+    "section": "General & Compilations",
+    "moods": [
+      "exploration"
+    ]
+  },
+  {
+    "id": "track-nocturnal-onslaught-unofficial-curse-of-strahd-soundtrack-1h",
+    "filename": "Nocturnal_Onslaught_Unofficial_Curse_of_Strahd_Soundtrack_1h_Battle_Music_Loop.mp3",
+    "title": "Nocturnal Onslaught",
+    "customName": "Nocturnal Onslaught",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "combat",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-old-bonegrinder-unofficial-curse-of-strahd-soundtrack-dark-a",
+    "filename": "Old_Bonegrinder_Unofficial_Curse_of_Strahd_Soundtrack_Dark_Ambient_TTRPG_Dungeon_Music_Loop.mp3",
+    "title": "Old Bonegrinder",
+    "customName": "Old Bonegrinder",
+    "addedAt": 0,
+    "section": "Old Bonegrinder",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-old-svalich-road-unofficial-curse-of-strahd-soundtrack-1h-tt",
+    "filename": "Old_Svalich_Road_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Background_Music_Loop.mp3",
+    "title": "Old Svalich Road",
+    "customName": "Old Svalich Road",
+    "addedAt": 0,
+    "section": "Roads & Travel",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-order-of-the-silver-dragon-unofficial-curse-of-strahd-soundt",
+    "filename": "Order_of_the_Silver_Dragon_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Theme_Music_Loop.mp3",
+    "title": "Order of the Silver Dragon",
+    "customName": "Order of the Silver Dragon",
+    "addedAt": 0,
+    "section": "Argynvostholt",
+    "moods": [
+      "theme",
+      "epic"
+    ]
+  },
+  {
+    "id": "track-out-of-the-mists-unofficial-curse-of-strahd-fan-ost-1h-dark-",
+    "filename": "Out_of_the_Mists_Unofficial_Curse_of_Strahd_Fan_OST_1h_Dark_Gothic_Music_1h.mp3",
+    "title": "Out of the Mists",
+    "customName": "Out of the Mists",
+    "addedAt": 0,
+    "section": "Roads & Travel",
+    "moods": [
+      "exploration",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-rahadin-theme-unofficial-curse-of-strahd-soundtrack-1h-ttrpg",
+    "filename": "Rahadin_Theme_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Theme_Loop.mp3",
+    "title": "Rahadin Theme",
+    "customName": "Rahadin Theme",
+    "addedAt": 0,
+    "section": "Castle Ravenloft",
+    "moods": [
+      "theme",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-rictavio-theme-unofficial-curse-of-strahd-soundtrack-1h-ttrp",
+    "filename": "Rictavio_Theme_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Thematic_Orchestral_Music_Loop.mp3",
+    "title": "Rictavio (Theme)",
+    "customName": "Rictavio (Theme)",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "theme",
+      "social"
+    ]
+  },
+  {
+    "id": "track-rose-and-thorn-unofficial-curse-of-strahd-soundtrack-1h-ttrp",
+    "filename": "Rose_and_Thorn_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Dramatic_Music_Loop.mp3",
+    "title": "Rose and Thorn",
+    "customName": "Rose and Thorn",
+    "addedAt": 0,
+    "section": "Death House",
+    "moods": [
+      "somber",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-ruins-of-argynvostholt-unofficial-curse-of-strahd-soundtrack",
+    "filename": "Ruins_of_Argynvostholt_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Background_Music_Loop.mp3",
+    "title": "Ruins of Argynvostholt",
+    "customName": "Ruins of Argynvostholt",
+    "addedAt": 0,
+    "section": "Argynvostholt",
+    "moods": [
+      "exploration",
+      "somber"
+    ]
+  },
+  {
+    "id": "track-ruins-of-berez-unofficial-curse-of-strahd-soundtrack-1h-ambi",
+    "filename": "Ruins_of_Berez_Unofficial_Curse_of_Strahd_Soundtrack_1h_Ambient_Background_Music_Loop.mp3",
+    "title": "Ruins of Berez",
+    "customName": "Ruins of Berez",
+    "addedAt": 0,
+    "section": "Berez",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-shadows-of-dread-unofficial-curse-of-strahd-soundtrack-1h-th",
+    "filename": "Shadows_of_Dread_Unofficial_Curse_of_Strahd_Soundtrack_1h_Thematic_Combat_Music_Loop.mp3",
+    "title": "Shadows of Dread",
+    "customName": "Shadows of Dread",
+    "addedAt": 0,
+    "section": "General & Compilations",
+    "moods": [
+      "combat",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-sir-godfrey-s-undying-love-unofficial-curse-of-strahd-soundt",
+    "filename": "Sir_Godfrey_s_Undying_Love_Unofficial_Curse_of_Strahd_Soundtrack_1h_Tragic_Music_Loop.mp3",
+    "title": "Sir Godfrey's Undying Love",
+    "customName": "Sir Godfrey's Undying Love",
+    "addedAt": 0,
+    "section": "Argynvostholt",
+    "moods": [
+      "somber",
+      "theme"
+    ]
+  },
+  {
+    "id": "track-st-andral-s-church-hopeful-unofficial-curse-of-strahd-soundt",
+    "filename": "St._Andral_s_Church_Hopeful_Unofficial_Curse_of_Strahd_Soundtrack_1h_Choir_Organ_Loop.mp3",
+    "title": "St. Andral's Church (Hopeful)",
+    "customName": "St. Andral's Church (Hopeful)",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "sacred"
+    ]
+  },
+  {
+    "id": "track-st-andral-s-church-somber-unofficial-curse-of-strahd-soundtr",
+    "filename": "St._Andral_s_Church_Somber_Unofficial_Curse_of_Strahd_Soundtrack_1h_Choir_Organ_Music_Loop.mp3",
+    "title": "St. Andral's Church (Somber)",
+    "customName": "St. Andral's Church (Somber)",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "sacred",
+      "somber"
+    ]
+  },
+  {
+    "id": "track-strahd-battle-theme-unofficial-curse-of-strahd-soundtrack-1h",
+    "filename": "Strahd_Battle_Theme_Unofficial_Curse_of_Strahd_Soundtrack_1h_D_D_BBEG_Battle_Music_Loop.mp3",
+    "title": "Strahd Battle Theme",
+    "customName": "Strahd Battle Theme",
+    "addedAt": 0,
+    "section": "Strahd",
+    "moods": [
+      "combat",
+      "boss",
+      "epic"
+    ]
+  },
+  {
+    "id": "track-strahd-prevails-unofficial-curse-of-strahd-fan-ost-dark-goth",
+    "filename": "Strahd_Prevails_Unofficial_Curse_of_Strahd_Fan_OST_Dark_Gothic_D_D_Music_1h.mp3",
+    "title": "Strahd Prevails",
+    "customName": "Strahd Prevails",
+    "addedAt": 0,
+    "section": "Strahd",
+    "moods": [
+      "creepy",
+      "epic"
+    ]
+  },
+  {
+    "id": "track-strahd-s-brides-theme-unofficial-curse-of-strahd-soundtrack-",
+    "filename": "Strahd_s_Brides_Theme_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Ambient_Music_Loop.mp3",
+    "title": "Strahd's Brides Theme",
+    "customName": "Strahd's Brides Theme",
+    "addedAt": 0,
+    "section": "Castle Ravenloft",
+    "moods": [
+      "creepy",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-strahd-von-zarovich-unofficial-curse-of-strahd-soundtrack-1h",
+    "filename": "Strahd_von_Zarovich_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Cello_Theme_Loop.mp3",
+    "title": "Strahd von Zarovich",
+    "customName": "Strahd von Zarovich",
+    "addedAt": 0,
+    "section": "Strahd",
+    "moods": [
+      "theme",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-tarokka-card-reading-unofficial-curse-of-strahd-soundtrack-1",
+    "filename": "Tarokka_Card_Reading_Unofficial_Curse_of_Strahd_Soundtrack_1h_Mysterious_Music_Loop.mp3",
+    "title": "Tarokka Card Reading",
+    "customName": "Tarokka Card Reading",
+    "addedAt": 0,
+    "section": "Tser Pool & Vistani",
+    "moods": [
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-the-abbot-unofficial-curse-of-strahd-ost-1h-dark-orchestral-",
+    "filename": "The_Abbot_Unofficial_Curse_of_Strahd_OST_1h_Dark_Orchestral_Piano_Theme_Music_Loop.mp3",
+    "title": "The Abbot",
+    "customName": "The Abbot",
+    "addedAt": 0,
+    "section": "Krezk & the Abbey",
+    "moods": [
+      "theme",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-the-end-justifies-the-means-unofficial-curse-of-strahd-ost-1",
+    "filename": "The_End_Justifies_the_Means_Unofficial_Curse_of_Strahd_OST_1h_Dark_Music_for_the_Abbot_Loop.mp3",
+    "title": "The End Justifies the Means",
+    "customName": "The End Justifies the Means",
+    "addedAt": 0,
+    "section": "Krezk & the Abbey",
+    "moods": [
+      "creepy",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-the-father-dark-van-richten-theme-1h-loop-unofficial-curse-o",
+    "filename": "The_Father_Dark_Van_Richten_Theme_1h_Loop_Unofficial_Curse_of_Strahd_Soundtrack.mp3",
+    "title": "The Father",
+    "customName": "The Father",
+    "addedAt": 0,
+    "section": "Van Richten & Ezmerelda",
+    "moods": [
+      "theme",
+      "somber"
+    ]
+  },
+  {
+    "id": "track-the-hanged-one-unofficial-curse-of-strahd-soundtrack-1h-ttrp",
+    "filename": "The_Hanged_One_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Creepy_Background_Music_Loop.mp3",
+    "title": "The Hanged One",
+    "customName": "The Hanged One",
+    "addedAt": 0,
+    "section": "General & Compilations",
+    "moods": [
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-the-hunter-van-richten-action-theme-1h-loop-unofficial-curse",
+    "filename": "The_Hunter_Van_Richten_Action_Theme_1h_Loop_Unofficial_Curse_of_Strahd_Soundtrack.mp3",
+    "title": "The Hunter",
+    "customName": "The Hunter",
+    "addedAt": 0,
+    "section": "Van Richten & Ezmerelda",
+    "moods": [
+      "combat",
+      "theme"
+    ]
+  },
+  {
+    "id": "track-the-scholar-van-richten-theme-1h-loop-unofficial-curse-of-st",
+    "filename": "The_Scholar_Van_Richten_Theme_1h_Loop_Unofficial_Curse_of_Strahd_Soundtrack.mp3",
+    "title": "The Scholar",
+    "customName": "The Scholar",
+    "addedAt": 0,
+    "section": "Van Richten & Ezmerelda",
+    "moods": [
+      "theme",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-the-story-of-tatyana-unofficial-curse-of-strahd-soundtrack-1",
+    "filename": "The_Story_of_Tatyana_Unofficial_Curse_of_Strahd_Soundtrack_1h_Emotional_Piano_Music_Loop.mp3",
+    "title": "The Story of Tatyana",
+    "customName": "The Story of Tatyana",
+    "addedAt": 0,
+    "section": "Strahd",
+    "moods": [
+      "somber",
+      "theme"
+    ]
+  },
+  {
+    "id": "track-the-tome-of-strahd-unofficial-curse-of-strahd-fan-soundtrack",
+    "filename": "The_Tome_of_Strahd_Unofficial_Curse_of_Strahd_Fan_Soundtrack_Tragic_Music_1h_Loop.mp3",
+    "title": "The Tome of Strahd",
+    "customName": "The Tome of Strahd",
+    "addedAt": 0,
+    "section": "Strahd",
+    "moods": [
+      "somber",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-the-town-of-vallaki-unofficial-curse-of-strahd-soundtrack-1h",
+    "filename": "The_Town_of_Vallaki_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Background_Music_Loop.mp3",
+    "title": "The Town of Vallaki",
+    "customName": "The Town of Vallaki",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "exploration",
+      "social"
+    ]
+  },
+  {
+    "id": "track-vampire-spawn-unofficial-curse-of-strahd-soundtrack-1h-d-d-b",
+    "filename": "Vampire_Spawn_Unofficial_Curse_of_Strahd_Soundtrack_1h_D_D_Battle_Music.mp3",
+    "title": "Vampire Spawn",
+    "customName": "Vampire Spawn",
+    "addedAt": 0,
+    "section": "General & Compilations",
+    "moods": [
+      "combat",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-van-richten-s-elevator-1h-loungy-gothic-horror-elevator-musi",
+    "filename": "Van_Richten_s_Elevator_1h_Loungy_Gothic_Horror_Elevator_Music_Unofficial_Curse_of_Strahd_OST.mp3",
+    "title": "Van Richten's Elevator",
+    "customName": "Van Richten's Elevator",
+    "addedAt": 0,
+    "section": "Van Richten & Ezmerelda",
+    "moods": [
+      "social",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-van-richten-s-tower-1h-exploration-music-unofficial-curse-of",
+    "filename": "Van_Richten_s_Tower_1h_Exploration_Music_Unofficial_Curse_of_Strahd_Soundtrack_Loop.mp3",
+    "title": "Van Richten's Tower",
+    "customName": "Van Richten's Tower",
+    "addedAt": 0,
+    "section": "Van Richten & Ezmerelda",
+    "moods": [
+      "exploration",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-vasilka-unofficial-curse-of-strahd-soundtrack-1h-orchestral-",
+    "filename": "Vasilka_Unofficial_Curse_of_Strahd_Soundtrack_1h_Orchestral_Background_Music_Loop.mp3",
+    "title": "Vasilka",
+    "customName": "Vasilka",
+    "addedAt": 0,
+    "section": "Krezk & the Abbey",
+    "moods": [
+      "somber",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-village-of-barovia-unofficial-curse-of-strahd-soundtrack-1h-",
+    "filename": "Village_of_Barovia_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Background_Music_Loop.mp3",
+    "title": "Village of Barovia",
+    "customName": "Village of Barovia",
+    "addedAt": 0,
+    "section": "Village of Barovia",
+    "moods": [
+      "exploration",
+      "somber"
+    ]
+  },
+  {
+    "id": "track-vistani-campfire-unofficial-curse-of-strahd-soundtrack-1-h-a",
+    "filename": "Vistani_Campfire_Unofficial_Curse_of_Strahd_Soundtrack_1_h_Ambience_and_Background_Music_Loop.mp3",
+    "title": "Vistani Campfire",
+    "customName": "Vistani Campfire",
+    "addedAt": 0,
+    "section": "Tser Pool & Vistani",
+    "moods": [
+      "tavern",
+      "social"
+    ]
+  },
+  {
+    "id": "track-vladimir-horngaard-theme-unofficial-curse-of-strahd-soundtra",
+    "filename": "Vladimir_Horngaard_Theme_Unofficial_Curse_of_Strahd_Soundtrack_1h_Dark_Music_Loop.mp3",
+    "title": "Vladimir Horngaard Theme",
+    "customName": "Vladimir Horngaard Theme",
+    "addedAt": 0,
+    "section": "Argynvostholt",
+    "moods": [
+      "theme",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-wachterhaus-unofficial-curse-of-strahd-soundtrack-1h-ttrpg-d",
+    "filename": "Wachterhaus_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Background_Music_Loop.mp3",
+    "title": "Wachterhaus",
+    "customName": "Wachterhaus",
+    "addedAt": 0,
+    "section": "Vallaki",
+    "moods": [
+      "social",
+      "mystery"
+    ]
+  },
+  {
+    "id": "track-walls-of-ravenloft-unofficial-curse-of-strahd-soundtrack-1h-",
+    "filename": "Walls_of_Ravenloft_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Dark_Background_Music_Loop.mp3",
+    "title": "Walls of Ravenloft",
+    "customName": "Walls of Ravenloft",
+    "addedAt": 0,
+    "section": "Castle Ravenloft",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-werewolf-den-unofficial-curse-of-strahd-soundtrack-1h-dark-t",
+    "filename": "Werewolf_Den_Unofficial_Curse_of_Strahd_Soundtrack_1h_Dark_Tribal_Ambient_Music_Loop.mp3",
+    "title": "Werewolf Den",
+    "customName": "Werewolf Den",
+    "addedAt": 0,
+    "section": "Werewolf Den",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-werewolf-encounter-unofficial-curse-of-strahd-soundtrack-1h-",
+    "filename": "Werewolf_Encounter_Unofficial_Curse_of_Strahd_Soundtrack_1h_Dark_Primal_Battle_Music_Loop.mp3",
+    "title": "Werewolf Encounter",
+    "customName": "Werewolf Encounter",
+    "addedAt": 0,
+    "section": "Werewolf Den",
+    "moods": [
+      "combat"
+    ]
+  },
+  {
+    "id": "track-witch-of-the-marsh-baba-lysaga-theme-unofficial-curse-of-str",
+    "filename": "Witch_of_the_Marsh_Baba_Lysaga_Theme_Unofficial_Curse_of_Strahd_OST_1h_Orchestral_Music_Loop.mp3",
+    "title": "Witch of the Marsh (Baba Lysaga Theme)",
+    "customName": "Witch of the Marsh (Baba Lysaga Theme)",
+    "addedAt": 0,
+    "section": "Berez",
+    "moods": [
+      "theme",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-wizard-of-wines-curse-of-strahd-fan-ost-1h-winery-exploratio",
+    "filename": "Wizard_of_Wines_Curse_of_Strahd_Fan_OST_1h_Winery_Exploration_Music_Loop.mp3",
+    "title": "Wizard of Wines",
+    "customName": "Wizard of Wines",
+    "addedAt": 0,
+    "section": "Wizard of Wines & Yester Hill",
+    "moods": [
+      "exploration"
+    ]
+  },
+  {
+    "id": "track-wizard-of-wines-encounter-curse-of-strahd-fan-ost-1h-mid-int",
+    "filename": "Wizard_of_Wines_Encounter_Curse_of_Strahd_Fan_OST_1h_Mid_Intensity_Battle_Music_Loop.mp3",
+    "title": "Wizard of Wines Encounter",
+    "customName": "Wizard of Wines Encounter",
+    "addedAt": 0,
+    "section": "Wizard of Wines & Yester Hill",
+    "moods": [
+      "combat"
+    ]
+  },
+  {
+    "id": "track-yester-hill-encounter-unofficial-curse-of-strahd-fan-ost-1h-",
+    "filename": "Yester_Hill_Encounter_Unofficial_Curse_of_Strahd_Fan_OST_1h_Battle_Music_Loop.mp3",
+    "title": "Yester Hill Encounter",
+    "customName": "Yester Hill Encounter",
+    "addedAt": 0,
+    "section": "Wizard of Wines & Yester Hill",
+    "moods": [
+      "combat"
+    ]
+  },
+  {
+    "id": "track-yester-hill-unofficial-curse-of-strahd-soundtrack-1h-dark-dr",
+    "filename": "Yester_Hill_Unofficial_Curse_of_Strahd_Soundtrack_1h_Dark_Druidic_Ambient_Music_Loop.mp3",
+    "title": "Yester Hill",
+    "customName": "Yester Hill",
+    "addedAt": 0,
+    "section": "Wizard of Wines & Yester Hill",
+    "moods": [
+      "exploration",
+      "creepy"
+    ]
+  },
+  {
+    "id": "track-zarovich-fugue-unofficial-curse-of-strahd-soundtrack-1h-ttrp",
+    "filename": "Zarovich_Fugue_Unofficial_Curse_of_Strahd_Soundtrack_1h_TTRPG_Organ_Music_Loop.mp3",
+    "title": "Zarovich Fugue",
+    "customName": "Zarovich Fugue",
+    "addedAt": 0,
+    "section": "Castle Ravenloft",
+    "moods": [
+      "sacred",
+      "creepy"
+    ]
   }
 ]
