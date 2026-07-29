@@ -8,6 +8,7 @@ interface Props {
 const navItems: { id: View; label: string; icon: string }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: '⚔️' },
   { id: 'campaign', label: 'Campaign', icon: '🗺️' },
+  { id: 'npcs', label: 'NPCs', icon: '🎭' },
   { id: 'music', label: 'Music Library', icon: '🎵' },
   { id: 'soundboard', label: 'Soundboard', icon: '🔊' },
 ];

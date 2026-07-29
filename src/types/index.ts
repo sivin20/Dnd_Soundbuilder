@@ -32,7 +32,7 @@ export interface Scene {
   ambients: { id: string; level: number; volume: number }[];
 }
 
-export type View = 'dashboard' | 'campaign' | 'music' | 'soundboard';
+export type View = 'dashboard' | 'campaign' | 'npcs' | 'music' | 'soundboard';
 
 // --- Campaign tracker (Curse of Strahd: Reloaded) ---------------------------
 
