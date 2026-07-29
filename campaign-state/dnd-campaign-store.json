@@ -19,7 +19,41 @@
       }
     },
     "currentArcId": "arc-d",
-    "sessions": []
+    "sessions": [],
+    "tarokka": {
+      "history": {
+        "card": "Nine of Glyphs \u2014 the Traitor",
+        "resolved": "The ancient foe of an old and noble house \u2014 the lost soul leads to him (Arc H).",
+        "done": false
+      },
+      "holy-symbol": {
+        "card": "Five of Swords \u2014 the Myrmidon",
+        "resolved": "",
+        "done": false
+      },
+      "sunsword": {
+        "card": "Eight of Glyphs \u2014 the Bishop",
+        "resolved": "In an amber prison where the devil fears to tread; the house of the fallen dragon can lead you there.",
+        "done": false
+      },
+      "ally": {
+        "card": "The Mists",
+        "resolved": "",
+        "done": false
+      },
+      "strahd": {
+        "card": "The Marionette",
+        "resolved": "",
+        "done": false
+      }
+    },
+    "flags": {},
+    "time": {
+      "day": 1,
+      "minutes": 480
+    },
+    "deadlines": [],
+    "milestonesDone": {}
   },
   "version": 0
 }

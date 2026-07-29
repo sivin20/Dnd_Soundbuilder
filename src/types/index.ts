@@ -49,6 +49,25 @@ export interface CampaignArc {
 
 export type ArcStatus = 'todo' | 'active' | 'done';
 
+export type AbilityKey = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha';
+
+/** Numbers a DM reads off the party sheet, derived from the DDB payload.
+ *  See utils/ddbCharacter.ts — D&D Beyond ships no computed AC or passives. */
+export interface DerivedStats {
+  abilities: Record<AbilityKey, number>;
+  proficiencyBonus: number;
+  armorClass: number;
+  /** How the AC was arrived at, and whether to trust it. */
+  armorClassNote: string;
+  armorClassUncertain: boolean;
+  initiative: number;
+  passivePerception: number;
+  passiveInvestigation: number;
+  passiveInsight: number;
+  /** Highest save DC across spellcasting classes, null if not a caster. */
+  spellSaveDc: number | null;
+}
+
 /** Snapshot of a D&D Beyond character (character must be set to Public). */
 export interface PartyMember {
   characterId: number;
@@ -61,6 +80,14 @@ export interface PartyMember {
   removedHitPoints: number;
   temporaryHitPoints: number;
   overrideHitPoints: number | null;
+  bonusHitPoints: number;
+  deathSaveFails: number;
+  deathSaveSuccesses: number;
+  stabilized: boolean;
+  inspiration: boolean;
+  conditions: string[];
+  currentXp: number;
+  stats: DerivedStats | null;
   fetchedAt: number;
   error?: string;    // last fetch error, if any
 }
@@ -71,4 +98,40 @@ export interface SessionNote {
   title: string;
   notes: string;
   arcId: string | null; // arc the session mostly took place in
+  /** Where you left them — shown on the dashboard so you never start cold. */
+  cliffhanger: string;
+  /** Things the party or an NPC promised; the stuff that gets forgotten. */
+  promises: string;
+  loot: string;
+  npcsMet: string;
+}
+
+// --- Campaign state ---------------------------------------------------------
+
+/** One of Madam Eva's five cards. */
+export interface TarokkaSlotState {
+  /** The drawn card, e.g. "Eight of Glyphs — the Bishop". */
+  card: string;
+  /** What Eva's reading pointed at, in your own words. */
+  resolved: string;
+  /** Ticked once the party has actually got it / met them / learned it. */
+  done: boolean;
+}
+
+/** Toggles and choices for state that spans the whole campaign. */
+export type CampaignFlagValue = boolean | string;
+
+export interface Deadline {
+  id: string;
+  label: string;
+  /** In-world day it comes due, against BarovianTime.day. */
+  dueDay: number;
+  note: string;
+  done: boolean;
+}
+
+/** In-world clock. Barovia runs on dusk, and Reloaded sets hard deadlines. */
+export interface BarovianTime {
+  day: number;      // 1-based day of the campaign
+  minutes: number;  // minutes since midnight, 0-1439
 }

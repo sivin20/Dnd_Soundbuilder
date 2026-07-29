@@ -6,6 +6,8 @@ import ScenePanel from './ScenePanel';
 import CombatButton from './CombatButton';
 import CurrentArcCard from './CurrentArcCard';
 import PartyPanel from './PartyPanel';
+import BarovianClock from './BarovianClock';
+import LastSessionCard from './LastSessionCard';
 
 interface Props {
   onOpenCampaign: () => void;
@@ -30,6 +32,12 @@ export default function Dashboard({ onOpenCampaign }: Props) {
 
       <div className="mb-5">
         <CurrentArcCard onOpenCampaign={onOpenCampaign} />
+      </div>
+
+      {/* Campaign continuity: the in-world clock and where you left the party */}
+      <div className="mb-5 grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <BarovianClock />
+        <LastSessionCard onOpenCampaign={onOpenCampaign} />
       </div>
 
       <div className="mb-5">

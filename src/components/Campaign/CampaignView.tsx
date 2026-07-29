@@ -7,11 +7,23 @@ import type { ArcStatus } from '../../types';
 import GuideContent from './GuideContent';
 import ArcMusicPlan from './ArcMusicPlan';
 import SessionLog from './SessionLog';
+import TarokkaPanel from './TarokkaPanel';
+import FlagsPanel from './FlagsPanel';
+import MilestonesPanel from './MilestonesPanel';
+
+type ChronicleKind = 'sessions' | 'tarokka' | 'flags' | 'milestones';
 
 type Selection =
   | { kind: 'arc'; arcId: string; anchor?: string }
   | { kind: 'page'; mdPath: string; title: string; anchor?: string }
-  | { kind: 'sessions' };
+  | { kind: ChronicleKind };
+
+const CHRONICLE: { kind: ChronicleKind; label: string }[] = [
+  { kind: 'sessions', label: '📜 Session Log' },
+  { kind: 'tarokka', label: '🃏 Tarokka' },
+  { kind: 'flags', label: '🏴 Campaign Flags' },
+  { kind: 'milestones', label: '🏆 Milestones' },
+];
 
 interface Props {
   /** Page to open on mount — used when jumping in from the NPC directory. */
@@ -156,24 +168,38 @@ export default function CampaignView({ initialPage = null }: Props) {
           )}
         </div>
 
-        <button
-          onClick={() => setSelection({ kind: 'sessions' })}
-          className={`w-full flex items-center gap-2 px-2 py-2 rounded-lg text-left font-serif text-sm transition-colors ${
-            selection.kind === 'sessions'
-              ? 'bg-amber-900/30 text-amber-300'
-              : 'text-stone-300 hover:bg-stone-800/70'
-          }`}
-        >
-          📜 Session Log
-          {campaign.sessions.length > 0 && (
-            <span className="text-xs text-stone-600 font-sans">{campaign.sessions.length}</span>
-          )}
-        </button>
+        {/* Chronicle — campaign state that spans the whole adventure */}
+        <div className="border-t border-stone-800 pt-3">
+          <h2 className="text-[11px] uppercase tracking-widest text-stone-500 font-sans mb-1.5">
+            Chronicle
+          </h2>
+          <div className="flex flex-col">
+            {CHRONICLE.map((entry) => (
+              <button
+                key={entry.kind}
+                onClick={() => setSelection({ kind: entry.kind })}
+                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-left font-serif text-sm transition-colors ${
+                  selection.kind === entry.kind
+                    ? 'bg-amber-900/30 text-amber-300'
+                    : 'text-stone-300 hover:bg-stone-800/70'
+                }`}
+              >
+                {entry.label}
+                {entry.kind === 'sessions' && campaign.sessions.length > 0 && (
+                  <span className="text-xs text-stone-600 font-sans">{campaign.sessions.length}</span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
       </aside>
 
       {/* Main */}
       <div className="flex-1 min-w-0 overflow-y-auto p-6">
         {selection.kind === 'sessions' && <SessionLog />}
+        {selection.kind === 'tarokka' && <TarokkaPanel />}
+        {selection.kind === 'flags' && <FlagsPanel />}
+        {selection.kind === 'milestones' && <MilestonesPanel />}
 
         {selection.kind === 'page' && (
           <div>
