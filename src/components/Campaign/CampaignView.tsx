@@ -345,8 +345,11 @@ function ArcDetail({
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-1 border-b border-stone-800 mb-4">
+      {/* Tabs — stuck to the top of the scroll area so you can switch between
+          Guide, Progress, Notes and Music without scrolling back up.
+          -mx-6/px-6 cancels the scroller's padding so the bar and its bottom
+          border span the full width. */}
+      <div className="sticky -top-6 z-20 -mx-6 px-6 pt-2 bg-stone-950 border-b border-stone-800 mb-4 flex gap-1">
         {TABS.map((t) => (
           <button
             key={t.id}

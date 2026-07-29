@@ -162,9 +162,10 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
         }}
       />
 
-      {/* On this page — heading outline with scroll-spy, like the website's sidebar */}
+      {/* On this page — heading outline with scroll-spy, like the website's
+          sidebar. top-12 clears the sticky arc tab bar above it. */}
       {page.toc.length > 1 && (
-        <nav ref={navRef} className="hidden lg:block w-60 flex-shrink-0 sticky top-4 max-h-[80vh] overflow-y-auto">
+        <nav ref={navRef} className="hidden lg:block w-60 flex-shrink-0 sticky top-12 max-h-[calc(100vh-14rem)] overflow-y-auto">
           <p className="text-[11px] uppercase tracking-widest text-stone-500 font-sans mb-2">
             On this page
           </p>
