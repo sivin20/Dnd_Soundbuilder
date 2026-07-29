@@ -58,8 +58,14 @@ export default function Dashboard({ onOpenCampaign }: Props) {
           </div>
         </div>
 
-        {/* Campaign state rail */}
-        <aside className="w-full xl:w-[23rem] 2xl:w-[25rem] flex-shrink-0 flex flex-col gap-5">
+        {/* Campaign state rail — stays put while the board scrolls, and scrolls
+            internally when the three cards exceed the viewport.
+            9rem = header (63px) + footer (33px) + the 24px offset top and bottom. */}
+        <aside
+          className="w-full xl:w-[23rem] 2xl:w-[25rem] flex-shrink-0 flex flex-col gap-5
+                     xl:sticky xl:top-6 xl:self-start
+                     xl:max-h-[calc(100vh-9rem)] xl:overflow-y-auto xl:pr-0.5"
+        >
           <BarovianClock />
           <PartyPanel />
           <LastSessionCard onOpenCampaign={onOpenCampaign} />
