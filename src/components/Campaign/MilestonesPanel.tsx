@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { loadMilestones, earnedXp, levelForXp, xpToNextLevel } from '../../utils/milestones';
+import { loadMilestones, earnedXp, levelForXp, xpToNextLevel, xpForLevel } from '../../utils/milestones';
 import type { Milestone } from '../../utils/milestones';
 import { useCampaignStore } from '../../store/campaignStore';
 import { usePartyStore } from '../../store/partyStore';
@@ -8,7 +8,7 @@ import { CAMPAIGN_ARCS } from '../../data/campaignArcs';
 export default function MilestonesPanel() {
   const [milestones, setMilestones] = useState<Milestone[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const { milestonesDone, toggleMilestone } = useCampaignStore();
+  const { milestonesDone, toggleMilestone, startingLevel, setStartingLevel } = useCampaignStore();
   const members = usePartyStore((s) => s.members);
 
   useEffect(() => {
@@ -19,10 +19,13 @@ export default function MilestonesPanel() {
     return () => { cancelled = true; };
   }, []);
 
-  const xp = useMemo(
+  const awarded = useMemo(
     () => (milestones ? earnedXp(milestones, milestonesDone) : 0),
     [milestones, milestonesDone]
   );
+  // Milestone XP sits on top of the level the party started at
+  const baseline = xpForLevel(startingLevel ?? 2);
+  const xp = baseline + awarded;
   const impliedLevel = levelForXp(xp);
   const toNext = xpToNextLevel(xp);
 
@@ -68,8 +71,26 @@ export default function MilestonesPanel() {
       <div className="bg-stone-900 border border-amber-900/30 rounded-xl p-5 mb-5">
         <div className="flex flex-wrap items-baseline gap-x-8 gap-y-2">
           <div>
-            <p className="text-xs uppercase tracking-widest text-amber-600 font-sans">XP awarded</p>
-            <p className="text-2xl font-serif text-parchment tabular-nums">{xp.toLocaleString()}</p>
+            <p className="text-xs uppercase tracking-widest text-amber-600 font-sans">Total XP</p>
+            <p className="text-2xl font-serif text-parchment tabular-nums" title={`${baseline.toLocaleString()} from starting at level ${startingLevel} + ${awarded.toLocaleString()} awarded`}>
+              {xp.toLocaleString()}
+            </p>
+            <p className="text-[11px] text-stone-600 font-sans">
+              {awarded.toLocaleString()} awarded + {baseline.toLocaleString()} base
+            </p>
+          </div>
+          <div>
+            <p className="text-xs uppercase tracking-widest text-stone-500 font-sans">Started at</p>
+            <select
+              value={startingLevel ?? 2}
+              onChange={(e) => setStartingLevel(Number(e.target.value))}
+              className="bg-stone-950 border border-stone-700 rounded px-2 py-1 text-lg font-serif text-parchment tabular-nums focus:outline-none focus:border-amber-700/60"
+              title="Reloaded starts characters at 2nd level, so its milestone XP is on top of 300 XP"
+            >
+              {[1, 2, 3, 4, 5].map((l) => (
+                <option key={l} value={l}>level {l}</option>
+              ))}
+            </select>
           </div>
           <div>
             <p className="text-xs uppercase tracking-widest text-amber-600 font-sans">Implies level</p>
@@ -138,6 +159,11 @@ export default function MilestonesPanel() {
                           done ? 'text-green-200/80' : 'text-stone-300'
                         }`}
                       >
+                        {m.optional && (
+                          <span className="text-[10px] uppercase tracking-wider text-stone-500 mr-1.5">
+                            bonus
+                          </span>
+                        )}
                         {m.summary}
                       </span>
                     </span>

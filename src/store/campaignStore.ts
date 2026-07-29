@@ -30,6 +30,9 @@ interface CampaignState {
   deadlines: Deadline[];
   /** Story milestones ticked off, keyed by the parsed milestone id. */
   milestonesDone: Record<string, boolean>;
+  /** Level the party began at — Reloaded starts at 2nd, so its milestone XP
+   *  sits on top of that level's threshold. */
+  startingLevel: number;
 
   setArcStatus: (arcId: string, status: ArcStatus) => void;
   setArcNotes: (arcId: string, notes: string) => void;
@@ -46,6 +49,7 @@ interface CampaignState {
   updateDeadline: (id: string, patch: Partial<Omit<Deadline, 'id'>>) => void;
   deleteDeadline: (id: string) => void;
   toggleMilestone: (milestoneId: string) => void;
+  setStartingLevel: (level: number) => void;
   /** Make an arc the "we are here" arc: mark active + prep the combat button
    *  with a fitting combat track from the arc's music sections. */
   enterArc: (arcId: string) => void;
@@ -69,6 +73,7 @@ export const useCampaignStore = create<CampaignState>()(
       time: DEFAULT_TIME,
       deadlines: [],
       milestonesDone: {},
+      startingLevel: 2,
 
       setArcStatus: (arcId, status) =>
         set((s) => ({
@@ -155,6 +160,8 @@ export const useCampaignStore = create<CampaignState>()(
         set((s) => ({
           milestonesDone: { ...s.milestonesDone, [milestoneId]: !s.milestonesDone[milestoneId] },
         })),
+
+      setStartingLevel: (level) => set({ startingLevel: Math.max(1, Math.min(20, level)) }),
 
       addSession: (note) =>
         set((s) => ({ sessions: [{ ...note, id: uuidv4() }, ...s.sessions] })),
