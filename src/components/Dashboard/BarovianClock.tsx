@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { useCampaignStore } from '../../store/campaignStore';
 import { timeBand, formatClock } from '../../data/campaignState';
+import { CAMPAIGN_ARCS, ACTS } from '../../data/campaignArcs';
+
+interface Props {
+  /** Opens a guide page (and optionally a section) in the campaign view. */
+  onOpenGuide?: (mdPath: string, anchor?: string) => void;
+}
 
 // Barovia runs on a clock: the horde attacks at dusk, Arabelle's nameday is in
 // two days, the wine delivery is overdue. Reloaded sets hard deadlines and
@@ -9,13 +15,14 @@ import { timeBand, formatClock } from '../../data/campaignState';
 const DUSK_MINUTES = 18 * 60;
 const DAWN_MINUTES = 7 * 60;
 
-export default function BarovianClock() {
+export default function BarovianClock({ onOpenGuide }: Props) {
   const { time, deadlines, advanceTime, setTimeOfDay, setDay, longRest, addDeadline, updateDeadline, deleteDeadline } =
     useCampaignStore();
 
   const [adding, setAdding] = useState(false);
   const [label, setLabel] = useState('');
   const [inDays, setInDays] = useState('2');
+  const [linkArcId, setLinkArcId] = useState('');
 
   const band = timeBand(time.minutes);
   const pending = deadlines.filter((d) => !d.done);
@@ -24,9 +31,16 @@ export default function BarovianClock() {
     const trimmed = label.trim();
     if (!trimmed) return;
     const offset = Number(inDays);
-    addDeadline(trimmed, time.day + (Number.isFinite(offset) ? offset : 0));
+    const arc = CAMPAIGN_ARCS.find((a) => a.id === linkArcId);
+    addDeadline(
+      trimmed,
+      time.day + (Number.isFinite(offset) ? offset : 0),
+      '',
+      arc ? { mdPath: arc.mdPath, label: `Arc ${arc.code} — ${arc.title}` } : undefined
+    );
     setLabel('');
     setInDays('2');
+    setLinkArcId('');
     setAdding(false);
   };
 
@@ -97,39 +111,58 @@ export default function BarovianClock() {
       </div>
 
       {adding && (
-        <div className="mb-3 bg-stone-800/70 border border-amber-800/40 rounded-lg p-3 flex gap-2">
-          <input
-            autoFocus
-            type="text"
-            value={label}
-            onChange={(e) => setLabel(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') submit();
-              if (e.key === 'Escape') { setAdding(false); setLabel(''); }
-            }}
-            placeholder="e.g. Arabelle's nameday — toy by noon"
-            className="flex-1 min-w-0 bg-stone-900 border border-stone-700 rounded px-2.5 py-1.5 text-sm text-parchment placeholder-stone-600 font-sans focus:outline-none focus:border-amber-700/60"
-          />
-          <input
-            type="number"
-            value={inDays}
-            onChange={(e) => setInDays(e.target.value)}
-            className="w-16 bg-stone-900 border border-stone-700 rounded px-2 py-1.5 text-sm text-stone-300 font-sans tabular-nums focus:outline-none focus:border-amber-700/60"
-            title="Days from today"
-          />
-          <button
-            onClick={submit}
-            disabled={!label.trim()}
-            className="text-xs font-sans bg-amber-700 hover:bg-amber-600 disabled:opacity-40 text-amber-100 px-3 rounded transition-colors"
-          >
-            Add
-          </button>
-          <button
-            onClick={() => { setAdding(false); setLabel(''); }}
-            className="text-xs font-sans text-stone-500 hover:text-stone-300 px-1 transition-colors"
-          >
-            ✕
-          </button>
+        <div className="mb-3 bg-stone-800/70 border border-amber-800/40 rounded-lg p-3 flex flex-col gap-2">
+          <div className="flex gap-2">
+            <input
+              autoFocus
+              type="text"
+              value={label}
+              onChange={(e) => setLabel(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') submit();
+                if (e.key === 'Escape') { setAdding(false); setLabel(''); }
+              }}
+              placeholder="e.g. Arabelle's nameday — toy by noon"
+              className="flex-1 min-w-0 bg-stone-900 border border-stone-700 rounded px-2.5 py-1.5 text-sm text-parchment placeholder-stone-600 font-sans focus:outline-none focus:border-amber-700/60"
+            />
+            <input
+              type="number"
+              value={inDays}
+              onChange={(e) => setInDays(e.target.value)}
+              className="w-16 bg-stone-900 border border-stone-700 rounded px-2 py-1.5 text-sm text-stone-300 font-sans tabular-nums focus:outline-none focus:border-amber-700/60"
+              title="Days from today"
+            />
+          </div>
+          <div className="flex gap-2">
+            <select
+              value={linkArcId}
+              onChange={(e) => setLinkArcId(e.target.value)}
+              className="flex-1 min-w-0 bg-stone-900 border border-stone-700 rounded px-2 py-1.5 text-xs text-stone-400 font-sans focus:outline-none focus:border-amber-700/60"
+              title="Link the deadline to the arc that explains it"
+            >
+              <option value="">No guide link</option>
+              {ACTS.map((act) => (
+                <optgroup key={act} label={act}>
+                  {CAMPAIGN_ARCS.filter((a) => a.act === act).map((a) => (
+                    <option key={a.id} value={a.id}>Arc {a.code} — {a.title}</option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+            <button
+              onClick={submit}
+              disabled={!label.trim()}
+              className="text-xs font-sans bg-amber-700 hover:bg-amber-600 disabled:opacity-40 text-amber-100 px-3 py-1.5 rounded transition-colors"
+            >
+              Add
+            </button>
+            <button
+              onClick={() => { setAdding(false); setLabel(''); setLinkArcId(''); }}
+              className="text-xs font-sans text-stone-500 hover:text-stone-300 px-1 transition-colors"
+            >
+              ✕
+            </button>
+          </div>
         </div>
       )}
 
@@ -149,9 +182,21 @@ export default function BarovianClock() {
                   className="w-4 h-4 rounded border border-stone-600 hover:border-amber-600 flex-shrink-0 transition-colors"
                   title="Mark as resolved"
                 />
-                <span className="text-sm font-sans text-stone-300 truncate flex-1 min-w-0">
+                <span
+                  className="text-sm font-sans text-stone-300 truncate flex-1 min-w-0"
+                  title={d.note || undefined}
+                >
                   {d.label}
                 </span>
+                {d.source && onOpenGuide && (
+                  <button
+                    onClick={() => onOpenGuide(d.source!.mdPath, d.source!.anchor)}
+                    className="text-xs text-stone-600 hover:text-amber-400 transition-colors flex-shrink-0"
+                    title={`Read up: ${d.source.label ?? d.source.mdPath.replace(/\.md$/, '')}`}
+                  >
+                    📖
+                  </button>
+                )}
                 <span className={`text-xs font-sans flex-shrink-0 ${due.tone}`}>{due.text}</span>
                 <button
                   onClick={() => deleteDeadline(d.id)}

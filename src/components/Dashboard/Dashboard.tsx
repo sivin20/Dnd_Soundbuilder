@@ -11,13 +11,15 @@ import LastSessionCard from './LastSessionCard';
 
 interface Props {
   onOpenCampaign: () => void;
+  /** Jump to a specific guide page/section — used by deadline "read up" links. */
+  onOpenGuide: (mdPath: string, anchor?: string) => void;
 }
 
 // Two columns on a wide screen: the audio board you drive during play on the
 // left, and the at-a-glance campaign state — clock, party, where you left them
 // — in a rail on the right. Everything stacks on narrow screens.
 
-export default function Dashboard({ onOpenCampaign }: Props) {
+export default function Dashboard({ onOpenCampaign, onOpenGuide }: Props) {
   return (
     <div className="p-6 max-w-[110rem] mx-auto">
       <div className="flex flex-col xl:flex-row gap-6 items-start">
@@ -66,7 +68,7 @@ export default function Dashboard({ onOpenCampaign }: Props) {
                      xl:sticky xl:top-6 xl:self-start
                      xl:max-h-[calc(100vh-9rem)] xl:overflow-y-auto xl:pr-0.5"
         >
-          <BarovianClock />
+          <BarovianClock onOpenGuide={onOpenGuide} />
           <PartyPanel />
           <LastSessionCard onOpenCampaign={onOpenCampaign} />
         </aside>

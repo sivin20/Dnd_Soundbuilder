@@ -49,11 +49,129 @@
     },
     "flags": {},
     "time": {
-      "day": 1,
-      "minutes": 480
+      "day": 3,
+      "minutes": 780
     },
-    "deadlines": [],
-    "milestonesDone": {}
+    "deadlines": [
+      {
+        "id": "7e7a5a3e-64fb-4de9-9a27-86b8b2829df6",
+        "label": "Arabelle's nameday — toy at the Vistani camp by noon",
+        "dueDay": 4,
+        "note": "Madam Eva's request from the Tarokka reading. Buy at Blinsky Toys, deliver to the camp SW of Vallaki. No celebration happens while she's still missing (Arc E).",
+        "done": false,
+        "source": {
+          "mdPath": "Act II - The Shadowed Town/Arc E - The Missing Vistana.md",
+          "anchor": "e1-blinsky-toys",
+          "label": "Arc E · E1. Blinsky Toys"
+        }
+      },
+      {
+        "id": "effe8722-85ce-4409-8381-5dc4c4d5573a",
+        "label": "Izek ransacks the Blue Water Inn",
+        "dueDay": 4,
+        "note": "If Izek saw Ireena on their first morning, he searches the inn while they're out — preferably at dusk. Begins Arc G.",
+        "done": false,
+        "source": {
+          "mdPath": "Act II - The Shadowed Town/Arc G - The Strazni Siblings.md",
+          "anchor": "g1a-izeks-visit",
+          "label": "Arc G · G1a. Izek’s Visit"
+        }
+      },
+      {
+        "id": "be6b7999-d187-4311-85ba-01a9fedb5718",
+        "label": "Erasmus van Richten's ghost visits at night",
+        "dueDay": 5,
+        "note": "Only if Arc E is complete and Arc H hasn't started. The poltergeist invites them to meet Victor Vallakovich.",
+        "done": false,
+        "source": {
+          "mdPath": "Act II - The Shadowed Town/Arc H - The Lost Soul.md",
+          "anchor": "h1-erasmus-plea",
+          "label": "Arc H · H1. Erasmus' Plea"
+        }
+      },
+      {
+        "id": "8cc5b446-1da4-4c1f-8731-c4551a02aca5",
+        "label": "Return the bones of St. Andral",
+        "dueDay": 6,
+        "note": "Last full day. The church's protective wards fail at dawn on Neyavr 7.",
+        "done": false,
+        "source": {
+          "mdPath": "Act II - The Shadowed Town/Arc D - St. Andral's Feast.md",
+          "anchor": "d5-retrieving-the-bones",
+          "label": "Arc D · D5. Retrieving the Bones"
+        }
+      },
+      {
+        "id": "48397f36-3c2e-4c48-ac4e-2ea37b121e78",
+        "label": "Izek kidnaps Ireena",
+        "dueDay": 6,
+        "note": "Happens while the players are away, unless Izek has been dealt with. He takes her to the Burgomaster's mansion.",
+        "done": false,
+        "source": {
+          "mdPath": "Act II - The Shadowed Town/Arc G - The Strazni Siblings.md",
+          "anchor": "g3-the-kidnapping",
+          "label": "Arc G · G3. The Kidnapping"
+        }
+      },
+      {
+        "id": "291c8871-46fc-4ebf-86e8-dc2a6e00a0bc",
+        "label": "Festival of the Blazing Sun — noon",
+        "dueDay": 7,
+        "note": "If Ireena was kidnapped and not rescued, she burns alive in the wicker sun at noon. Only if Vallakovich still holds power.",
+        "done": false,
+        "source": {
+          "mdPath": "Act II - The Shadowed Town/Arc G - The Strazni Siblings.md",
+          "anchor": "g4-the-rescue",
+          "label": "Arc G · G4. The Rescue"
+        }
+      },
+      {
+        "id": "29ac34ba-ffa7-4881-9f73-31f2f89ffd16",
+        "label": "Volenta attacks the sundown service",
+        "dueDay": 7,
+        "note": "St. Andral's Feast service at sundown. If the wards are still down she kills dozens of Vallakians and Baroness Lydia Petrovna.",
+        "done": false,
+        "source": {
+          "mdPath": "Act II - The Shadowed Town/Arc D - St. Andral's Feast.md",
+          "anchor": "d4c-volentas-trap",
+          "label": "Arc D · D4c. Volenta's Trap"
+        }
+      },
+      {
+        "id": "0b785091-9843-4867-b2e0-83c5e4a79a72",
+        "label": "Full moon rises at sundown",
+        "dueDay": 8,
+        "note": "Barovia's cosmology brings the next one just two weeks later.",
+        "done": false,
+        "source": {
+          "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
+          "anchor": "neyavr-8",
+          "label": "Act II Summary · Neyavr 8"
+        }
+      },
+      {
+        "id": "a9b23595-658a-41b8-82f2-84afd0c86f43",
+        "label": "Restore Stella Wachter's soul",
+        "dueDay": 8,
+        "note": "Last full day. At dawn on Neyavr 9 her spirit slips into the Ethereal Plane and reincarnates in Krezk.",
+        "done": false,
+        "source": {
+          "mdPath": "Act II - The Shadowed Town/Arc H - The Lost Soul.md",
+          "anchor": "h4-victors-plan",
+          "label": "Arc H · H4. Victor’s Plan"
+        }
+      }
+    ],
+    "milestonesDone": {
+      "A-0": true,
+      "A-1": true,
+      "B-0": true,
+      "C-0": true,
+      "C-1": true,
+      "D-0": true,
+      "E-0": false,
+      "F-0": false
+    }
   },
   "version": 0
 }

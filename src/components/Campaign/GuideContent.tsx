@@ -14,8 +14,24 @@ interface Props {
 // Headings above this viewport offset count as "read" for the scroll-spy
 const SPY_OFFSET_PX = 130;
 
+/** Past this many viewports, smooth scrolling is abandoned for a direct jump. */
+const SMOOTH_SCROLL_LIMIT_VIEWPORTS = 2;
+
+/**
+ * Scroll a heading into view.
+ *
+ * Smooth behaviour silently does nothing over long distances in these nested
+ * scroll containers — a jump to a section 20,000px down left the page at the
+ * top with no error. Anything beyond a couple of screens is scrolled instantly,
+ * which is also what you want when you deliberately followed a link.
+ */
 function scrollToHeading(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const el = document.getElementById(id);
+  if (!el) return;
+  const distance = Math.abs(el.getBoundingClientRect().top);
+  const behavior: ScrollBehavior =
+    distance > window.innerHeight * SMOOTH_SCROLL_LIMIT_VIEWPORTS ? 'instant' : 'smooth';
+  el.scrollIntoView({ behavior, block: 'start' });
 }
 
 // NOTE: render with key={mdPath} — state resets via remount on page change.

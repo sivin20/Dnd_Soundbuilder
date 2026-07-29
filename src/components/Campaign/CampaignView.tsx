@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CAMPAIGN_ARCS, ACTS, REFERENCE_PAGES, findArcByMdPath } from '../../data/campaignArcs';
+import { CAMPAIGN_ARCS, ACTS, REFERENCE_PAGES, REFERENCE_GROUPS, actSummary, findArcByMdPath } from '../../data/campaignArcs';
 import type { ArcDef } from '../../data/campaignArcs';
 import { useCampaignStore, getArcState } from '../../store/campaignStore';
 import type { ArcStatus } from '../../types';
@@ -83,11 +83,28 @@ export default function CampaignView({ initialPage = null }: Props) {
         <h1 className="text-lg font-serif font-bold text-amber-400 text-glow mb-1">Campaign</h1>
         <p className="text-stone-600 text-xs font-sans mb-4">Curse of Strahd: Reloaded</p>
 
-        {ACTS.map((act) => (
+        {ACTS.map((act) => {
+          const summary = actSummary(act);
+          return (
           <div key={act} className="mb-4">
             <h2 className="text-[11px] uppercase tracking-widest text-stone-500 font-sans mb-1.5">
               {act}
             </h2>
+            {/* The act page holds the day-by-day timeline and every deadline in
+                the act — too useful to leave buried under Reference. */}
+            {summary && (
+              <button
+                onClick={() => setSelection({ kind: 'page', mdPath: summary.mdPath, title: summary.title })}
+                className={`flex items-center gap-2 px-2 py-1 rounded-lg text-left text-xs font-sans mb-1 transition-colors ${
+                  selection.kind === 'page' && selection.mdPath === summary.mdPath
+                    ? 'bg-amber-900/30 text-amber-300'
+                    : 'text-stone-500 hover:bg-stone-800/70 hover:text-stone-300'
+                }`}
+                title="Timeline, quest schedule and deadlines for the whole act"
+              >
+                🗓 {summary.title}
+              </button>
+            )}
             <div className="flex flex-col">
               {CAMPAIGN_ARCS.filter((a) => a.act === act).map((a) => {
                 const st = getArcState(campaign, a.id);
@@ -119,7 +136,8 @@ export default function CampaignView({ initialPage = null }: Props) {
               })}
             </div>
           </div>
-        ))}
+          );
+        })}
 
         {/* Reference pages */}
         <div className="mb-4">
@@ -130,22 +148,29 @@ export default function CampaignView({ initialPage = null }: Props) {
             {refsOpen ? '▾' : '▸'} Reference
           </button>
           {refsOpen && (
-            <div className="flex flex-col">
-              {REFERENCE_PAGES.map((p) => {
-                const isSelected = selection.kind === 'page' && selection.mdPath === p.mdPath;
-                return (
-                  <button
-                    key={p.mdPath}
-                    onClick={() => setSelection({ kind: 'page', mdPath: p.mdPath, title: p.title })}
-                    className={`px-2 py-1 rounded-lg text-left text-sm font-serif truncate transition-colors ${
-                      isSelected ? 'bg-amber-900/30 text-amber-300' : 'text-stone-400 hover:bg-stone-800/70'
-                    }`}
-                    title={`${p.group} — ${p.title}`}
-                  >
-                    {p.title}
-                  </button>
-                );
-              })}
+            <div className="flex flex-col gap-2">
+              {REFERENCE_GROUPS.map((group) => (
+                <div key={group} className="flex flex-col">
+                  <p className="text-[10px] uppercase tracking-widest text-stone-600 font-sans px-2 mb-0.5">
+                    {group}
+                  </p>
+                  {REFERENCE_PAGES.filter((p) => p.group === group).map((p) => {
+                    const isSelected = selection.kind === 'page' && selection.mdPath === p.mdPath;
+                    return (
+                      <button
+                        key={p.mdPath}
+                        onClick={() => setSelection({ kind: 'page', mdPath: p.mdPath, title: p.title })}
+                        className={`px-2 py-1 rounded-lg text-left text-sm font-serif truncate transition-colors ${
+                          isSelected ? 'bg-amber-900/30 text-amber-300' : 'text-stone-400 hover:bg-stone-800/70'
+                        }`}
+                        title={`${p.group} — ${p.title}`}
+                      >
+                        {p.title}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           )}
         </div>

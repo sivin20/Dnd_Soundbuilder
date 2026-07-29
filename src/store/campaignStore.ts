@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { fileStorage } from './fileStorage';
 import { v4 as uuidv4 } from 'uuid';
 import type {
-  ArcStatus, SessionNote, TarokkaSlotState, CampaignFlagValue, Deadline, BarovianTime,
+  ArcStatus, SessionNote, TarokkaSlotState, CampaignFlagValue, Deadline, BarovianTime, GuideRef,
 } from '../types';
 import { CAMPAIGN_ARCS } from '../data/campaignArcs';
 import { defaultTarokka } from '../data/campaignState';
@@ -42,7 +42,7 @@ interface CampaignState {
   setTimeOfDay: (minutes: number, nextDay?: boolean) => void;
   setDay: (day: number) => void;
   longRest: () => void;
-  addDeadline: (label: string, dueDay: number, note?: string) => void;
+  addDeadline: (label: string, dueDay: number, note?: string, source?: GuideRef) => void;
   updateDeadline: (id: string, patch: Partial<Omit<Deadline, 'id'>>) => void;
   deleteDeadline: (id: string) => void;
   toggleMilestone: (milestoneId: string) => void;
@@ -135,9 +135,9 @@ export const useCampaignStore = create<CampaignState>()(
         get().advanceTime(LONG_REST_MINUTES);
       },
 
-      addDeadline: (label, dueDay, note = '') =>
+      addDeadline: (label, dueDay, note = '', source) =>
         set((s) => ({
-          deadlines: [...s.deadlines, { id: uuidv4(), label, dueDay, note, done: false }]
+          deadlines: [...s.deadlines, { id: uuidv4(), label, dueDay, note, done: false, source }]
             .sort((a, b) => a.dueDay - b.dueDay),
         })),
 

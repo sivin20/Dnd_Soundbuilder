@@ -111,6 +111,7 @@ export const ACTS = [...new Set(CAMPAIGN_ARCS.map((a) => a.act))];
 export const REFERENCE_PAGES: { group: string; title: string; mdPath: string }[] = [
   { group: 'Introduction', title: "A DM's Guide to Curse of Strahd", mdPath: "Introduction/A DM's Guide to Curse of Strahd.md" },
   { group: 'Introduction', title: 'Using This Guide', mdPath: 'Introduction/Using This Guide.md' },
+  { group: 'Introduction', title: 'Changelog', mdPath: 'Introduction/Changelog.md' },
   { group: 'Beginning the Campaign', title: 'Session Zero', mdPath: 'Chapter 1 - Beginning the Campaign/Session Zero.md' },
   { group: 'Beginning the Campaign', title: 'Character Creation', mdPath: 'Chapter 1 - Beginning the Campaign/Character Creation.md' },
   { group: 'The Land of Barovia', title: 'Lore of Barovia', mdPath: 'Chapter 2 - The Land of Barovia/Lore of Barovia.md' },
@@ -129,6 +130,23 @@ export const REFERENCE_PAGES: { group: string; title: string; mdPath: string }[]
   { group: 'Appendices', title: 'Glossary', mdPath: 'Appendices/Glossary.md' },
 ];
 
+/** Reference groups in the order they appear, for the sidebar. */
+export const REFERENCE_GROUPS = [...new Set(REFERENCE_PAGES.map((p) => p.group))];
+
 export function findArcByMdPath(mdPath: string): ArcDef | undefined {
   return CAMPAIGN_ARCS.find((a) => a.mdPath === mdPath);
+}
+
+/**
+ * The act-level summary page, which carries the day-by-day Timeline and the
+ * Quest Timeline table — where every deadline in the act is actually described.
+ * Derived from the act's own directory: "Act II - The Shadowed Town" →
+ * "Act II - The Shadowed Town/Act II Summary.md".
+ */
+export function actSummary(act: string): { mdPath: string; title: string } | null {
+  const arc = CAMPAIGN_ARCS.find((a) => a.act === act);
+  if (!arc) return null;
+  const dir = arc.mdPath.split('/')[0];
+  const label = dir.split(' - ')[0]; // "Act II"
+  return { mdPath: `${dir}/${label} Summary.md`, title: `${label} Summary` };
 }

@@ -41,7 +41,7 @@ export default function App() {
           </p>
         ) : (
           <>
-            {view === 'dashboard' && <Dashboard onOpenCampaign={() => changeView('campaign')} />}
+            {view === 'dashboard' && <Dashboard onOpenCampaign={() => changeView('campaign')} onOpenGuide={openGuidePage} />}
             {view === 'campaign' && (
               <CampaignView key={guideTarget?.mdPath ?? 'default'} initialPage={guideTarget} />
             )}

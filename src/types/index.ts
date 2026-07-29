@@ -121,6 +121,15 @@ export interface TarokkaSlotState {
 /** Toggles and choices for state that spans the whole campaign. */
 export type CampaignFlagValue = boolean | string;
 
+/** Where to read up on something — a page in the local guide mirror. */
+export interface GuideRef {
+  mdPath: string;
+  /** Heading id within that page, as produced by slugify(). */
+  anchor?: string;
+  /** Short label for the link, e.g. "Arc D · D5. Retrieving the Bones". */
+  label?: string;
+}
+
 export interface Deadline {
   id: string;
   label: string;
@@ -128,6 +137,8 @@ export interface Deadline {
   dueDay: number;
   note: string;
   done: boolean;
+  /** Jump straight to the passage that explains it. */
+  source?: GuideRef;
 }
 
 /** In-world clock. Barovia runs on dusk, and Reloaded sets hard deadlines. */
