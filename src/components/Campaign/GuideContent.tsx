@@ -109,13 +109,22 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
     return () => { cancelled = true; };
   }, [mdPath]);
 
-  // Jump to a wikilink's #Section once the page is on screen. Images shift the
-  // layout as they load, so the position is corrected once shortly after.
+  // Jump to a wikilink's or a deadline's #Section once the page is on screen.
+  //
+  // Images load lazily and shift everything above the target, which drags the
+  // heading off the position we just scrolled to — landing a couple of hundred
+  // pixels past it, with the heading itself off-screen. Correcting at a few
+  // increasing delays lands it and keeps it there as the layout settles.
   useEffect(() => {
     if (!page || !anchor) return;
-    const first = requestAnimationFrame(() => scrollToHeading(anchor));
-    const settle = setTimeout(() => scrollToHeading(anchor), 300);
-    return () => { cancelAnimationFrame(first); clearTimeout(settle); };
+    const frame = requestAnimationFrame(() => scrollToHeading(anchor));
+    const passes = [300, 1000, 2000].map((delay) =>
+      setTimeout(() => scrollToHeading(anchor), delay)
+    );
+    return () => {
+      cancelAnimationFrame(frame);
+      passes.forEach(clearTimeout);
+    };
   }, [page, anchor, navSeq]);
 
   if (error) {

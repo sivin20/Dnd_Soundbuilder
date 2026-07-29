@@ -60,9 +60,9 @@
         "note": "Madam Eva's request from the Tarokka reading. Buy at Blinsky Toys, deliver to the camp SW of Vallaki. No celebration happens while she's still missing (Arc E).",
         "done": false,
         "source": {
-          "mdPath": "Act II - The Shadowed Town/Arc E - The Missing Vistana.md",
-          "anchor": "e1-blinsky-toys",
-          "label": "Arc E · E1. Blinsky Toys"
+          "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
+          "anchor": "neyavr-4",
+          "label": "Act II Summary · Neyavr 4"
         }
       },
       {
@@ -72,9 +72,9 @@
         "note": "If Izek saw Ireena on their first morning, he searches the inn while they're out — preferably at dusk. Begins Arc G.",
         "done": false,
         "source": {
-          "mdPath": "Act II - The Shadowed Town/Arc G - The Strazni Siblings.md",
-          "anchor": "g1a-izeks-visit",
-          "label": "Arc G · G1a. Izek’s Visit"
+          "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
+          "anchor": "neyavr-4",
+          "label": "Act II Summary · Neyavr 4"
         }
       },
       {
@@ -84,9 +84,9 @@
         "note": "Only if Arc E is complete and Arc H hasn't started. The poltergeist invites them to meet Victor Vallakovich.",
         "done": false,
         "source": {
-          "mdPath": "Act II - The Shadowed Town/Arc H - The Lost Soul.md",
-          "anchor": "h1-erasmus-plea",
-          "label": "Arc H · H1. Erasmus' Plea"
+          "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
+          "anchor": "neyavr-5",
+          "label": "Act II Summary · Neyavr 5"
         }
       },
       {
@@ -96,9 +96,9 @@
         "note": "Last full day. The church's protective wards fail at dawn on Neyavr 7.",
         "done": false,
         "source": {
-          "mdPath": "Act II - The Shadowed Town/Arc D - St. Andral's Feast.md",
-          "anchor": "d5-retrieving-the-bones",
-          "label": "Arc D · D5. Retrieving the Bones"
+          "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
+          "anchor": "neyavr-7",
+          "label": "Act II Summary · Neyavr 7"
         }
       },
       {
@@ -108,9 +108,9 @@
         "note": "Happens while the players are away, unless Izek has been dealt with. He takes her to the Burgomaster's mansion.",
         "done": false,
         "source": {
-          "mdPath": "Act II - The Shadowed Town/Arc G - The Strazni Siblings.md",
-          "anchor": "g3-the-kidnapping",
-          "label": "Arc G · G3. The Kidnapping"
+          "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
+          "anchor": "neyavr-6",
+          "label": "Act II Summary · Neyavr 6"
         }
       },
       {
@@ -120,9 +120,9 @@
         "note": "If Ireena was kidnapped and not rescued, she burns alive in the wicker sun at noon. Only if Vallakovich still holds power.",
         "done": false,
         "source": {
-          "mdPath": "Act II - The Shadowed Town/Arc G - The Strazni Siblings.md",
-          "anchor": "g4-the-rescue",
-          "label": "Arc G · G4. The Rescue"
+          "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
+          "anchor": "neyavr-7",
+          "label": "Act II Summary · Neyavr 7"
         }
       },
       {
@@ -132,9 +132,9 @@
         "note": "St. Andral's Feast service at sundown. If the wards are still down she kills dozens of Vallakians and Baroness Lydia Petrovna.",
         "done": false,
         "source": {
-          "mdPath": "Act II - The Shadowed Town/Arc D - St. Andral's Feast.md",
-          "anchor": "d4c-volentas-trap",
-          "label": "Arc D · D4c. Volenta's Trap"
+          "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
+          "anchor": "neyavr-7",
+          "label": "Act II Summary · Neyavr 7"
         }
       },
       {
@@ -156,9 +156,9 @@
         "note": "Last full day. At dawn on Neyavr 9 her spirit slips into the Ethereal Plane and reincarnates in Krezk.",
         "done": false,
         "source": {
-          "mdPath": "Act II - The Shadowed Town/Arc H - The Lost Soul.md",
-          "anchor": "h4-victors-plan",
-          "label": "Arc H · H4. Victor’s Plan"
+          "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
+          "anchor": "neyavr-9",
+          "label": "Act II Summary · Neyavr 9"
         }
       }
     ],
