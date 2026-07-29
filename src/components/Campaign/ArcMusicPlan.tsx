@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { useMusicStore } from '../../store/musicStore';
 import type { ArcDef } from '../../data/campaignArcs';
 import type { Track } from '../../types';
-import ArcScenes from '../shared/ArcScenes';
+import ArcScenes, { GenericScenes } from '../shared/ArcScenes';
 
 interface Props {
   arc: ArcDef;
@@ -21,6 +22,7 @@ function randomPick(pool: Track[], fallback: Track | undefined): Track | undefin
 export default function ArcMusicPlan({ arc }: Props) {
   const { tracks, currentTrackId, isPlaying, playTrack, setIsPlaying, combatTrackId } =
     useMusicStore();
+  const [genericOpen, setGenericOpen] = useState(false);
 
   const inArc = tracks.filter((t) => t.section && arc.musicSections.includes(t.section));
 
@@ -71,6 +73,17 @@ export default function ArcMusicPlan({ arc }: Props) {
           🎬 Scenes for this arc
         </h3>
         <ArcScenes arcId={arc.id} />
+      </div>
+
+      {/* Scenes that fit any arc */}
+      <div>
+        <button
+          onClick={() => setGenericOpen(!genericOpen)}
+          className="text-xs uppercase tracking-widest text-stone-500 font-sans mb-2 hover:text-amber-400 transition-colors"
+        >
+          {genericOpen ? '▾' : '▸'} 🌍 Anywhere in the campaign
+        </button>
+        {genericOpen && <GenericScenes />}
       </div>
 
       <p className="text-xs text-stone-500 font-sans">

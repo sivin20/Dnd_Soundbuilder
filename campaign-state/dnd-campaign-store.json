@@ -22,17 +22,17 @@
     "sessions": [],
     "tarokka": {
       "history": {
-        "card": "Nine of Glyphs \u2014 the Traitor",
-        "resolved": "The ancient foe of an old and noble house \u2014 the lost soul leads to him (Arc H).",
+        "card": "Nine of Glyphs — the Traitor",
+        "resolved": "The ancient foe of an old and noble house — the lost soul leads to him (Arc H).",
         "done": false
       },
       "holy-symbol": {
-        "card": "Five of Swords \u2014 the Myrmidon",
+        "card": "Five of Swords — the Myrmidon",
         "resolved": "",
         "done": false
       },
       "sunsword": {
-        "card": "Eight of Glyphs \u2014 the Bishop",
+        "card": "Eight of Glyphs — the Bishop",
         "resolved": "In an amber prison where the devil fears to tread; the house of the fallen dragon can lead you there.",
         "done": false
       },

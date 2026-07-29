@@ -17,7 +17,7 @@ export interface PresetAmbient {
 
 export interface PresetScene {
   id: string;
-  /** Arcs this scene belongs to — a scene can serve several. */
+  /** Arcs this scene belongs to — a scene can serve several. Empty for generic. */
   arcIds: string[];
   name: string;
   /** When to reach for it. */
@@ -27,6 +27,8 @@ export interface PresetScene {
   ambients: PresetAmbient[];
   /** Combat scenes want to be obvious in the list. */
   kind?: 'scene' | 'combat';
+  /** Grouping label, generic scenes only. */
+  category?: string;
 }
 
 const S = (
@@ -240,4 +242,101 @@ export const ARC_SCENES: PresetScene[] = [
 
 export function scenesForArc(arcId: string): PresetScene[] {
   return ARC_SCENES.filter((s) => s.arcIds.includes(arcId));
+}
+
+// ---------------------------------------------------------------------------
+// Generic scenes — the situations that recur everywhere in Barovia regardless
+// of which arc you're in. Travel, rest, an ambush, Strahd turning up uninvited.
+// ---------------------------------------------------------------------------
+
+const G = (
+  id: string,
+  category: string,
+  name: string,
+  hint: string,
+  tracks: string[],
+  ambients: PresetAmbient[],
+  kind: 'scene' | 'combat' = 'scene'
+): PresetScene => ({ id: `g-${id}`, arcIds: [], category, name, hint, tracks, ambients, kind });
+
+export const GENERIC_SCENES: PresetScene[] = [
+  G('road-day', 'Travel', 'Road by day', 'Grey light, wet road, nothing yet',
+    ['Lands of Barovia', 'Old Svalich Road'],
+    [{ id: 'mist-wind', level: 0, volume: 50 }, { id: 'forest-night', volume: 45 }]),
+  G('road-night', 'Travel', 'Road after dark', 'The part of the day that belongs to him',
+    ['Old Svalich Road', 'Into the Mists'],
+    [{ id: 'forest-night' }, { id: 'wolves', level: 0, volume: 55 }, { id: 'mist-wind', level: 0, volume: 45 }]),
+  G('wagon', 'Travel', 'Wagon journey', 'Riding, with time to talk',
+    ['Lands of Barovia'], [{ id: 'cart-road' }]),
+  G('lost-mists', 'Travel', 'Lost in the mists', 'The road stops cooperating',
+    ['Into the Mists', 'Out of the Mists'], [{ id: 'mist-wind', level: 1 }]),
+  G('blizzard', 'Travel', 'High and freezing', 'Above the treeline',
+    ['Exploring Tsolenka Pass'], [{ id: 'blizzard' }]),
+
+  G('camp', 'Rest', 'Camp for the night', 'Fire, watches, quiet conversation',
+    ['Vistani Campfire'], [{ id: 'fireplace' }, { id: 'forest-night', volume: 50 }]),
+  G('fireside', 'Rest', 'Quiet room, low fire', 'Downtime indoors',
+    ['Darkness Remains', 'Vistani Campfire'], [{ id: 'fireplace', volume: 60 }]),
+  G('storm-shelter', 'Rest', 'Sheltering from a storm', 'Rain on the roof',
+    ['Into the Mists'], [{ id: 'rain', level: 1 }, { id: 'thunder', volume: 45 }, { id: 'fireplace', volume: 50 }]),
+
+  G('tavern', 'Social', 'Tavern in the evening', 'Crowd, drink, rumours',
+    ['Blood of the Vine Tavern', 'Blue Water Inn'], [{ id: 'tavern' }, { id: 'fireplace', volume: 45 }]),
+  G('village-day', 'Social', 'Village by day', 'Streets, errands, suspicious locals',
+    ['The Town of Vallaki', 'Village of Barovia'], [{ id: 'village' }]),
+  G('noble-house', 'Social', 'Someone important’s house', 'Being received, and watched',
+    ['Wachterhaus', "Baron's Mansion"], [{ id: 'fireplace', volume: 50 }]),
+  G('shopping', 'Social', 'Shops and errands', 'Spending money in a place that has none',
+    ["Blinsky's Toystore"], [{ id: 'village', volume: 50 }]),
+
+  G('searching', 'Investigation', 'Searching a place', 'Room by room, finding things',
+    ['Exploring the Death House'], [{ id: 'castle', volume: 45 }]),
+  G('wrong', 'Investigation', "Something's wrong here", 'Before they know why',
+    ['The Hanged One', 'Darkness Remains'], [{ id: 'mist-wind', level: 0, volume: 50 }]),
+  G('clue', 'Investigation', 'A piece falls into place', 'The moment they work it out',
+    ['Keepers of the Feather', 'The Scholar'], []),
+  G('crypt', 'Investigation', 'Crypts and tunnels', 'Underground, stone, dripping',
+    ['Crypts'], [{ id: 'crypt' }]),
+  G('sacred', 'Investigation', 'Sacred ground', 'A church, a shrine, a moment of hope',
+    ["St. Andral's Church (Hopeful)", 'Abbey of Saint Markovia'], [{ id: 'church' }]),
+
+  G('stalked', 'Danger', 'Stalked', 'Something is following them',
+    ['Old Svalich Road', 'The Hanged One'],
+    [{ id: 'wolves', level: 1, volume: 60 }, { id: 'forest-night', volume: 50 }]),
+  G('storm-breaks', 'Danger', 'The storm breaks', 'Thunder on cue',
+    ['Into the Mists'], [{ id: 'rain', level: 1 }, { id: 'thunder' }]),
+  G('watching', 'Danger', 'Strahd is watching', 'He does not need to be present',
+    ['Strahd von Zarovich'], [{ id: 'mist-wind', level: 0, volume: 55 }]),
+  G('he-appears', 'Danger', 'Strahd appears', 'He walks in and everything stops',
+    ['Strahd Prevails', 'Strahd von Zarovich'], []),
+
+  G('skirmish', 'Combat', 'Skirmish', 'Ordinary violence',
+    ['Encounter in Barovia', 'Encounter in Vallaki'], [], 'combat'),
+  G('ambush', 'Combat', 'Ambush!', 'It starts badly',
+    ['Shadows of Dread', 'Bats, Rats and Vermin'], [], 'combat'),
+  G('desperate', 'Combat', 'Desperate fight', 'Someone is going to go down',
+    ['Nocturnal Onslaught'], [], 'combat'),
+  G('horde', 'Combat', 'Undead horde', 'Too many to fight properly',
+    ['March of the Dead'], [], 'combat'),
+  G('boss', 'Combat', 'Boss fight', 'The big one, not Strahd',
+    ['Deva Encounter', 'Lorgoth the Decayer'], [], 'combat'),
+  G('strahd-duel', 'Combat', 'Strahd himself', '',
+    ['Strahd Battle Theme'], [], 'combat'),
+
+  G('death', 'Aftermath', 'Someone died', 'Give it room',
+    ['The Story of Tatyana', 'Darkness Remains'], []),
+  G('vigil', 'Aftermath', 'Burial and vigil', 'Standing over a grave',
+    ['Zarovich Fugue', "Sir Godfrey's Undying Love"],
+    [{ id: 'graveyard', volume: 55 }, { id: 'church', volume: 40 }]),
+  G('victory', 'Aftermath', 'They won', 'Grim, earned, still alive',
+    ['Ismark Kolyanovich (Heroic Deeds Theme)', 'Order of the Silver Dragon'], []),
+];
+
+export const GENERIC_CATEGORIES = [...new Set(GENERIC_SCENES.map((s) => s.category!))];
+
+export function genericScenesByCategory(): { category: string; scenes: PresetScene[] }[] {
+  return GENERIC_CATEGORIES.map((category) => ({
+    category,
+    scenes: GENERIC_SCENES.filter((s) => s.category === category),
+  }));
 }

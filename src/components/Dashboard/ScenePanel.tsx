@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useSceneStore } from '../../store/sceneStore';
 import { useMusicStore } from '../../store/musicStore';
 import { useSoundStore } from '../../store/soundStore';
+import { GenericScenes } from '../shared/ArcScenes';
+import { GENERIC_SCENES } from '../../data/arcScenes';
 
 export default function ScenePanel() {
   const { scenes, activeSceneId, saveCurrentAsScene, applyScene, deleteScene } = useSceneStore();
@@ -9,6 +11,7 @@ export default function ScenePanel() {
   const { sounds } = useSoundStore();
 
   const [saving, setSaving] = useState(false);
+  const [genericOpen, setGenericOpen] = useState(false);
   const [name, setName] = useState('');
 
   const currentTrack = tracks.find((t) => t.id === currentTrackId);
@@ -24,18 +27,37 @@ export default function ScenePanel() {
 
   return (
     <div className="bg-stone-900 border border-amber-900/30 rounded-xl p-5 shadow-xl">
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between gap-2 mb-3">
         <h2 className="text-xs uppercase tracking-widest text-amber-600 font-sans">Scenes</h2>
-        {!saving && (
+        <div className="flex items-center gap-2">
           <button
-            onClick={() => setSaving(true)}
-            className="text-xs font-sans bg-stone-800 hover:bg-stone-700 text-amber-500 px-2.5 py-1 rounded-full border border-stone-700 transition-colors"
-            title="Save the current music + ambience mix as a scene"
+            onClick={() => setGenericOpen(!genericOpen)}
+            className={`text-xs font-sans px-2.5 py-1 rounded-full border transition-colors ${
+              genericOpen
+                ? 'bg-amber-900/40 border-amber-700/60 text-amber-300'
+                : 'bg-stone-800 hover:bg-stone-700 text-stone-300 border-stone-700'
+            }`}
+            title="Scenes that fit anywhere in the campaign — travel, rest, ambush, Strahd"
           >
-            + Save current
+            🌍 Anywhere {genericOpen ? '▾' : `(${GENERIC_SCENES.length})`}
           </button>
-        )}
+          {!saving && (
+            <button
+              onClick={() => setSaving(true)}
+              className="text-xs font-sans bg-stone-800 hover:bg-stone-700 text-amber-500 px-2.5 py-1 rounded-full border border-stone-700 transition-colors"
+              title="Save the current music + ambience mix as a scene"
+            >
+              + Save current
+            </button>
+          )}
+        </div>
       </div>
+
+      {genericOpen && (
+        <div className="mb-4 pb-4 border-b border-stone-800">
+          <GenericScenes />
+        </div>
+      )}
 
       {saving && (
         <div className="mb-3 bg-stone-800/70 border border-amber-800/40 rounded-lg p-3">
