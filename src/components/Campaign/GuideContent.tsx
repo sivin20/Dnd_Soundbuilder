@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { loadMirrorIndex, renderObsidian } from '../../utils/obsidianMarkdown';
 import type { RenderedPage } from '../../utils/obsidianMarkdown';
+import { useCampaignStore, sceneKey } from '../../store/campaignStore';
+import { SCENE_STATUS } from '../../data/sceneStatus';
 
 interface Props {
   mdPath: string;
@@ -40,6 +42,9 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
   const [error, setError] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
+  // Show how each scene went right in the outline, so progress is visible while
+  // reading rather than only on the Progress tab.
+  const sceneProgress = useCampaignStore((s) => s.sceneProgress);
   const contentRef = useRef<HTMLDivElement>(null);
 
   // Mount the rendered guide HTML imperatively.
@@ -166,20 +171,26 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
           <div className="border-l border-stone-800 flex flex-col">
             {page.toc.map((entry) => {
               const isActive = entry.id === activeId;
+              const status = sceneProgress[sceneKey(mdPath, entry.id)]?.status;
               return (
                 <button
                   key={entry.id}
                   data-toc={entry.id}
                   onClick={() => scrollToHeading(entry.id)}
-                  className={`text-left text-[13px] font-sans py-1 leading-snug transition-colors border-l-2 -ml-px ${
+                  className={`flex items-center gap-1.5 text-left text-[13px] font-sans py-1 leading-snug transition-colors border-l-2 -ml-px ${
                     isActive
                       ? 'text-amber-400 border-amber-600'
                       : 'text-stone-400 border-transparent hover:text-amber-400 hover:border-amber-700/60'
                   }`}
                   style={{ paddingLeft: `${0.75 + Math.max(0, entry.level - 2) * 0.9}rem` }}
-                  title={entry.text}
+                  title={status ? `${entry.text} — ${SCENE_STATUS[status].label}` : entry.text}
                 >
-                  {entry.text}
+                  {status && status !== 'todo' && (
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${SCENE_STATUS[status].dot}`}
+                    />
+                  )}
+                  <span className="min-w-0 truncate">{entry.text}</span>
                 </button>
               );
             })}

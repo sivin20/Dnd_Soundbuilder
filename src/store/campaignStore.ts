@@ -4,6 +4,7 @@ import { fileStorage } from './fileStorage';
 import { v4 as uuidv4 } from 'uuid';
 import type {
   ArcStatus, SessionNote, TarokkaSlotState, CampaignFlagValue, Deadline, BarovianTime, GuideRef,
+  SceneStatus, SceneProgress,
 } from '../types';
 import { CAMPAIGN_ARCS } from '../data/campaignArcs';
 import { defaultTarokka } from '../data/campaignState';
@@ -30,6 +31,8 @@ interface CampaignState {
   deadlines: Deadline[];
   /** Story milestones ticked off, keyed by the parsed milestone id. */
   milestonesDone: Record<string, boolean>;
+  /** How each guide scene went, keyed by `${mdPath}#${headingId}`. */
+  sceneProgress: Record<string, SceneProgress>;
   /** Level the party began at — Reloaded starts at 2nd, so its milestone XP
    *  sits on top of that level's threshold. */
   startingLevel: number;
@@ -50,12 +53,23 @@ interface CampaignState {
   deleteDeadline: (id: string) => void;
   toggleMilestone: (milestoneId: string) => void;
   setStartingLevel: (level: number) => void;
+  /** Advance a scene through todo -> done -> diverged -> skipped -> todo. */
+  cycleSceneStatus: (sceneKey: string) => void;
+  setSceneStatus: (sceneKey: string, status: SceneStatus) => void;
+  setSceneNote: (sceneKey: string, note: string) => void;
   /** Make an arc the "we are here" arc: mark active + prep the combat button
    *  with a fitting combat track from the arc's music sections. */
   enterArc: (arcId: string) => void;
   addSession: (note: Omit<SessionNote, 'id'>) => void;
   updateSession: (id: string, patch: Partial<Omit<SessionNote, 'id'>>) => void;
   deleteSession: (id: string) => void;
+}
+
+const SCENE_CYCLE: SceneStatus[] = ['todo', 'done', 'diverged', 'skipped'];
+
+/** Key a scene by its page and heading so it survives re-parsing. */
+export function sceneKey(mdPath: string, headingId: string): string {
+  return `${mdPath}#${headingId}`;
 }
 
 export function getArcState(state: CampaignState, arcId: string): ArcState {
@@ -73,6 +87,7 @@ export const useCampaignStore = create<CampaignState>()(
       time: DEFAULT_TIME,
       deadlines: [],
       milestonesDone: {},
+      sceneProgress: {},
       startingLevel: 2,
 
       setArcStatus: (arcId, status) =>
@@ -162,6 +177,29 @@ export const useCampaignStore = create<CampaignState>()(
         })),
 
       setStartingLevel: (level) => set({ startingLevel: Math.max(1, Math.min(20, level)) }),
+
+      cycleSceneStatus: (sceneKey) =>
+        set((s) => {
+          const current = s.sceneProgress[sceneKey] ?? { status: 'todo' as SceneStatus, note: '' };
+          const next = SCENE_CYCLE[(SCENE_CYCLE.indexOf(current.status) + 1) % SCENE_CYCLE.length];
+          return { sceneProgress: { ...s.sceneProgress, [sceneKey]: { ...current, status: next } } };
+        }),
+
+      setSceneStatus: (sceneKey, status) =>
+        set((s) => ({
+          sceneProgress: {
+            ...s.sceneProgress,
+            [sceneKey]: { note: s.sceneProgress[sceneKey]?.note ?? '', status },
+          },
+        })),
+
+      setSceneNote: (sceneKey, note) =>
+        set((s) => ({
+          sceneProgress: {
+            ...s.sceneProgress,
+            [sceneKey]: { status: s.sceneProgress[sceneKey]?.status ?? 'todo', note },
+          },
+        })),
 
       addSession: (note) =>
         set((s) => ({ sessions: [{ ...note, id: uuidv4() }, ...s.sessions] })),

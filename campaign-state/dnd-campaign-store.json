@@ -22,17 +22,17 @@
     "sessions": [],
     "tarokka": {
       "history": {
-        "card": "Nine of Glyphs — the Traitor",
-        "resolved": "The ancient foe of an old and noble house — the lost soul leads to him (Arc H).",
+        "card": "Nine of Glyphs \u2014 the Traitor",
+        "resolved": "The ancient foe of an old and noble house \u2014 the lost soul leads to him (Arc H).",
         "done": false
       },
       "holy-symbol": {
-        "card": "Five of Swords — the Myrmidon",
+        "card": "Five of Swords \u2014 the Myrmidon",
         "resolved": "",
         "done": false
       },
       "sunsword": {
-        "card": "Eight of Glyphs — the Bishop",
+        "card": "Eight of Glyphs \u2014 the Bishop",
         "resolved": "In an amber prison where the devil fears to tread; the house of the fallen dragon can lead you there.",
         "done": false
       },
@@ -55,26 +55,26 @@
     "deadlines": [
       {
         "id": "7e7a5a3e-64fb-4de9-9a27-86b8b2829df6",
-        "label": "Arabelle's nameday — toy at the Vistani camp by noon",
+        "label": "Arabelle's nameday \u2014 toy at the Vistani camp by noon",
         "dueDay": 4,
         "note": "Madam Eva's request from the Tarokka reading. Buy at Blinsky Toys, deliver to the camp SW of Vallaki. No celebration happens while she's still missing (Arc E).",
         "done": false,
         "source": {
           "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
           "anchor": "neyavr-4",
-          "label": "Act II Summary · Neyavr 4"
+          "label": "Act II Summary \u00b7 Neyavr 4"
         }
       },
       {
         "id": "effe8722-85ce-4409-8381-5dc4c4d5573a",
         "label": "Izek ransacks the Blue Water Inn",
         "dueDay": 4,
-        "note": "If Izek saw Ireena on their first morning, he searches the inn while they're out — preferably at dusk. Begins Arc G.",
+        "note": "If Izek saw Ireena on their first morning, he searches the inn while they're out \u2014 preferably at dusk. Begins Arc G.",
         "done": false,
         "source": {
           "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
           "anchor": "neyavr-4",
-          "label": "Act II Summary · Neyavr 4"
+          "label": "Act II Summary \u00b7 Neyavr 4"
         }
       },
       {
@@ -86,7 +86,7 @@
         "source": {
           "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
           "anchor": "neyavr-5",
-          "label": "Act II Summary · Neyavr 5"
+          "label": "Act II Summary \u00b7 Neyavr 5"
         }
       },
       {
@@ -98,7 +98,7 @@
         "source": {
           "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
           "anchor": "neyavr-7",
-          "label": "Act II Summary · Neyavr 7"
+          "label": "Act II Summary \u00b7 Neyavr 7"
         }
       },
       {
@@ -110,19 +110,19 @@
         "source": {
           "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
           "anchor": "neyavr-6",
-          "label": "Act II Summary · Neyavr 6"
+          "label": "Act II Summary \u00b7 Neyavr 6"
         }
       },
       {
         "id": "291c8871-46fc-4ebf-86e8-dc2a6e00a0bc",
-        "label": "Festival of the Blazing Sun — noon",
+        "label": "Festival of the Blazing Sun \u2014 noon",
         "dueDay": 7,
         "note": "If Ireena was kidnapped and not rescued, she burns alive in the wicker sun at noon. Only if Vallakovich still holds power.",
         "done": false,
         "source": {
           "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
           "anchor": "neyavr-7",
-          "label": "Act II Summary · Neyavr 7"
+          "label": "Act II Summary \u00b7 Neyavr 7"
         }
       },
       {
@@ -134,7 +134,7 @@
         "source": {
           "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
           "anchor": "neyavr-7",
-          "label": "Act II Summary · Neyavr 7"
+          "label": "Act II Summary \u00b7 Neyavr 7"
         }
       },
       {
@@ -146,7 +146,7 @@
         "source": {
           "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
           "anchor": "neyavr-8",
-          "label": "Act II Summary · Neyavr 8"
+          "label": "Act II Summary \u00b7 Neyavr 8"
         }
       },
       {
@@ -158,7 +158,7 @@
         "source": {
           "mdPath": "Act II - The Shadowed Town/Act II Summary.md",
           "anchor": "neyavr-9",
-          "label": "Act II Summary · Neyavr 9"
+          "label": "Act II Summary \u00b7 Neyavr 9"
         }
       }
     ],
@@ -191,7 +191,9 @@
       "T-1": false,
       "T-2": false,
       "U-0": false
-    }
+    },
+    "sceneProgress": {},
+    "startingLevel": 2
   },
   "version": 0
 }

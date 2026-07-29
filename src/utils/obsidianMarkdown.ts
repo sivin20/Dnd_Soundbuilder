@@ -99,6 +99,13 @@ function preprocess(md: string, index: MirrorIndex): string {
   // Strip Obsidian comments
   src = src.replace(/%%[\s\S]*?%%/g, '');
 
+  // A raw-HTML line ends its block only at a blank line, so a heading written
+  // directly beneath one (the guide does this after art credits) is absorbed
+  // into the HTML and never becomes a heading. Ten headings across the mirror
+  // vanished this way, including "D2. Milivoj's House". Give them their blank
+  // line back. Quoted headings inside callouts are left alone.
+  src = src.replace(/(\n\s*<[^\n]*>[^\n]*)\n(#{1,6}\s+\S)/g, '$1\n\n$2');
+
   // Image / file embeds: ![[file]] or ![[file|300]]
   src = src.replace(/!\[\[([^\]|]+)(?:\|([^\]]*))?\]\]/g, (_m, target: string, mod?: string) => {
     const t = target.trim();
@@ -200,6 +207,10 @@ function processHeadings(doc: Document): TocEntry[] {
   const seen = new Map<string, number>();
 
   doc.body.querySelectorAll('h1, h2, h3, h4').forEach((h) => {
+    // Monster stat blocks are raw <div class="statblock"><h2>Volenta…</h2>.
+    // They're headings in the markup but not sections of the adventure, so they
+    // belong in neither the outline nor the scene tracker.
+    if (h.closest('.statblock')) return;
     const text = (h.textContent ?? '').trim();
     let id = slugify(text) || 'section';
     const n = seen.get(id) ?? 0;
@@ -211,6 +222,28 @@ function processHeadings(doc: Document): TocEntry[] {
   });
 
   return toc;
+}
+
+// Heading outline for a page, without the caller having to render or hold the
+// whole document. Cached per page — the scene tracker and the guide reader both
+// want the same list.
+const tocCache = new Map<string, Promise<TocEntry[]>>();
+
+export function loadPageToc(mdPath: string): Promise<TocEntry[]> {
+  let cached = tocCache.get(mdPath);
+  if (!cached) {
+    cached = (async () => {
+      const url = '/reloaded/' + mdPath.split('/').map(encodeURIComponent).join('/');
+      const [res, index] = await Promise.all([fetch(url), loadMirrorIndex()]);
+      if (!res.ok) throw new Error(`${res.status} — is the mirror downloaded?`);
+      return renderObsidian(await res.text(), index).toc;
+    })().catch((e) => {
+      tocCache.delete(mdPath); // let a later mount retry
+      throw e;
+    });
+    tocCache.set(mdPath, cached);
+  }
+  return cached;
 }
 
 export function renderObsidian(md: string, index: MirrorIndex): RenderedPage {

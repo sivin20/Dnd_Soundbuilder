@@ -49,6 +49,19 @@ export interface CampaignArc {
 
 export type ArcStatus = 'todo' | 'active' | 'done';
 
+/**
+ * How a single scene actually went. Reloaded assumes a fairly fixed order, so
+ * "diverged" matters as much as "done" — it's the record of where you had to
+ * freestyle and what the table did instead.
+ */
+export type SceneStatus = 'todo' | 'done' | 'diverged' | 'skipped';
+
+export interface SceneProgress {
+  status: SceneStatus;
+  /** What actually happened, if it wasn't what the guide expected. */
+  note: string;
+}
+
 export type AbilityKey = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha';
 
 /** Numbers a DM reads off the party sheet, derived from the DDB payload.

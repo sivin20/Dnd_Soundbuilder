@@ -9,6 +9,7 @@ import SessionLog from './SessionLog';
 import TarokkaPanel from './TarokkaPanel';
 import FlagsPanel from './FlagsPanel';
 import MilestonesPanel from './MilestonesPanel';
+import ArcProgress from './ArcProgress';
 
 type ChronicleKind = 'sessions' | 'tarokka' | 'flags' | 'milestones';
 
@@ -29,7 +30,7 @@ interface Props {
   initialPage?: { mdPath: string; anchor?: string } | null;
 }
 
-type ArcTab = 'guide' | 'notes' | 'music';
+type ArcTab = 'guide' | 'progress' | 'notes' | 'music';
 
 const STATUS_META: Record<ArcStatus, { dot: string; label: string }> = {
   todo:   { dot: 'bg-stone-600',  label: 'Not started' },
@@ -62,6 +63,15 @@ export default function CampaignView({ initialPage = null }: Props) {
     selection.kind === 'arc'
       ? CAMPAIGN_ARCS.find((a) => a.id === selection.arcId) ?? null
       : null;
+
+  /** Jump from the progress list into that scene in the Guide tab. */
+  const openSceneInGuide = (mdPath: string, headingId: string) => {
+    const arc = findArcByMdPath(mdPath);
+    if (!arc) return;
+    setNavSeq((n) => n + 1);
+    setSelection({ kind: 'arc', arcId: arc.id, anchor: headingId });
+    setArcTab('guide');
+  };
 
   // Wikilink navigation: arcs open as arcs, everything else as a reference page
   const navigateToPage = (mdPath: string, anchor?: string) => {
@@ -130,6 +140,19 @@ export default function CampaignView({ initialPage = null }: Props) {
                     <span className={`text-sm font-serif truncate ${isSelected ? 'text-amber-300' : 'text-stone-300'}`}>
                       {a.title}
                     </span>
+                    {(() => {
+                      const played = Object.entries(campaign.sceneProgress).filter(
+                        ([k, v]) => k.startsWith(`${a.mdPath}#`) && v.status !== 'todo'
+                      ).length;
+                      return played > 0 ? (
+                        <span
+                          className="text-[10px] font-sans text-stone-600 flex-shrink-0"
+                          title={`${played} scenes marked`}
+                        >
+                          {played}
+                        </span>
+                      ) : null;
+                    })()}
                     {isCurrent && <span className="text-[10px] flex-shrink-0" title="You are here">📍</span>}
                   </button>
                 );
@@ -236,6 +259,7 @@ export default function CampaignView({ initialPage = null }: Props) {
             tab={arcTab}
             onTabChange={setArcTab}
             onNavigate={navigateToPage}
+            onOpenScene={openSceneInGuide}
             anchor={selection.kind === 'arc' ? selection.anchor : undefined}
             navSeq={navSeq}
           />
@@ -246,12 +270,13 @@ export default function CampaignView({ initialPage = null }: Props) {
 }
 
 function ArcDetail({
-  arc, tab, onTabChange, onNavigate, anchor, navSeq,
+  arc, tab, onTabChange, onNavigate, onOpenScene, anchor, navSeq,
 }: {
   arc: ArcDef;
   tab: ArcTab;
   onTabChange: (t: ArcTab) => void;
   onNavigate: (mdPath: string, anchor?: string) => void;
+  onOpenScene: (mdPath: string, headingId: string) => void;
   anchor?: string;
   navSeq: number;
 }) {
@@ -261,6 +286,7 @@ function ArcDetail({
 
   const TABS: { id: ArcTab; label: string }[] = [
     { id: 'guide', label: '📖 Guide' },
+    { id: 'progress', label: '✅ Progress' },
     { id: 'notes', label: '📝 Notes' },
     { id: 'music', label: '🎵 Music' },
   ];
@@ -343,6 +369,13 @@ function ArcDetail({
           onNavigate={onNavigate}
           anchor={anchor}
           navSeq={navSeq}
+        />
+      )}
+
+      {tab === 'progress' && (
+        <ArcProgress
+          arc={arc}
+          onOpenScene={(headingId) => onOpenScene(arc.mdPath, headingId)}
         />
       )}
 
