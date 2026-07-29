@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { fileStorage } from './fileStorage';
 import { v4 as uuidv4 } from 'uuid';
 import type { Scene } from '../types';
 import { useMusicStore } from './musicStore';
@@ -71,6 +72,12 @@ export const useSceneStore = create<SceneState>()(
           scenes: st.scenes.map((s) => (s.id === id ? { ...s, name } : s)),
         })),
     }),
-    { name: 'dnd-scene-store' }
+    {
+      name: 'dnd-scene-store',
+      storage: createJSONStorage(() => fileStorage),
+      // activeSceneId is a visual hint that changes on every cue fire — keeping
+      // it out of the file means playing a scene doesn't dirty the repo.
+      partialize: (state) => ({ scenes: state.scenes }),
+    }
   )
 );

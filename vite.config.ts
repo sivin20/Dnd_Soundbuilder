@@ -95,9 +95,128 @@ function autoRegisterPlugin() {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Campaign state API
+// ---------------------------------------------------------------------------
+// Prep data (arc notes, session log, scenes, cues) is hours of irreplaceable
+// work, so it lives in campaign-state/*.json inside the repo rather than in one
+// browser's localStorage. This serves that directory to the app:
+//
+//   GET    /api/state         → { "<store-name>": <parsed json>, … }  (one trip)
+//   PUT    /api/state/<name>  → write campaign-state/<name>.json
+//   POST   /api/state/<name>  → same (sendBeacon can only POST)
+//   DELETE /api/state/<name>  → remove it
+//
+// Mounted on both the dev server and `vite preview`.
+const STATE_NAME = /^[a-z0-9][a-z0-9-]{0,63}$/; // no dots or slashes — no traversal
+const MAX_STATE_BYTES = 8 * 1024 * 1024;
+
+interface MinimalReq {
+  url?: string;
+  method?: string;
+  on: (event: string, cb: (chunk?: never) => void) => void;
+  destroy: () => void;
+}
+interface MinimalRes {
+  statusCode: number;
+  setHeader: (k: string, v: string) => void;
+  end: (body?: string) => void;
+}
+type Middleware = (req: MinimalReq, res: MinimalRes, next: () => void) => void;
+
+function stateApiPlugin() {
+  const dir = path.resolve('campaign-state');
+
+  const json = (res: MinimalRes, status: number, body: unknown) => {
+    res.statusCode = status;
+    res.setHeader('content-type', 'application/json');
+    res.end(JSON.stringify(body));
+  };
+
+  const readBody = (req: MinimalReq): Promise<string> =>
+    new Promise((resolve, reject) => {
+      let size = 0;
+      const chunks: Buffer[] = [];
+      req.on('data', (chunk) => {
+        const buf = chunk as unknown as Buffer;
+        size += buf.length;
+        if (size > MAX_STATE_BYTES) {
+          req.destroy();
+          reject(new Error('state payload too large'));
+          return;
+        }
+        chunks.push(buf);
+      });
+      req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+      req.on('error', () => reject(new Error('read failed')));
+    });
+
+  const middleware: Middleware = (req, res, next) => {
+    const url = req.url ?? '';
+    if (!url.startsWith('/api/state')) return next();
+
+    const rest = url.slice('/api/state'.length).split('?')[0];
+
+    // Collection: hand the client everything in one request so store hydration
+    // doesn't waterfall one fetch per store.
+    if (rest === '' || rest === '/') {
+      if (req.method !== 'GET') return json(res, 405, { error: 'method not allowed' });
+      const out: Record<string, unknown> = {};
+      if (fs.existsSync(dir)) {
+        for (const file of fs.readdirSync(dir)) {
+          if (!file.endsWith('.json')) continue;
+          try {
+            out[file.replace(/\.json$/, '')] = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
+          } catch {
+            console.warn(`[state] ignoring unparseable ${file}`);
+          }
+        }
+      }
+      return json(res, 200, out);
+    }
+
+    const name = decodeURIComponent(rest.replace(/^\//, ''));
+    if (!STATE_NAME.test(name)) return json(res, 400, { error: 'bad state name' });
+    const file = path.join(dir, `${name}.json`);
+
+    if (req.method === 'PUT' || req.method === 'POST') {
+      readBody(req)
+        .then((body) => {
+          // Parse before writing: never replace good state with a broken payload
+          const parsed = JSON.parse(body);
+          fs.mkdirSync(dir, { recursive: true });
+          // Write-then-rename so a crash mid-write can't truncate existing state
+          const tmp = `${file}.${process.pid}.tmp`;
+          fs.writeFileSync(tmp, JSON.stringify(parsed, null, 2) + '\n');
+          fs.renameSync(tmp, file);
+          json(res, 200, { ok: true });
+        })
+        .catch((e) => json(res, 400, { error: String(e instanceof Error ? e.message : e) }));
+      return;
+    }
+
+    if (req.method === 'DELETE') {
+      fs.rmSync(file, { force: true });
+      return json(res, 200, { ok: true });
+    }
+
+    return json(res, 405, { error: 'method not allowed' });
+  };
+
+  return {
+    name: 'campaign-state-api',
+    configureServer(server: { middlewares: { use: (m: Middleware) => void } }) {
+      server.middlewares.use(middleware);
+    },
+    configurePreviewServer(server: { middlewares: { use: (m: Middleware) => void } }) {
+      server.middlewares.use(middleware);
+    },
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), autoRegisterPlugin()],
+  plugins: [react(), autoRegisterPlugin(), stateApiPlugin()],
   server: {
     proxy: {
       // D&D Beyond's character service has no CORS headers, so the dev

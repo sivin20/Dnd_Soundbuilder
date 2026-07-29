@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { fileStorage } from './fileStorage';
 import { v4 as uuidv4 } from 'uuid';
 import type { ArcStatus, SessionNote } from '../types';
 import { CAMPAIGN_ARCS } from '../data/campaignArcs';
@@ -78,6 +79,8 @@ export const useCampaignStore = create<CampaignState>()(
       deleteSession: (id) =>
         set((s) => ({ sessions: s.sessions.filter((n) => n.id !== id) })),
     }),
-    { name: 'dnd-campaign-store' }
+    // Arc notes and the session log are the least replaceable data in the app —
+    // stored as a file in campaign-state/, not in this browser.
+    { name: 'dnd-campaign-store', storage: createJSONStorage(() => fileStorage) }
   )
 );

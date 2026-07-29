@@ -1,6 +1,7 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { useSceneStore } from './sceneStore';
+import { fileStorage } from './fileStorage';
 
 // Scene cues bind a saved scene (music + ambient mix) to a heading in the
 // Reloaded guide — "B5a. The Barricade" plays the siege mix. Prep once by
@@ -49,7 +50,7 @@ export const useCueStore = create<CueState>()(
         if (scenes.some((s) => s.id === cue.sceneId)) applyScene(cue.sceneId);
       },
     }),
-    { name: 'dnd-cue-store' }
+    { name: 'dnd-cue-store', storage: createJSONStorage(() => fileStorage) }
   )
 );
 

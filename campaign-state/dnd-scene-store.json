@@ -1,0 +1,22 @@
+{
+  "state": {
+    "scenes": [
+      {
+        "id": "18fb2e3c-732f-4827-afee-0865027df5d0",
+        "name": "Rainy Travel",
+        "trackId": "track-out-of-the-mists-unofficial-curse-of-strahd-fan-ost-1h-dark-",
+        "musicVolume": 80,
+        "loop": false,
+        "ambients": [
+          {
+            "id": "rain",
+            "level": 0,
+            "volume": 80
+          }
+        ]
+      }
+    ],
+    "activeSceneId": null
+  },
+  "version": 0
+}

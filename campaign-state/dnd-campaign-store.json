@@ -1,0 +1,25 @@
+{
+  "state": {
+    "arcState": {
+      "arc-d": {
+        "status": "active",
+        "notes": ""
+      },
+      "arc-c": {
+        "status": "done",
+        "notes": ""
+      },
+      "arc-b": {
+        "status": "done",
+        "notes": ""
+      },
+      "arc-a": {
+        "status": "done",
+        "notes": ""
+      }
+    },
+    "currentArcId": "arc-d",
+    "sessions": []
+  },
+  "version": 0
+}

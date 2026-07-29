@@ -7,6 +7,8 @@ import MusicLibrary from './components/MusicLibrary/MusicLibrary';
 import Soundboard from './components/Soundboard/Soundboard';
 import type { View } from './types';
 import { MusicEngine } from './hooks/useMusicPlayer';
+import { useStoresHydrated } from './store/useHydrated';
+import { backendKind } from './store/fileStorage';
 
 export default function App() {
   const [view, setView] = useState<View>('dashboard');
@@ -24,24 +26,43 @@ export default function App() {
     setView('campaign');
   };
 
+  // Prep data loads from campaign-state/ — hold the views until it's in
+  const hydrated = useStoresHydrated();
+
   return (
     <div className="h-screen bg-stone-950 flex flex-col">
       <MusicEngine />
       <Header currentView={view} onViewChange={changeView} />
 
       <main className="flex-1 overflow-y-auto">
-        {view === 'dashboard' && <Dashboard onOpenCampaign={() => changeView('campaign')} />}
-        {view === 'campaign' && (
-          <CampaignView key={guideTarget?.mdPath ?? 'default'} initialPage={guideTarget} />
+        {!hydrated ? (
+          <p className="text-stone-600 font-sans text-sm italic py-16 text-center">
+            Opening the campaign ledger…
+          </p>
+        ) : (
+          <>
+            {view === 'dashboard' && <Dashboard onOpenCampaign={() => changeView('campaign')} />}
+            {view === 'campaign' && (
+              <CampaignView key={guideTarget?.mdPath ?? 'default'} initialPage={guideTarget} />
+            )}
+            {view === 'npcs' && <NpcView onOpenSource={openGuidePage} />}
+            {view === 'music' && <MusicLibrary />}
+            {view === 'soundboard' && <Soundboard />}
+          </>
         )}
-        {view === 'npcs' && <NpcView onOpenSource={openGuidePage} />}
-        {view === 'music' && <MusicLibrary />}
-        {view === 'soundboard' && <Soundboard />}
       </main>
 
       <footer className="border-t border-stone-800/60 px-6 py-2 text-center">
         <p className="text-stone-700 text-xs font-sans">
           Tavern Sounds — DnD Sound Builder ⚔️ May your sessions be legendary
+          {hydrated && backendKind() === 'browser' && (
+            <span
+              className="text-amber-700/80 ml-2"
+              title="The /api/state endpoint isn't reachable, so notes, scenes and cues are only in this browser. Run with npm run dev to save them to campaign-state/."
+            >
+              · ⚠ prep saving to this browser only
+            </span>
+          )}
         </p>
       </footer>
     </div>

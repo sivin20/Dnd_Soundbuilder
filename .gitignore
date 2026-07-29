@@ -38,5 +38,9 @@ public/ambience/*.mp3
 !public/ambience/thunder.mp3
 public/.sound-provenance.json
 
+# Campaign prep (arc notes, session log, scenes, cues) IS tracked — that's the
+# point of campaign-state/. Only the transient write-then-rename files are not.
+campaign-state/*.tmp
+
 # Local Claude Code settings
 .claude/settings.local.json

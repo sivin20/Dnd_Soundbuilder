@@ -62,6 +62,26 @@ To add to the curated set instead, put the entry in `sound-sources.json` and run
 `./download-sounds.sh && node register-sounds.js`. Re-running never overwrites
 config you've hand-tuned.
 
+## Where your prep lives
+
+Arc notes, the session log, arc status, saved scenes and cues are written to
+`campaign-state/*.json` — plain, readable, git-tracked files, served by the dev
+server at `/api/state`. Commit them and a year of prep is versioned and
+recoverable; there's nothing to export.
+
+Writes are debounced, flushed when the tab hides, and done write-then-rename so
+an interrupted save can't truncate a file. Data already in localStorage is
+migrated into `campaign-state/` automatically the first time you load the app.
+
+Playback state (current track, volumes) and the D&D Beyond party cache stay in
+localStorage — high-churn and regenerable, and file-writing them would dirty the
+repo on every track change. To move a store between the two, change its
+`storage:` line in `src/store/`.
+
+If `/api/state` isn't reachable (a static build with no server behind it), the
+app falls back to localStorage and says so in the footer rather than dropping
+writes silently.
+
 ## D&D Beyond party sync
 
 The roster lives in `src/data/party.json`. There is no official API, so the app
