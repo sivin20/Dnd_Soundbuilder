@@ -36,12 +36,17 @@ export default function Soundboard() {
       {/* How to add sounds */}
       <div className="mb-5 bg-stone-900 border border-stone-800 rounded-xl px-5 py-4 text-stone-500 font-sans text-xs leading-relaxed">
         <span className="text-amber-600 font-medium">Adding sounds: </span>
-        Drop any <code className="bg-stone-800 px-1 rounded text-stone-400">.mp3</code> file into{' '}
-        <code className="bg-stone-800 px-1 rounded text-stone-400">public/sounds/</code> — it
+        Drop an <code className="bg-stone-800 px-1 rounded text-stone-400">.mp3</code> into{' '}
+        <code className="bg-stone-800 px-1 rounded text-stone-400">public/sounds/</code> (one-shots) or{' '}
+        <code className="bg-stone-800 px-1 rounded text-stone-400">public/ambience/</code> (loops) — it
         appears here automatically on next dev-server restart. Edit{' '}
-        <code className="bg-stone-800 px-1 rounded text-stone-400">src/data/soundsConfig.json</code>{' '}
-        to change its name, emoji, type (<code className="bg-stone-800 px-1 rounded text-stone-400">ambient</code> /{' '}
-        <code className="bg-stone-800 px-1 rounded text-stone-400">oneshot</code>) and intensity levels.
+        <code className="bg-stone-800 px-1 rounded text-stone-400">soundsConfig.json</code> /{' '}
+        <code className="bg-stone-800 px-1 rounded text-stone-400">ambienceConfig.json</code> in{' '}
+        <code className="bg-stone-800 px-1 rounded text-stone-400">src/data/</code> to set its name, emoji,
+        intensity <code className="bg-stone-800 px-1 rounded text-stone-400">levels</code> and{' '}
+        <code className="bg-stone-800 px-1 rounded text-stone-400">sprinkles</code>. For the curated set,
+        add to <code className="bg-stone-800 px-1 rounded text-stone-400">sound-sources.json</code> and run{' '}
+        <code className="bg-stone-800 px-1 rounded text-stone-400">./download-sounds.sh</code>.
       </div>
 
       {/* Tab selector */}

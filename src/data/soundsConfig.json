@@ -38,5 +38,229 @@
     "type": "oneshot",
     "url": "/sounds/dragon-roar.mp3",
     "volume": 80
+  },
+  {
+    "id": "church-bell",
+    "name": "Church Bells",
+    "emoji": "🔔",
+    "type": "oneshot",
+    "url": "/sounds/church-bell.mp3",
+    "volume": 85
+  },
+  {
+    "id": "bell-toll",
+    "name": "Single Bell Toll",
+    "emoji": "🛎",
+    "type": "oneshot",
+    "url": "/sounds/bell-toll.mp3",
+    "volume": 85
+  },
+  {
+    "id": "raven-caw",
+    "name": "Raven Caw",
+    "emoji": "🐦‍⬛",
+    "type": "oneshot",
+    "url": "/sounds/raven-caw.mp3",
+    "volume": 85
+  },
+  {
+    "id": "crow-flock",
+    "name": "Flock Takes Off",
+    "emoji": "🕊",
+    "type": "oneshot",
+    "url": "/sounds/crow-flock.mp3",
+    "volume": 85
+  },
+  {
+    "id": "horse-whinny",
+    "name": "Horse Whinny",
+    "emoji": "🐴",
+    "type": "oneshot",
+    "url": "/sounds/horse-whinny.mp3",
+    "volume": 85
+  },
+  {
+    "id": "wolf-growl",
+    "name": "Wolf Growl",
+    "emoji": "🐺",
+    "type": "oneshot",
+    "url": "/sounds/wolf-growl.mp3",
+    "volume": 85
+  },
+  {
+    "id": "glass-shatter",
+    "name": "Glass Shatters",
+    "emoji": "🥃",
+    "type": "oneshot",
+    "url": "/sounds/glass-shatter.mp3",
+    "volume": 85
+  },
+  {
+    "id": "heartbeat",
+    "name": "Heartbeat",
+    "emoji": "💓",
+    "type": "oneshot",
+    "url": "/sounds/heartbeat.mp3",
+    "volume": 85
+  },
+  {
+    "id": "scream",
+    "name": "Scream",
+    "emoji": "😱",
+    "type": "oneshot",
+    "url": "/sounds/scream.mp3",
+    "volume": 85
+  },
+  {
+    "id": "scream-man",
+    "name": "Man's Scream",
+    "emoji": "🗣",
+    "type": "oneshot",
+    "url": "/sounds/scream-man.mp3",
+    "volume": 85
+  },
+  {
+    "id": "bone-crack",
+    "name": "Bone Crunch",
+    "emoji": "🦴",
+    "type": "oneshot",
+    "url": "/sounds/bone-crack.mp3",
+    "volume": 85
+  },
+  {
+    "id": "chains-rattle",
+    "name": "Chains Rattle",
+    "emoji": "⛓️",
+    "type": "oneshot",
+    "url": "/sounds/chains-rattle.mp3",
+    "volume": 85
+  },
+  {
+    "id": "coins-drop",
+    "name": "Coin Purse",
+    "emoji": "🪙",
+    "type": "oneshot",
+    "url": "/sounds/coins-drop.mp3",
+    "volume": 85
+  },
+  {
+    "id": "arrow-shot",
+    "name": "Crossbow Bolt",
+    "emoji": "🏹",
+    "type": "oneshot",
+    "url": "/sounds/arrow-shot.mp3",
+    "volume": 85
+  },
+  {
+    "id": "spell-cast",
+    "name": "Spell Cast",
+    "emoji": "🔮",
+    "type": "oneshot",
+    "url": "/sounds/spell-cast.mp3",
+    "volume": 85
+  },
+  {
+    "id": "evil-laugh",
+    "name": "Strahd's Laugh",
+    "emoji": "😈",
+    "type": "oneshot",
+    "url": "/sounds/evil-laugh.mp3",
+    "volume": 85
+  },
+  {
+    "id": "wood-crack",
+    "name": "Wood Splinters",
+    "emoji": "🪵",
+    "type": "oneshot",
+    "url": "/sounds/wood-crack.mp3",
+    "volume": 85
+  },
+  {
+    "id": "gate-slam",
+    "name": "Gate Slams",
+    "emoji": "🚪",
+    "type": "oneshot",
+    "url": "/sounds/gate-slam.mp3",
+    "volume": 85
+  },
+  {
+    "id": "stone-door",
+    "name": "Stone Door",
+    "emoji": "🪨",
+    "type": "oneshot",
+    "url": "/sounds/stone-door.mp3",
+    "volume": 85
+  },
+  {
+    "id": "wind-gust",
+    "name": "Wind Gust",
+    "emoji": "💨",
+    "type": "oneshot",
+    "url": "/sounds/wind-gust.mp3",
+    "volume": 85
+  },
+  {
+    "id": "body-fall",
+    "name": "Body Drops",
+    "emoji": "🩸",
+    "type": "oneshot",
+    "url": "/sounds/body-fall.mp3",
+    "volume": 85
+  },
+  {
+    "id": "lightning",
+    "name": "Lightning Strike",
+    "emoji": "⚡",
+    "type": "oneshot",
+    "url": "/sounds/lightning.mp3",
+    "volume": 85
+  },
+  {
+    "id": "music-box",
+    "name": "Music Box",
+    "emoji": "🎶",
+    "type": "oneshot",
+    "url": "/sounds/music-box.mp3",
+    "volume": 85
+  },
+  {
+    "id": "baby-cry",
+    "name": "Child Crying",
+    "emoji": "👶",
+    "type": "oneshot",
+    "url": "/sounds/baby-cry.mp3",
+    "volume": 85
+  },
+  {
+    "id": "whispers",
+    "name": "Whispers",
+    "emoji": "👥",
+    "type": "oneshot",
+    "url": "/sounds/whispers.mp3",
+    "volume": 85
+  },
+  {
+    "id": "war-drums",
+    "name": "War Drums",
+    "emoji": "🥁",
+    "type": "oneshot",
+    "url": "/sounds/war-drums.mp3",
+    "volume": 85
+  },
+  {
+    "id": "zombie-groan",
+    "name": "Undead Groan",
+    "emoji": "🧟",
+    "type": "oneshot",
+    "url": "/sounds/zombie-groan.mp3",
+    "volume": 85
+  },
+  {
+    "id": "candle-blow",
+    "name": "Candle Snuffed",
+    "emoji": "🕯",
+    "type": "oneshot",
+    "url": "/sounds/candle-blow.mp3",
+    "volume": 85
   }
 ]

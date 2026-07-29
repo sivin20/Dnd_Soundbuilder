@@ -5,9 +5,14 @@
     "emoji": "🌧️",
     "type": "ambient",
     "url": "/ambience/rain-gentle.mp3",
-    "levels": ["/ambience/rain-gentle.mp3", "/ambience/rain-heavy.mp3"],
+    "levels": [
+      "/ambience/rain-gentle.mp3",
+      "/ambience/rain-heavy.mp3"
+    ],
     "volume": 80,
-    "sprinkles": ["/sounds/thunder-crack.mp3"]
+    "sprinkles": [
+      "/sounds/thunder-crack.mp3"
+    ]
   },
   {
     "id": "thunder",
@@ -16,5 +21,183 @@
     "type": "ambient",
     "url": "/ambience/thunder.mp3",
     "volume": 80
+  },
+  {
+    "id": "mist-wind",
+    "name": "Mists of Barovia",
+    "emoji": "🌫️",
+    "type": "ambient",
+    "url": "/ambience/mist-wind-calm.mp3",
+    "volume": 70,
+    "levels": [
+      "/ambience/mist-wind-calm.mp3",
+      "/ambience/mist-wind-howling.mp3"
+    ],
+    "sprinkles": [
+      "/sounds/wind-gust.mp3",
+      "/sounds/raven-caw.mp3",
+      "/sounds/wolf-howl.mp3"
+    ]
+  },
+  {
+    "id": "wolves",
+    "name": "Wolves",
+    "emoji": "🐺",
+    "type": "ambient",
+    "url": "/ambience/wolves-distant.mp3",
+    "volume": 70,
+    "levels": [
+      "/ambience/wolves-distant.mp3",
+      "/ambience/wolves-close.mp3"
+    ],
+    "sprinkles": [
+      "/sounds/wolf-howl.mp3",
+      "/sounds/wolf-growl.mp3"
+    ]
+  },
+  {
+    "id": "village",
+    "name": "Village of Barovia",
+    "emoji": "🏘️",
+    "type": "ambient",
+    "url": "/ambience/village-murmur.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/church-bell.mp3",
+      "/sounds/horse-whinny.mp3",
+      "/sounds/raven-caw.mp3"
+    ]
+  },
+  {
+    "id": "castle",
+    "name": "Castle Ravenloft",
+    "emoji": "🏰",
+    "type": "ambient",
+    "url": "/ambience/castle-halls.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/chains-rattle.mp3",
+      "/sounds/whispers.mp3",
+      "/sounds/gate-slam.mp3"
+    ]
+  },
+  {
+    "id": "forest-night",
+    "name": "Svalich Woods",
+    "emoji": "🌲",
+    "type": "ambient",
+    "url": "/ambience/forest-night.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/raven-caw.mp3",
+      "/sounds/wolf-howl.mp3",
+      "/sounds/wood-crack.mp3"
+    ]
+  },
+  {
+    "id": "tavern",
+    "name": "Blood of the Vine",
+    "emoji": "🍺",
+    "type": "ambient",
+    "url": "/ambience/tavern.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/glass-shatter.mp3",
+      "/sounds/coins-drop.mp3"
+    ]
+  },
+  {
+    "id": "church",
+    "name": "Church of St. Andral",
+    "emoji": "⛪",
+    "type": "ambient",
+    "url": "/ambience/church.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/bell-toll.mp3",
+      "/sounds/whispers.mp3"
+    ]
+  },
+  {
+    "id": "crypt",
+    "name": "Crypts & Catacombs",
+    "emoji": "💧",
+    "type": "ambient",
+    "url": "/ambience/crypt.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/bone-crack.mp3",
+      "/sounds/chains-rattle.mp3",
+      "/sounds/whispers.mp3"
+    ]
+  },
+  {
+    "id": "fireplace",
+    "name": "Hearth Fire",
+    "emoji": "🔥",
+    "type": "ambient",
+    "url": "/ambience/fireplace.mp3",
+    "volume": 70
+  },
+  {
+    "id": "graveyard",
+    "name": "Graveyard",
+    "emoji": "🪦",
+    "type": "ambient",
+    "url": "/ambience/graveyard.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/whispers.mp3",
+      "/sounds/raven-caw.mp3",
+      "/sounds/crow-flock.mp3"
+    ]
+  },
+  {
+    "id": "swamp",
+    "name": "Berez Marshes",
+    "emoji": "🐸",
+    "type": "ambient",
+    "url": "/ambience/swamp.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/raven-caw.mp3",
+      "/sounds/whispers.mp3"
+    ]
+  },
+  {
+    "id": "blizzard",
+    "name": "Tsolenka Pass",
+    "emoji": "❄️",
+    "type": "ambient",
+    "url": "/ambience/blizzard.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/wind-gust.mp3"
+    ]
+  },
+  {
+    "id": "windmill",
+    "name": "Old Bonegrinder",
+    "emoji": "🌾",
+    "type": "ambient",
+    "url": "/ambience/windmill.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/bone-crack.mp3",
+      "/sounds/baby-cry.mp3",
+      "/sounds/wood-crack.mp3"
+    ]
+  },
+  {
+    "id": "cart-road",
+    "name": "Old Svalich Road",
+    "emoji": "🐎",
+    "type": "ambient",
+    "url": "/ambience/cart-road.mp3",
+    "volume": 70,
+    "sprinkles": [
+      "/sounds/horse-whinny.mp3",
+      "/sounds/raven-caw.mp3"
+    ]
   }
 ]

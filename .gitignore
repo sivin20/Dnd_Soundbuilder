@@ -29,5 +29,14 @@ public/reloaded/
 # Downloaded soundtrack MP3s (4.9GB) — re-download with: ./download-playlist.sh && node register-tracks.js
 public/music/*.mp3
 
+# Downloaded ambience loops (hour-long, ~50MB each) — re-download with:
+#   ./download-sounds.sh ambience && node register-sounds.js
+# The three originals below are small and stay in git.
+public/ambience/*.mp3
+!public/ambience/rain-gentle.mp3
+!public/ambience/rain-heavy.mp3
+!public/ambience/thunder.mp3
+public/.sound-provenance.json
+
 # Local Claude Code settings
 .claude/settings.local.json
