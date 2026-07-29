@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { CAMPAIGN_ARCS, ACTS, REFERENCE_PAGES, findArcByMdPath } from '../../data/campaignArcs';
+import { useCueStore } from '../../store/cueStore';
 import type { ArcDef } from '../../data/campaignArcs';
 import { useCampaignStore, getArcState } from '../../store/campaignStore';
 import type { ArcStatus } from '../../types';
@@ -8,9 +9,14 @@ import ArcMusicPlan from './ArcMusicPlan';
 import SessionLog from './SessionLog';
 
 type Selection =
-  | { kind: 'arc'; arcId: string }
-  | { kind: 'page'; mdPath: string; title: string }
+  | { kind: 'arc'; arcId: string; anchor?: string }
+  | { kind: 'page'; mdPath: string; title: string; anchor?: string }
   | { kind: 'sessions' };
+
+interface Props {
+  /** Page to open on mount — used when jumping in from the NPC directory. */
+  initialPage?: { mdPath: string; anchor?: string } | null;
+}
 
 type ArcTab = 'guide' | 'notes' | 'music';
 
@@ -20,15 +26,35 @@ const STATUS_META: Record<ArcStatus, { dot: string; label: string }> = {
   done:   { dot: 'bg-green-700',  label: 'Completed' },
 };
 
-export default function CampaignView() {
+export default function CampaignView({ initialPage = null }: Props) {
   const campaign = useCampaignStore();
   const { currentArcId } = campaign;
 
-  const [selection, setSelection] = useState<Selection>(() =>
-    currentArcId ? { kind: 'arc', arcId: currentArcId } : { kind: 'arc', arcId: CAMPAIGN_ARCS[0].id }
-  );
+  const [selection, setSelection] = useState<Selection>(() => {
+    if (initialPage) {
+      const arc = findArcByMdPath(initialPage.mdPath);
+      if (arc) return { kind: 'arc', arcId: arc.id, anchor: initialPage.anchor };
+      const title = initialPage.mdPath.split('/').pop()!.replace(/\.md$/, '');
+      return { kind: 'page', mdPath: initialPage.mdPath, title, anchor: initialPage.anchor };
+    }
+    return currentArcId
+      ? { kind: 'arc', arcId: currentArcId }
+      : { kind: 'arc', arcId: CAMPAIGN_ARCS[0].id };
+  });
   const [arcTab, setArcTab] = useState<ArcTab>('guide');
   const [refsOpen, setRefsOpen] = useState(false);
+  // Bumped on every navigation so jumping twice to the same anchor re-scrolls
+  const [navSeq, setNavSeq] = useState(0);
+
+  // How many scene cues are prepped per guide page — a prep-progress hint
+  const cues = useCueStore((s) => s.cues);
+  const cueCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const c of Object.values(cues)) {
+      counts.set(c.mdPath, (counts.get(c.mdPath) ?? 0) + 1);
+    }
+    return counts;
+  }, [cues]);
 
   const selectedArc: ArcDef | null =
     selection.kind === 'arc'
@@ -36,14 +62,15 @@ export default function CampaignView() {
       : null;
 
   // Wikilink navigation: arcs open as arcs, everything else as a reference page
-  const navigateToPage = (mdPath: string) => {
+  const navigateToPage = (mdPath: string, anchor?: string) => {
+    setNavSeq((n) => n + 1);
     const arc = findArcByMdPath(mdPath);
     if (arc) {
-      setSelection({ kind: 'arc', arcId: arc.id });
+      setSelection({ kind: 'arc', arcId: arc.id, anchor });
       setArcTab('guide');
     } else {
       const title = mdPath.split('/').pop()!.replace(/\.md$/, '');
-      setSelection({ kind: 'page', mdPath, title });
+      setSelection({ kind: 'page', mdPath, title, anchor });
     }
   };
 
@@ -84,6 +111,14 @@ export default function CampaignView() {
                     <span className={`text-sm font-serif truncate ${isSelected ? 'text-amber-300' : 'text-stone-300'}`}>
                       {a.title}
                     </span>
+                    {cueCounts.has(a.mdPath) && (
+                      <span
+                        className="text-[10px] font-sans text-amber-700 flex-shrink-0"
+                        title={`${cueCounts.get(a.mdPath)} scene cue(s) prepped`}
+                      >
+                        ▶{cueCounts.get(a.mdPath)}
+                      </span>
+                    )}
                     {isCurrent && <span className="text-[10px] flex-shrink-0" title="You are here">📍</span>}
                   </button>
                 );
@@ -152,7 +187,13 @@ export default function CampaignView() {
                 Open on strahdreloaded.com ↗
               </a>
             </div>
-            <GuideContent key={selection.mdPath} mdPath={selection.mdPath} onNavigate={navigateToPage} />
+            <GuideContent
+              key={selection.mdPath}
+              mdPath={selection.mdPath}
+              onNavigate={navigateToPage}
+              anchor={selection.anchor}
+              navSeq={navSeq}
+            />
           </div>
         )}
 
@@ -162,6 +203,8 @@ export default function CampaignView() {
             tab={arcTab}
             onTabChange={setArcTab}
             onNavigate={navigateToPage}
+            anchor={selection.kind === 'arc' ? selection.anchor : undefined}
+            navSeq={navSeq}
           />
         )}
       </div>
@@ -170,12 +213,14 @@ export default function CampaignView() {
 }
 
 function ArcDetail({
-  arc, tab, onTabChange, onNavigate,
+  arc, tab, onTabChange, onNavigate, anchor, navSeq,
 }: {
   arc: ArcDef;
   tab: ArcTab;
   onTabChange: (t: ArcTab) => void;
-  onNavigate: (mdPath: string) => void;
+  onNavigate: (mdPath: string, anchor?: string) => void;
+  anchor?: string;
+  navSeq: number;
 }) {
   const campaign = useCampaignStore();
   const st = getArcState(campaign, arc.id);
@@ -258,7 +303,15 @@ function ArcDetail({
         ))}
       </div>
 
-      {tab === 'guide' && <GuideContent key={arc.mdPath} mdPath={arc.mdPath} onNavigate={onNavigate} />}
+      {tab === 'guide' && (
+        <GuideContent
+          key={arc.mdPath}
+          mdPath={arc.mdPath}
+          onNavigate={onNavigate}
+          anchor={anchor}
+          navSeq={navSeq}
+        />
+      )}
 
       {tab === 'notes' && (
         <div>

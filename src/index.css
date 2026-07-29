@@ -95,6 +95,10 @@ input[type='range']::-moz-range-thumb {
   animation: playing-pulse 1.5s ease-in-out infinite;
 }
 
+/* Inline markdown inside NPC dossier fields */
+.npc-field strong { color: #e7e5e4; }
+.npc-field em { color: #d6d3d1; }
+
 /* --- Guide content (Curse of Strahd: Reloaded mirror) --- */
 .guide-content {
   color: #d6d3d1;
@@ -128,6 +132,256 @@ input[type='range']::-moz-range-thumb {
   background: rgba(28, 25, 23, 0.7);
 }
 .guide-content .callout-title { color: #fbbf24; display: block; margin-bottom: 0.2em; }
+
+/* --- Typed callouts ------------------------------------------------------ */
+/* Reloaded leans hard on callouts (combat, profile, lore, item…). Colouring
+   them by type is the difference between a scannable page and a wall of grey. */
+.guide-content details.callout {
+  margin: 0.9em 0;
+  padding: 0.5em 1em 0.6em;
+  background: rgba(41, 37, 36, 0.7);
+  border-left: 3px solid #b45309;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.guide-content details.callout > summary {
+  cursor: pointer;
+  color: #fbbf24;
+  font-weight: 600;
+  list-style: none;
+  display: block;
+}
+.guide-content details.callout > summary::-webkit-details-marker { display: none; }
+.guide-content details.callout > summary::after {
+  content: ' ▸';
+  color: rgba(168, 162, 158, 0.7);
+  font-size: 0.85em;
+}
+.guide-content details.callout[open] > summary::after { content: ' ▾'; }
+.guide-content details.callout > summary:hover { filter: brightness(1.15); }
+.guide-content .callout-body > :first-child { margin-top: 0.4em; }
+.guide-content .callout-body > :last-child { margin-bottom: 0; }
+
+.guide-content details.callout-combat {
+  border-left-color: #b91c1c;
+  background: rgba(69, 10, 10, 0.35);
+}
+.guide-content details.callout-combat > summary { color: #fca5a5; }
+
+.guide-content details.callout-profile {
+  border-left-color: #7e22ce;
+  background: rgba(59, 7, 100, 0.28);
+}
+.guide-content details.callout-profile > summary { color: #d8b4fe; }
+
+.guide-content details.callout-lore {
+  border-left-color: #1d4ed8;
+  background: rgba(23, 37, 84, 0.32);
+}
+.guide-content details.callout-lore > summary { color: #93c5fd; }
+
+.guide-content details.callout-item {
+  border-left-color: #ca8a04;
+  background: rgba(66, 50, 6, 0.32);
+}
+.guide-content details.callout-item > summary { color: #fde047; }
+
+.guide-content details.callout-abstract,
+.guide-content details.callout-summary {
+  border-left-color: #0f766e;
+  background: rgba(4, 47, 46, 0.3);
+}
+.guide-content details.callout-abstract > summary,
+.guide-content details.callout-summary > summary { color: #5eead4; }
+
+.guide-content details.callout-warning,
+.guide-content details.callout-caution,
+.guide-content details.callout-important {
+  border-left-color: #ea580c;
+  background: rgba(67, 20, 7, 0.3);
+}
+.guide-content details.callout-warning > summary,
+.guide-content details.callout-caution > summary,
+.guide-content details.callout-important > summary { color: #fdba74; }
+
+.guide-content details.callout-danger,
+.guide-content details.callout-error {
+  border-left-color: #dc2626;
+  background: rgba(69, 10, 10, 0.4);
+}
+.guide-content details.callout-danger > summary,
+.guide-content details.callout-error > summary { color: #fca5a5; }
+
+.guide-content details.callout-tip,
+.guide-content details.callout-hint,
+.guide-content details.callout-success,
+.guide-content details.callout-check {
+  border-left-color: #15803d;
+  background: rgba(5, 46, 22, 0.3);
+}
+.guide-content details.callout-tip > summary,
+.guide-content details.callout-hint > summary,
+.guide-content details.callout-success > summary,
+.guide-content details.callout-check > summary { color: #86efac; }
+
+/* Design commentary is prep reading — folded and visually recessed. */
+.guide-content details.callout-design {
+  border-left-color: #57534e;
+  background: rgba(28, 25, 23, 0.6);
+}
+.guide-content details.callout-design > summary { color: #a8a29e; font-weight: 500; }
+.guide-content details.callout-design .callout-body { color: #a8a29e; font-size: 0.95em; }
+
+/* --- Read-aloud boxes ---------------------------------------------------- */
+/* The guide's <div class="description"> blocks are text meant to be read to
+   the players. Make them unmistakable at a glance. */
+.guide-content .description {
+  background: linear-gradient(rgba(120, 86, 40, 0.18), rgba(120, 86, 40, 0.1));
+  border: 1px solid rgba(180, 131, 60, 0.45);
+  border-radius: 0.6rem;
+  padding: 0.9em 1.2em;
+  margin: 1.1em 0;
+  color: #f5e6c8;
+  font-style: italic;
+  line-height: 1.7;
+}
+.guide-content .description p:first-child { margin-top: 0; }
+.guide-content .description p:last-child { margin-bottom: 0; }
+
+/* Module page references and art credits — present, not shouting. */
+.guide-content .citation {
+  color: #a8a29e;
+  font-size: 0.85em;
+}
+.guide-content .credit {
+  display: block;
+  color: #78716c;
+  font-size: 0.75em;
+  margin-top: -0.4em;
+}
+
+/* --- Scene cues on headings --------------------------------------------- */
+.guide-content .cue-anchor {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 400;
+}
+.guide-content .cue-button {
+  opacity: 0;
+  flex-shrink: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  border-radius: 9999px;
+  background: #292524;
+  color: #a8a29e;
+  border: 1px solid #44403c;
+  transition: opacity 0.15s, background 0.15s, color 0.15s;
+}
+.guide-content h1:hover .cue-button,
+.guide-content h2:hover .cue-button,
+.guide-content h3:hover .cue-button,
+.guide-content h4:hover .cue-button,
+.guide-content .cue-button:focus-visible { opacity: 1; }
+.guide-content .cue-button:hover { background: #44403c; color: #fbbf24; }
+.guide-content .cue-button-bound {
+  opacity: 1;
+  background: #78350f;
+  color: #fcd34d;
+  border-color: #b45309;
+}
+.guide-content .cue-button-live { box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.55); }
+.guide-content .cue-label {
+  font-size: 0.7rem;
+  color: #a16207;
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.guide-content .cue-label:hover { color: #fbbf24; }
+
+.guide-content .cue-popover {
+  position: absolute;
+  top: 1.9rem;
+  left: 0;
+  z-index: 50;
+  width: 18rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.65rem;
+  background: #1c1917;
+  border: 1px solid #44403c;
+  border-radius: 0.6rem;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.65);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #d6d3d1;
+  text-align: left;
+  white-space: normal;
+  line-height: 1.45;
+}
+.guide-content .cue-popover-title {
+  color: #fbbf24;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.guide-content .cue-board-summary {
+  color: #a8a29e;
+  font-size: 0.7rem;
+  background: rgba(41, 37, 36, 0.8);
+  border-radius: 0.35rem;
+  padding: 0.3rem 0.45rem;
+}
+.guide-content .cue-popover-label {
+  color: #78716c;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.15rem;
+}
+.guide-content .cue-popover-action {
+  text-align: left;
+  background: #78350f;
+  color: #fde68a;
+  border: 1px solid #b45309;
+  border-radius: 0.4rem;
+  padding: 0.35rem 0.5rem;
+}
+.guide-content .cue-popover-action:hover { background: #92400e; }
+.guide-content .cue-scene-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 11rem;
+  overflow-y: auto;
+}
+.guide-content .cue-scene-item {
+  text-align: left;
+  padding: 0.25rem 0.4rem;
+  border-radius: 0.35rem;
+  color: #d6d3d1;
+}
+.guide-content .cue-scene-item:hover { background: #292524; color: #fbbf24; }
+.guide-content .cue-scene-item-active { color: #fbbf24; }
+.guide-content .cue-popover-remove {
+  text-align: left;
+  color: #a8a29e;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+}
+.guide-content .cue-popover-remove:hover { color: #f87171; }
 .guide-content img {
   max-width: 100%;
   border-radius: 0.75rem;

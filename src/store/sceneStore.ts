@@ -9,8 +9,9 @@ interface SceneState {
   scenes: Scene[];
   activeSceneId: string | null; // last applied scene (visual hint only)
 
-  /** Snapshot the current board (music + ambient mix) under a name. */
-  saveCurrentAsScene: (name: string) => void;
+  /** Snapshot the current board (music + ambient mix) under a name.
+   *  Returns the new scene's id so callers can bind it (e.g. to a guide cue). */
+  saveCurrentAsScene: (name: string) => string;
   applyScene: (id: string) => void;
   deleteScene: (id: string) => void;
   renameScene: (id: string, name: string) => void;
@@ -36,6 +37,7 @@ export const useSceneStore = create<SceneState>()(
             .map((s) => ({ id: s.id, level: s.currentLevel ?? 0, volume: s.volume })),
         };
         set((st) => ({ scenes: [...st.scenes, scene], activeSceneId: scene.id }));
+        return scene.id;
       },
 
       applyScene: (id) => {
