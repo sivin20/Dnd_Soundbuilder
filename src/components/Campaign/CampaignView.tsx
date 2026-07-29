@@ -1,6 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { CAMPAIGN_ARCS, ACTS, REFERENCE_PAGES, findArcByMdPath } from '../../data/campaignArcs';
-import { useCueStore } from '../../store/cueStore';
 import type { ArcDef } from '../../data/campaignArcs';
 import { useCampaignStore, getArcState } from '../../store/campaignStore';
 import type { ArcStatus } from '../../types';
@@ -58,15 +57,6 @@ export default function CampaignView({ initialPage = null }: Props) {
   // Bumped on every navigation so jumping twice to the same anchor re-scrolls
   const [navSeq, setNavSeq] = useState(0);
 
-  // How many scene cues are prepped per guide page — a prep-progress hint
-  const cues = useCueStore((s) => s.cues);
-  const cueCounts = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const c of Object.values(cues)) {
-      counts.set(c.mdPath, (counts.get(c.mdPath) ?? 0) + 1);
-    }
-    return counts;
-  }, [cues]);
 
   const selectedArc: ArcDef | null =
     selection.kind === 'arc'
@@ -123,14 +113,6 @@ export default function CampaignView({ initialPage = null }: Props) {
                     <span className={`text-sm font-serif truncate ${isSelected ? 'text-amber-300' : 'text-stone-300'}`}>
                       {a.title}
                     </span>
-                    {cueCounts.has(a.mdPath) && (
-                      <span
-                        className="text-[10px] font-sans text-amber-700 flex-shrink-0"
-                        title={`${cueCounts.get(a.mdPath)} scene cue(s) prepped`}
-                      >
-                        ▶{cueCounts.get(a.mdPath)}
-                      </span>
-                    )}
                     {isCurrent && <span className="text-[10px] flex-shrink-0" title="You are here">📍</span>}
                   </button>
                 );

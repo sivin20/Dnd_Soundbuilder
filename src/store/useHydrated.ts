@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useCampaignStore } from './campaignStore';
-import { useCueStore } from './cueStore';
 import { useSceneStore } from './sceneStore';
 
 // The file-backed stores hydrate asynchronously (one fetch to /api/state).
 // Anything that reads their state on mount — CampaignView picking the current
-// arc, cue buttons showing their binding — has to wait, or it decides against
+// arc, scene lists — has to wait, or it decides against
 // empty state and never revisits.
 
-const FILE_BACKED = [useCampaignStore, useCueStore, useSceneStore];
+const FILE_BACKED = [useCampaignStore, useSceneStore];
 
 export function useStoresHydrated(): boolean {
   const [ready, setReady] = useState(() => FILE_BACKED.every((s) => s.persist.hasHydrated()));

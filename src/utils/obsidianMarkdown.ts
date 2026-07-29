@@ -194,7 +194,7 @@ function convertCallout(quote: HTMLQuoteElement, doc: Document): void {
   quote.replaceWith(details);
 }
 
-/** Assign heading ids, collect the TOC, and add a cue-button slot. */
+/** Assign heading ids and collect the TOC. */
 function processHeadings(doc: Document): TocEntry[] {
   const toc: TocEntry[] = [];
   const seen = new Map<string, number>();
@@ -208,12 +208,6 @@ function processHeadings(doc: Document): TocEntry[] {
 
     h.id = id;
     toc.push({ id, text, level: Number(h.tagName[1]) });
-
-    // Anchor point for the scene-cue button (portalled in by GuideContent)
-    const slot = doc.createElement('span');
-    slot.className = 'cue-slot';
-    slot.setAttribute('data-cue-slot', id);
-    h.appendChild(slot);
   });
 
   return toc;

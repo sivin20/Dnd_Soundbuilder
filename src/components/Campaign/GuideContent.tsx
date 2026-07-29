@@ -1,10 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useEffect, useRef, useState } from 'react';
 import { loadMirrorIndex, renderObsidian } from '../../utils/obsidianMarkdown';
 import type { RenderedPage } from '../../utils/obsidianMarkdown';
-import { useCueStore, selectPageCues } from '../../store/cueStore';
-import { useSceneStore } from '../../store/sceneStore';
-import HeadingCue from './HeadingCue';
 
 interface Props {
   mdPath: string;
@@ -27,38 +23,19 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
   const [page, setPage] = useState<RenderedPage | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [cueSlots, setCueSlots] = useState<{ id: string; el: HTMLElement }[]>([]);
   const navRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const cues = useCueStore((s) => s.cues);
-  const fireCue = useCueStore((s) => s.fireCue);
-  const scenes = useSceneStore((s) => s.scenes);
-
-  const headingOrder = useMemo(() => page?.toc.map((t) => t.id) ?? [], [page]);
-  const cuedHeadings = useMemo(() => {
-    const set = new Set<string>();
-    for (const c of Object.values(cues)) if (c.mdPath === mdPath) set.add(c.headingId);
-    return set;
-  }, [cues, mdPath]);
-  const pageCues = useMemo(
-    () => selectPageCues(cues, mdPath, headingOrder),
-    [cues, mdPath, headingOrder]
-  );
-
-  // Mount the rendered guide HTML imperatively, then collect the cue slots each
-  // heading carries so the ▶ buttons can be portalled into them.
+  // Mount the rendered guide HTML imperatively.
   //
   // Deliberately NOT dangerouslySetInnerHTML: React re-applies that prop on
-  // re-render, which replaces these nodes with fresh copies and leaves the
-  // portals attached to detached elements. Owning the innerHTML ourselves means
-  // React never touches the guide DOM.
+  // re-render, replacing these nodes with fresh copies, which breaks anything
+  // holding a reference into the guide DOM. Owning the innerHTML ourselves
+  // means React never touches it.
   useEffect(() => {
     const host = contentRef.current;
     if (!page || !host) return;
     host.innerHTML = page.html;
-    const els = [...host.querySelectorAll<HTMLElement>('[data-cue-slot]')];
-    setCueSlots(els.map((el) => ({ id: el.dataset.cueSlot!, el })));
   }, [page]);
 
   // Scroll-spy: highlight the TOC entry for the section currently in view.
@@ -155,87 +132,33 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
         }}
       />
 
-      {cueSlots.map(({ id, el }) =>
-        createPortal(
-          <HeadingCue
-            mdPath={mdPath}
-            headingId={id}
-            headingText={page.toc.find((t) => t.id === id)?.text ?? id}
-          />,
-          el,
-          id
-        )
-      )}
-
-      {(page.toc.length > 1 || pageCues.length > 0) && (
+      {/* On this page — heading outline with scroll-spy, like the website's sidebar */}
+      {page.toc.length > 1 && (
         <nav ref={navRef} className="hidden lg:block w-60 flex-shrink-0 sticky top-4 max-h-[80vh] overflow-y-auto">
-          {/* Cue sheet — the compact run-list for this page */}
-          {pageCues.length > 0 && (
-            <div className="mb-4">
-              <p className="text-[11px] uppercase tracking-widest text-amber-700 font-sans mb-2">
-                🎬 Cue sheet
-              </p>
-              <div className="flex flex-col gap-1">
-                {pageCues.map((c) => {
-                  const scene = scenes.find((s) => s.id === c.sceneId);
-                  return (
-                    <button
-                      key={c.headingId}
-                      onClick={() => fireCue(c.mdPath, c.headingId)}
-                      disabled={!scene}
-                      className="flex items-center gap-1.5 text-left text-[12px] font-sans px-2 py-1 rounded-lg bg-stone-900/80 border border-stone-800 hover:border-amber-800/60 disabled:opacity-40 transition-colors group"
-                      title={scene ? `Play “${scene.name}” — ${c.headingText}` : 'Scene was deleted'}
-                    >
-                      <span className="text-amber-600 flex-shrink-0">{scene ? '▶' : '⚠'}</span>
-                      <span className="min-w-0">
-                        <span className="block text-stone-300 truncate group-hover:text-amber-300 transition-colors">
-                          {c.headingText}
-                        </span>
-                        {scene && (
-                          <span className="block text-stone-600 text-[11px] truncate">{scene.name}</span>
-                        )}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* On this page — heading outline with scroll-spy, like the website's sidebar */}
-          {page.toc.length > 1 && (
-            <>
-              <p className="text-[11px] uppercase tracking-widest text-stone-500 font-sans mb-2">
-                On this page
-              </p>
-              <div className="border-l border-stone-800 flex flex-col">
-                {page.toc.map((entry) => {
-                  const isActive = entry.id === activeId;
-                  return (
-                    <button
-                      key={entry.id}
-                      data-toc={entry.id}
-                      onClick={() => scrollToHeading(entry.id)}
-                      className={`flex items-start gap-1 text-left text-[13px] font-sans py-1 leading-snug transition-colors border-l-2 -ml-px ${
-                        isActive
-                          ? 'text-amber-400 border-amber-600'
-                          : 'text-stone-400 border-transparent hover:text-amber-400 hover:border-amber-700/60'
-                      }`}
-                      style={{ paddingLeft: `${0.75 + Math.max(0, entry.level - 2) * 0.9}rem` }}
-                      title={entry.text}
-                    >
-                      {cuedHeadings.has(entry.id) && (
-                        <span className="text-amber-700 text-[10px] mt-0.5 flex-shrink-0" title="Has a scene cue">
-                          ▶
-                        </span>
-                      )}
-                      <span className="min-w-0 truncate">{entry.text}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </>
-          )}
+          <p className="text-[11px] uppercase tracking-widest text-stone-500 font-sans mb-2">
+            On this page
+          </p>
+          <div className="border-l border-stone-800 flex flex-col">
+            {page.toc.map((entry) => {
+              const isActive = entry.id === activeId;
+              return (
+                <button
+                  key={entry.id}
+                  data-toc={entry.id}
+                  onClick={() => scrollToHeading(entry.id)}
+                  className={`text-left text-[13px] font-sans py-1 leading-snug transition-colors border-l-2 -ml-px ${
+                    isActive
+                      ? 'text-amber-400 border-amber-600'
+                      : 'text-stone-400 border-transparent hover:text-amber-400 hover:border-amber-700/60'
+                  }`}
+                  style={{ paddingLeft: `${0.75 + Math.max(0, entry.level - 2) * 0.9}rem` }}
+                  title={entry.text}
+                >
+                  {entry.text}
+                </button>
+              );
+            })}
+          </div>
         </nav>
       )}
     </div>

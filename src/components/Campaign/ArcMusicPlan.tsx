@@ -1,6 +1,7 @@
 import { useMusicStore } from '../../store/musicStore';
 import type { ArcDef } from '../../data/campaignArcs';
 import type { Track } from '../../types';
+import ArcScenes from '../shared/ArcScenes';
 
 interface Props {
   arc: ArcDef;
@@ -44,18 +45,36 @@ export default function ArcMusicPlan({ arc }: Props) {
     if (pick) playTrack(pick.id);
   };
 
+  // Presets name tracks from any section, so they still work even when nothing
+  // is mapped to this arc's own chapters.
   if (inArc.length === 0) {
     return (
-      <p className="text-stone-600 font-sans text-sm italic py-4">
-        No tracks mapped to this arc's sections ({arc.musicSections.join(', ')}).
-      </p>
+      <div className="flex flex-col gap-4">
+        <div>
+          <h3 className="text-xs uppercase tracking-widest text-amber-600 font-sans mb-2">
+            🎬 Scenes for this arc
+          </h3>
+          <ArcScenes arcId={arc.id} />
+        </div>
+        <p className="text-stone-600 font-sans text-sm italic">
+          No individual tracks mapped to this arc's sections ({arc.musicSections.join(', ')}).
+        </p>
+      </div>
     );
   }
 
   return (
     <div className="flex flex-col gap-5">
+      {/* Ready-made scenes for this arc — the fastest way to set the board */}
+      <div>
+        <h3 className="text-xs uppercase tracking-widest text-amber-600 font-sans mb-2">
+          🎬 Scenes for this arc
+        </h3>
+        <ArcScenes arcId={arc.id} />
+      </div>
+
       <p className="text-xs text-stone-500 font-sans">
-        Suggested from chapters: {arc.musicSections.join(' · ')}
+        Individual tracks, from chapters: {arc.musicSections.join(' · ')}
       </p>
 
       {buckets.filter((b) => b.tracks.length > 0).map((bucket) => (

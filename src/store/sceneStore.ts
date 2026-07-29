@@ -2,9 +2,31 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { fileStorage } from './fileStorage';
 import { v4 as uuidv4 } from 'uuid';
-import type { Scene } from '../types';
+import type { Scene, Track } from '../types';
+import type { PresetScene } from '../data/arcScenes';
 import { useMusicStore } from './musicStore';
 import { useSoundStore } from './soundStore';
+
+const DEFAULT_PRESET_MUSIC_VOLUME = 80;
+const DEFAULT_PRESET_AMBIENT_VOLUME = 70;
+
+/** Presets name tracks by title, since ids come from downloaded filenames.
+ *  Exact match first, then a loose contains, then give up. */
+function resolvePresetTrack(tracks: Track[], titles: string[]): Track | null {
+  for (const title of titles) {
+    const wanted = title.toLowerCase();
+    const exact = tracks.find((t) => t.title.toLowerCase() === wanted);
+    if (exact) return exact;
+    const loose = tracks.find((t) => t.title.toLowerCase().includes(wanted));
+    if (loose) return loose;
+  }
+  return null;
+}
+
+/** Does this preset have a track in the current library? */
+export function presetIsPlayable(preset: PresetScene, tracks: Track[]): boolean {
+  return resolvePresetTrack(tracks, preset.tracks) !== null;
+}
 
 interface SceneState {
   scenes: Scene[];
@@ -14,6 +36,8 @@ interface SceneState {
    *  Returns the new scene's id so callers can bind it (e.g. to a guide cue). */
   saveCurrentAsScene: (name: string) => string;
   applyScene: (id: string) => void;
+  /** Apply a ready-made arc scene. Nothing is saved — it just sets the board. */
+  applyPreset: (preset: PresetScene) => void;
   deleteScene: (id: string) => void;
   renameScene: (id: string, name: string) => void;
 }
@@ -59,6 +83,30 @@ export const useSceneStore = create<SceneState>()(
 
         useSoundStore.getState().applyAmbientMix(scene.ambients);
         set({ activeSceneId: id });
+      },
+
+      applyPreset: (preset) => {
+        const music = useMusicStore.getState();
+        // Exiting combat first keeps the duck factor and snapshot sane
+        if (music.combatActive) music.exitCombat();
+
+        const track = resolvePresetTrack(music.tracks, preset.tracks);
+        music.setVolume(DEFAULT_PRESET_MUSIC_VOLUME);
+        // Arc scenes are meant to sit under a whole location, so they loop
+        useMusicStore.setState({ loop: true, playlistMood: null });
+        if (track) music.playTrack(track.id);
+        else music.stopPlayback();
+
+        useSoundStore.getState().applyAmbientMix(
+          preset.ambients.map((a) => ({
+            id: a.id,
+            level: a.level ?? 0,
+            volume: a.volume ?? DEFAULT_PRESET_AMBIENT_VOLUME,
+          }))
+        );
+
+        // Prefixed so it can never collide with a saved scene's uuid
+        set({ activeSceneId: `preset:${preset.id}` });
       },
 
       deleteScene: (id) =>
