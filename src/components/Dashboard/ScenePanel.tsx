@@ -4,6 +4,7 @@ import { useMusicStore } from '../../store/musicStore';
 import { useSoundStore } from '../../store/soundStore';
 import { GenericScenes } from '../shared/ArcScenes';
 import { GENERIC_SCENES } from '../../data/arcScenes';
+import { fadeEverythingOut } from '../../audio/panic';
 
 export default function ScenePanel() {
   const { scenes, activeSceneId, saveCurrentAsScene, applyScene, deleteScene } = useSceneStore();
@@ -113,12 +114,17 @@ export default function ScenePanel() {
                 }`}
               >
                 <button
-                  onClick={() => applyScene(scene.id)}
+                  onClick={() => (isActive ? fadeEverythingOut() : applyScene(scene.id))}
                   className={`px-3 py-2 text-sm font-serif transition-colors ${
                     isActive ? 'text-amber-300' : 'text-parchment hover:text-amber-200'
                   }`}
-                  title={`Crossfade into "${scene.name}"`}
+                  title={
+                    isActive
+                      ? 'Playing — click again to fade everything out'
+                      : `Crossfade into "${scene.name}"`
+                  }
                 >
+                  {isActive && <span className="mr-1">◼</span>}
                   {scene.name}
                 </button>
                 <button

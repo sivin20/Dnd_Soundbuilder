@@ -105,7 +105,8 @@ interface SoundState {
   toggleAmbient:   (id: string) => void;
   setAmbientLevel: (id: string, level: number) => void;
   triggerOneShot:  (id: string) => void;
-  stopAllAmbient:  () => void;
+  /** Fade every active loop out. `fadeMs` overrides the default duration. */
+  stopAllAmbient:  (fadeMs?: number) => void;
   /** Reconcile all ambient loops against a scene's mix (fade in/out/adjust). */
   applyAmbientMix: (targets: AmbientMixTarget[]) => void;
 }
@@ -119,16 +120,26 @@ function fadeInAmbient(sound: Sound) {
   if (sound.sprinkles?.length) scheduleSprinkle(sound.id);
 }
 
-function fadeOutAmbient(sound: Sound) {
+/**
+ * Fade a loop out and release it.
+ *
+ * The Howl is detached from howlMap *immediately*, before the fade finishes, so a
+ * fade-in that starts during the fade builds a fresh Howl instead of reusing this
+ * one. Reusing it was a real bug: switching scenes twice inside FADE_MS left this
+ * fade's completion handler queued on the same Howl, and it fired against the
+ * newly-started loop and stopped it — the sound showed as active in the UI with
+ * nothing coming out of the speakers.
+ */
+function fadeOutAmbient(sound: Sound, fadeMs: number = FADE_MS) {
   cancelSprinkle(sound.id);
   const howl = howlMap.get(sound.id);
-  if (howl) {
-    howl.fade(howl.volume() as number, 0, FADE_MS);
-    howl.once('fade', () => {
-      howl.stop();
-      howl.volume(ambientTarget(sound)); // restore for next play
-    });
-  }
+  if (!howl) return;
+  howlMap.delete(sound.id);
+  howl.fade(howl.volume() as number, 0, fadeMs);
+  howl.once('fade', () => {
+    howl.stop();
+    howl.unload();
+  });
 }
 
 export const useSoundStore = create<SoundState>()(
@@ -198,8 +209,10 @@ export const useSoundStore = create<SoundState>()(
         h.play();
       },
 
-      stopAllAmbient: () => {
-        get().sounds.filter((s) => s.type === 'ambient' && s.isActive).forEach(fadeOutAmbient);
+      stopAllAmbient: (fadeMs) => {
+        get().sounds
+          .filter((s) => s.type === 'ambient' && s.isActive)
+          .forEach((s) => fadeOutAmbient(s, fadeMs));
         set((s) => ({ sounds: s.sounds.map((x) => x.type === 'ambient' ? { ...x, isActive: false } : x) }));
       },
 

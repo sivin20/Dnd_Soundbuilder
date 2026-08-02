@@ -11,6 +11,7 @@ import { MusicEngine } from './hooks/useMusicPlayer';
 import { useStoresHydrated } from './store/useHydrated';
 import { backendKind } from './store/fileStorage';
 import { usePrefsStore, FONT_SCALES } from './store/prefsStore';
+import { panicStop } from './audio/panic';
 
 export default function App() {
   const [view, setView] = useState<View>('dashboard');
@@ -40,13 +41,20 @@ export default function App() {
   // Prep data loads from campaign-state/ — hold the views until it's in
   const hydrated = useStoresHydrated();
 
-  // Cmd+K / Ctrl+K anywhere. Bound on the window in capture phase so it still
-  // fires while focus is inside a notes textarea.
+  // Global keys, bound in capture phase on the window so they still fire while
+  // focus is inside a notes textarea.
+  //   ⌘K — palette
+  //   ⌘. — panic: silence everything immediately
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      if (!(e.metaKey || e.ctrlKey)) return;
+      const key = e.key.toLowerCase();
+      if (key === 'k') {
         e.preventDefault();
         setPaletteOpen((o) => !o);
+      } else if (key === '.') {
+        e.preventDefault();
+        panicStop();
       }
     };
     window.addEventListener('keydown', onKey, { capture: true });

@@ -9,6 +9,7 @@ import type { SearchHit } from '../../utils/guideSearch';
 import { useSoundStore } from '../../store/soundStore';
 import { useSceneStore } from '../../store/sceneStore';
 import { usePrefsStore } from '../../store/prefsStore';
+import { panicStop, fadeEverythingOut } from '../../audio/panic';
 import type { View } from '../../types';
 
 // One box that reaches everything: guide text, arcs, pages, NPCs, ready-made
@@ -91,7 +92,6 @@ export default function CommandPalette({ open, onClose, onOpenGuide, onOpenNpc, 
   const sounds = useSoundStore((s) => s.sounds);
   const toggleAmbient = useSoundStore((s) => s.toggleAmbient);
   const triggerOneShot = useSoundStore((s) => s.triggerOneShot);
-  const stopAllAmbient = useSoundStore((s) => s.stopAllAmbient);
   const applyPreset = useSceneStore((s) => s.applyPreset);
   const nudgeFontScale = usePrefsStore((s) => s.nudgeFontScale);
   const readAloudLang = usePrefsStore((s) => s.readAloudLang);
@@ -243,12 +243,22 @@ export default function CommandPalette({ open, onClose, onOpenGuide, onOpenNpc, 
 
     items.push(
       {
-        id: 'cmd:silence',
+        id: 'cmd:panic',
         group: 'Commands',
         icon: '🔇',
-        label: 'Stop all ambience',
-        keywords: 'silence quiet panic hush',
-        run: () => { stopAllAmbient(); close(); },
+        label: 'Stop everything (⌘.)',
+        detail: 'Music, ambience and one-shots, over a 2s fade',
+        keywords: 'silence quiet panic hush stop all sound mute',
+        run: () => { panicStop(); close(); },
+      },
+      {
+        id: 'cmd:fade-out',
+        group: 'Commands',
+        icon: '🌙',
+        label: 'Fade everything out',
+        detail: 'Wind the board down gracefully',
+        keywords: 'silence quiet stop scene end',
+        run: () => { fadeEverythingOut(); close(); },
       },
       {
         id: 'cmd:lang',
@@ -281,7 +291,7 @@ export default function CommandPalette({ open, onClose, onOpenGuide, onOpenNpc, 
     return items;
   }, [
     npcs, sounds, readAloudLang, openGuide, openNpc, close, applyPreset, toggleAmbient,
-    triggerOneShot, stopAllAmbient, onChangeView, toggleReadAloudLang, nudgeFontScale,
+    triggerOneShot, onChangeView, toggleReadAloudLang, nudgeFontScale,
   ]);
 
   // --- Filter + assemble the visible list ----------------------------------

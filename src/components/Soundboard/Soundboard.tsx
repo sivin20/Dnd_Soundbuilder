@@ -25,7 +25,9 @@ export default function Soundboard() {
         </div>
         {activeAmbientCount > 0 && (
           <button
-            onClick={stopAllAmbient}
+            // Wrapped, not passed directly: stopAllAmbient takes an optional
+            // fade duration, and a bare handler would hand it the MouseEvent.
+            onClick={() => stopAllAmbient()}
             className="px-4 py-2 bg-red-900/40 hover:bg-red-900/70 border border-red-800/50 text-red-400 rounded-lg text-sm font-sans transition-all"
           >
             ⏹ Stop All Ambient

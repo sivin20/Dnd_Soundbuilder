@@ -62,6 +62,24 @@ function fadeOutAndUnload(h: Howl) {
   }
 }
 
+/**
+ * Fade the current track out over `ms` and release it.
+ *
+ * Exported for the panic path, which needs its own duration and needs the engine
+ * torn down *before* the store is cleared — otherwise the store change would kick
+ * off the engine's own 3-second crossfade instead.
+ */
+export function fadeOutMusic(ms: number) {
+  const h = howl;
+  howl = null;
+  loadedTrackId = null;
+  emit({ elapsed: 0, duration: 0 });
+  if (!h) return;
+  if (!h.playing()) { h.stop(); h.unload(); return; }
+  h.fade(h.volume() as number, 0, ms);
+  h.once('fade', () => { h.stop(); h.unload(); });
+}
+
 export function seekTo(pct: number) {
   if (!howl) return;
   const pos = (howl.duration() * pct) / 100;

@@ -32,7 +32,10 @@ interface MusicState {
   setVolume: (volume: number) => void;
   toggleLoop: () => void;
   playTrack: (id: string) => void;
+  /** Pause where we are, keeping the track loaded. */
   stopPlayback: () => void;
+  /** Unload the track entirely, fading out. Use when a scene has no music. */
+  clearTrack: () => void;
   setPlaylistMood: (mood: string | null) => void;
   playMood: (mood: string) => void;
   enterCombat: (trackId: string) => void;
@@ -77,6 +80,12 @@ export const useMusicStore = create<MusicState>()(
       toggleLoop: () => set((s) => ({ loop: !s.loop })),
       playTrack: (id) => set({ currentTrackId: id, isPlaying: true }),
       stopPlayback: () => set({ isPlaying: false }),
+
+      // Clearing the track (rather than just pausing) is what makes the engine
+      // fade it out and release it. Pausing left currentTrackId set, so the next
+      // scene that wanted the same track resumed it mid-phrase at full volume
+      // instead of starting cleanly.
+      clearTrack: () => set({ currentTrackId: null, isPlaying: false, playlistMood: null }),
 
       setPlaylistMood: (mood) => set({ playlistMood: mood }),
 

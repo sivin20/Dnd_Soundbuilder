@@ -3,6 +3,7 @@ import { scenesForArc, genericScenesByCategory } from '../../data/arcScenes';
 import type { PresetScene } from '../../data/arcScenes';
 import { useSceneStore, presetIsPlayable } from '../../store/sceneStore';
 import { useMusicStore } from '../../store/musicStore';
+import { fadeEverythingOut } from '../../audio/panic';
 
 /** One clickable preset. Applies music + the whole ambient mix in one go. */
 function SceneButton({ preset, dense }: { preset: PresetScene; dense: boolean }) {
@@ -16,12 +17,14 @@ function SceneButton({ preset, dense }: { preset: PresetScene; dense: boolean })
 
   return (
     <button
-      onClick={() => applyPreset(preset)}
+      // Tapping the playing scene again winds the board down — the scene button
+      // is the thing you already have your hand on when you want silence.
+      onClick={() => (isActive ? fadeEverythingOut() : applyPreset(preset))}
       disabled={!playable}
       title={
         playable
           ? [
-              preset.hint,
+              isActive ? 'Playing — click again to fade everything out' : preset.hint,
               `Music: ${preset.tracks[0]}`,
               preset.ambients.length
                 ? `Ambience: ${preset.ambients.map((a) => a.id).join(', ')}`
@@ -42,7 +45,7 @@ function SceneButton({ preset, dense }: { preset: PresetScene; dense: boolean })
       }`}
     >
       <span className={`font-serif ${dense ? 'text-xs' : 'text-sm'}`}>
-        {isCombat && <span className="mr-1">⚔️</span>}
+        {isActive ? <span className="mr-1">◼</span> : isCombat && <span className="mr-1">⚔️</span>}
         {preset.name}
       </span>
     </button>

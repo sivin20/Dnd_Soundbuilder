@@ -38,6 +38,8 @@ interface SceneState {
   applyScene: (id: string) => void;
   /** Apply a ready-made arc scene. Nothing is saved — it just sets the board. */
   applyPreset: (preset: PresetScene) => void;
+  /** Forget which scene is showing as active. Audio is stopped by the caller. */
+  clearActiveScene: () => void;
   deleteScene: (id: string) => void;
   renameScene: (id: string, name: string) => void;
 }
@@ -78,7 +80,9 @@ export const useSceneStore = create<SceneState>()(
         if (scene.trackId && music.tracks.some((t) => t.id === scene.trackId)) {
           music.playTrack(scene.trackId); // crossfade handled by the player
         } else {
-          music.stopPlayback();
+          // Clear, not pause: a scene with no music means silence, and the old
+          // track has to be released or it resumes mid-phrase later.
+          music.clearTrack();
         }
 
         useSoundStore.getState().applyAmbientMix(scene.ambients);
@@ -95,8 +99,11 @@ export const useSceneStore = create<SceneState>()(
         // Arc scenes are meant to sit under a whole location, so they loop
         useMusicStore.setState({ loop: true, playlistMood: null });
         if (track) music.playTrack(track.id);
-        else music.stopPlayback();
+        else music.clearTrack();
 
+        // applyAmbientMix is a full reconcile: any loop not named by this preset
+        // is faded out, so a scene switch never stacks the old scene's layers
+        // under the new one.
         useSoundStore.getState().applyAmbientMix(
           preset.ambients.map((a) => ({
             id: a.id,
@@ -108,6 +115,8 @@ export const useSceneStore = create<SceneState>()(
         // Prefixed so it can never collide with a saved scene's uuid
         set({ activeSceneId: `preset:${preset.id}` });
       },
+
+      clearActiveScene: () => set({ activeSceneId: null }),
 
       deleteScene: (id) =>
         set((st) => ({

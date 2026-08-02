@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useMusicStore } from '../../store/musicStore';
+import { panicStop } from '../../audio/panic';
 
 export default function CombatButton() {
   const { tracks, combatActive, combatTrackId, enterCombat, exitCombat } = useMusicStore();
@@ -50,6 +51,16 @@ export default function CombatButton() {
           title="Choose combat track"
         >
           🎯
+        </button>
+
+        {/* Next to Combat! because that's where your hand already is when the
+            wrong thing is playing. */}
+        <button
+          onClick={panicStop}
+          className="h-12 px-3 rounded-lg bg-stone-800 hover:bg-red-900/60 text-stone-400 hover:text-red-200 text-lg border border-stone-700 hover:border-red-700/60 transition-colors"
+          title="Stop everything — music, ambience and one-shots — over a 2s fade (⌘.)"
+        >
+          🔇
         </button>
       </div>
 
