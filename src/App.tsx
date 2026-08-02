@@ -18,15 +18,23 @@ export default function App() {
   // Set when something outside the campaign view asks it to open a specific
   // guide page (e.g. an NPC's source link). Cleared on plain navigation.
   const [guideTarget, setGuideTarget] = useState<{ mdPath: string; anchor?: string } | null>(null);
+  // Set when the palette picks a specific NPC dossier to open.
+  const [npcTarget, setNpcTarget] = useState<string | null>(null);
 
   const changeView = (v: View) => {
     setGuideTarget(null);
+    setNpcTarget(null);
     setView(v);
   };
 
   const openGuidePage = (mdPath: string, anchor?: string) => {
     setGuideTarget({ mdPath, anchor });
     setView('campaign');
+  };
+
+  const openNpc = (npcId: string) => {
+    setNpcTarget(npcId);
+    setView('npcs');
   };
 
   // Prep data loads from campaign-state/ — hold the views until it's in
@@ -63,6 +71,7 @@ export default function App() {
         open={paletteOpen}
         onClose={() => setPaletteOpen(false)}
         onOpenGuide={openGuidePage}
+        onOpenNpc={openNpc}
         onChangeView={changeView}
       />
 
@@ -77,7 +86,13 @@ export default function App() {
             {view === 'campaign' && (
               <CampaignView key={guideTarget?.mdPath ?? 'default'} initialPage={guideTarget} />
             )}
-            {view === 'npcs' && <NpcView onOpenSource={openGuidePage} />}
+            {view === 'npcs' && (
+              <NpcView
+                key={npcTarget ?? 'all'}
+                initialNpcId={npcTarget}
+                onOpenSource={openGuidePage}
+              />
+            )}
             {view === 'music' && <MusicLibrary />}
             {view === 'soundboard' && <Soundboard />}
           </>

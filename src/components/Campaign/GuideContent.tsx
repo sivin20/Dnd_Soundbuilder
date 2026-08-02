@@ -17,6 +17,11 @@ interface Props {
   anchor?: string;
   /** Bumped on every navigation so repeat jumps to the same anchor re-scroll. */
   navSeq?: number;
+  /**
+   * Where the sticky reading toolbar docks. Arc pages have the tab bar above it,
+   * so they pass an offset; reference pages don't. See ReadingControls.
+   */
+  stickyTop?: string;
 }
 
 // Headings above this viewport offset count as "read" for the scroll-spy
@@ -42,8 +47,14 @@ function scrollToHeading(id: string) {
   el.scrollIntoView({ behavior, block: 'start' });
 }
 
+/** Flush with the guide scroller's top edge — its 24px padding is why this is
+ *  negative rather than zero. */
+const SCROLLER_TOP = '-1.5rem';
+
 // NOTE: render with key={mdPath} — state resets via remount on page change.
-export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Props) {
+export default function GuideContent({
+  mdPath, onNavigate, anchor, navSeq, stickyTop = SCROLLER_TOP,
+}: Props) {
   const [page, setPage] = useState<RenderedPage | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -194,6 +205,7 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
     <div className="flex gap-6 items-start">
       <div className="flex-1 min-w-0">
       <ReadingControls
+        stickyTop={stickyTop}
         total={readAloud.total}
         translated={readAloud.translated}
         missing={readAloud.missing.length}

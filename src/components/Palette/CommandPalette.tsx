@@ -22,6 +22,8 @@ interface Props {
   open: boolean;
   onClose: () => void;
   onOpenGuide: (mdPath: string, anchor?: string) => void;
+  /** Open the NPC directory on a specific dossier. */
+  onOpenNpc: (npcId: string) => void;
   onChangeView: (view: View) => void;
 }
 
@@ -76,7 +78,7 @@ function fuzzyScore(text: string, query: string): number {
   return score;
 }
 
-export default function CommandPalette({ open, onClose, onOpenGuide, onChangeView }: Props) {
+export default function CommandPalette({ open, onClose, onOpenGuide, onOpenNpc, onChangeView }: Props) {
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
   const [npcs, setNpcs] = useState<NpcProfile[]>([]);
@@ -139,6 +141,11 @@ export default function CommandPalette({ open, onClose, onOpenGuide, onChangeVie
     close();
   }, [onOpenGuide, close]);
 
+  const openNpc = useCallback((npcId: string) => {
+    onOpenNpc(npcId);
+    close();
+  }, [onOpenNpc, close]);
+
   // --- Candidate items (everything the palette can reach) -------------------
   const commands = useMemo<PaletteItem[]>(() => {
     const items: PaletteItem[] = [];
@@ -181,6 +188,9 @@ export default function CommandPalette({ open, onClose, onOpenGuide, onChangeVie
       });
     }
 
+    // Straight to the dossier in the NPC directory — the roleplaying material
+    // laid out to read mid-scene, rather than the guide page it's buried in.
+    // The dossier itself links onward to its source page.
     for (const npc of npcs) {
       items.push({
         id: `npc:${npc.id}`,
@@ -188,7 +198,7 @@ export default function CommandPalette({ open, onClose, onOpenGuide, onChangeVie
         icon: '🎭',
         label: npc.name,
         detail: npc.sourceLabel,
-        run: () => openGuide(npc.mdPath, npc.anchor ?? undefined),
+        run: () => openNpc(npc.id),
       });
     }
 
@@ -270,7 +280,7 @@ export default function CommandPalette({ open, onClose, onOpenGuide, onChangeVie
 
     return items;
   }, [
-    npcs, sounds, readAloudLang, openGuide, close, applyPreset, toggleAmbient,
+    npcs, sounds, readAloudLang, openGuide, openNpc, close, applyPreset, toggleAmbient,
     triggerOneShot, stopAllAmbient, onChangeView, toggleReadAloudLang, nudgeFontScale,
   ]);
 

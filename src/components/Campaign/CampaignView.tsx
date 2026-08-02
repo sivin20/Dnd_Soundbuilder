@@ -372,6 +372,8 @@ function ArcDetail({
           onNavigate={onNavigate}
           anchor={anchor}
           navSeq={navSeq}
+          // Docks under the 46px tab bar above, which itself sits at -1.5rem.
+          stickyTop="1.375rem"
         />
       )}
 

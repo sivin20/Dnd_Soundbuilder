@@ -4,6 +4,8 @@ import type { NpcProfile } from '../../utils/npcProfiles';
 
 interface Props {
   onOpenSource: (mdPath: string, anchor?: string) => void;
+  /** Profile to open on mount — set when arriving from the ⌘K palette. */
+  initialNpcId?: string | null;
 }
 
 // Field labels in the order Reloaded presents them, split into the two groups
@@ -98,11 +100,13 @@ function NpcCard({ npc, onOpenSource }: { npc: NpcProfile; onOpenSource: Props['
   );
 }
 
-export default function NpcView({ onOpenSource }: Props) {
+// NOTE: render with key={initialNpcId} — a new palette pick re-seeds the
+// selection via remount, so picking the same NPC twice still lands on it.
+export default function NpcView({ onOpenSource, initialNpcId = null }: Props) {
   const [npcs, setNpcs] = useState<NpcProfile[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState('');
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(initialNpcId);
 
   useEffect(() => {
     let cancelled = false;
@@ -171,6 +175,13 @@ export default function NpcView({ onOpenSource }: Props) {
             return (
               <button
                 key={n.id}
+                // Arriving from the palette lands on a name that may be far down
+                // a 47-entry list, so bring it into view.
+                ref={
+                  isSelected && n.id === initialNpcId
+                    ? (el) => el?.scrollIntoView({ block: 'center' })
+                    : undefined
+                }
                 onClick={() => setSelectedId(n.id)}
                 className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-left transition-colors ${
                   isSelected ? 'bg-amber-900/30' : 'hover:bg-stone-800/70'

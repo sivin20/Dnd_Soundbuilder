@@ -12,6 +12,15 @@ interface Props {
   busy: boolean;
   error: string | null;
   onTranslate: () => void;
+  /**
+   * CSS `top` for the sticky bar.
+   *
+   * Sticky offsets here resolve against the guide scroller's *padding* box, and
+   * that scroller has 24px of padding — so -1.5rem is flush with its top edge,
+   * not 0. On an arc page the 46px tab bar already occupies that spot, so the
+   * toolbar docks below it at -1.5rem + 46px = 1.375rem.
+   */
+  stickyTop: string;
 }
 
 /**
@@ -19,16 +28,25 @@ interface Props {
  *
  * Both belong here rather than in a settings screen: text size is something you
  * change when the room's lighting changes, and the language switch is something
- * you flip mid-session.
+ * you flip mid-session — which is why the bar stays pinned while you scroll. A
+ * read-aloud box two screens down is exactly when you want to switch language,
+ * and scrolling back up to do it is the whole problem.
+ *
+ * -ml-6/pl-6 cancels the scroller's left padding so the bar's background covers
+ * the full width of the column it belongs to; nothing bleeds right, which keeps
+ * it clear of the "On this page" outline.
  */
 export default function ReadingControls({
-  total, translated, missing, stale, busy, error, onTranslate,
+  total, translated, missing, stale, busy, error, onTranslate, stickyTop,
 }: Props) {
   const { fontScaleIndex, nudgeFontScale, readAloudLang, setReadAloudLang } = usePrefsStore();
   const isDanish = readAloudLang === 'da';
 
   return (
-    <div className="flex items-center flex-wrap gap-x-4 gap-y-2 mb-4 pb-3 border-b border-stone-800/70">
+    <div
+      style={{ top: stickyTop }}
+      className="sticky z-10 -ml-6 pl-6 pt-2 pb-2.5 mb-4 bg-stone-950 border-b border-stone-800/70 flex items-center flex-wrap gap-x-4 gap-y-2"
+    >
       {/* Text size */}
       <div className="flex items-center gap-1">
         <span className="text-[11px] uppercase tracking-widest text-stone-600 font-sans mr-1">Text</span>
