@@ -1,8 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { loadMirrorIndex, renderObsidian } from '../../utils/obsidianMarkdown';
 import type { RenderedPage } from '../../utils/obsidianMarkdown';
 import { useCampaignStore, sceneKey } from '../../store/campaignStore';
+import { usePrefsStore } from '../../store/prefsStore';
 import { SCENE_STATUS } from '../../data/sceneStatus';
+import ReadingControls from './ReadingControls';
+import {
+  applyReadAloudLang, loadTranslations, translateBlocks, TranslationUnavailable,
+} from '../../utils/readAloud';
+import type { ApplyResult, ReadAloudBlock, TranslationFile } from '../../utils/readAloud';
 
 interface Props {
   mdPath: string;
@@ -47,6 +53,14 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
   const sceneProgress = useCampaignStore((s) => s.sceneProgress);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  // Read-aloud language. Translations live on disk and are swapped into the
+  // mounted DOM, so this has to re-run whenever the page or the language changes.
+  const readAloudLang = usePrefsStore((s) => s.readAloudLang);
+  const [translations, setTranslations] = useState<TranslationFile | null>(null);
+  const [readAloud, setReadAloud] = useState<ApplyResult>({ total: 0, translated: 0, missing: [], stale: 0 });
+  const [translating, setTranslating] = useState(false);
+  const [translateError, setTranslateError] = useState<string | null>(null);
+
   // Mount the rendered guide HTML imperatively.
   //
   // Deliberately NOT dangerouslySetInnerHTML: React re-applies that prop on
@@ -58,6 +72,36 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
     if (!page || !host) return;
     host.innerHTML = page.html;
   }, [page]);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadTranslations().then((file) => { if (!cancelled) setTranslations(file); });
+    return () => { cancelled = true; };
+  }, []);
+
+  // Swap the read-aloud boxes into the chosen language. Runs after the mount
+  // effect above (same dependency on `page`, declared later) so the nodes exist.
+  useEffect(() => {
+    const host = contentRef.current;
+    if (!page || !host) return;
+    setReadAloud(applyReadAloudLang(host, mdPath, readAloudLang, translations));
+  }, [page, mdPath, readAloudLang, translations]);
+
+  const translateMissing = useCallback(async (blocks: ReadAloudBlock[]) => {
+    setTranslating(true);
+    setTranslateError(null);
+    try {
+      setTranslations(await translateBlocks(mdPath, blocks));
+    } catch (e) {
+      setTranslateError(
+        e instanceof TranslationUnavailable
+          ? e.message
+          : `Kunne ikke oversætte: ${e instanceof Error ? e.message : String(e)}`
+      );
+    } finally {
+      setTranslating(false);
+    }
+  }, [mdPath]);
 
   // Scroll-spy: highlight the TOC entry for the section currently in view.
   // Capture-phase listener on document catches scrolls of ANY container
@@ -148,9 +192,20 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
 
   return (
     <div className="flex gap-6 items-start">
+      <div className="flex-1 min-w-0">
+      <ReadingControls
+        total={readAloud.total}
+        translated={readAloud.translated}
+        missing={readAloud.missing.length}
+        stale={readAloud.stale}
+        busy={translating}
+        error={translateError}
+        onTranslate={() => translateMissing(readAloud.missing)}
+      />
+
       <div
         ref={contentRef}
-        className="guide-content flex-1 min-w-0"
+        className="guide-content"
         onClick={(e) => {
           const link = (e.target as HTMLElement).closest('a[data-page], a[data-anchor]');
           if (!link) return;
@@ -161,6 +216,7 @@ export default function GuideContent({ mdPath, onNavigate, anchor, navSeq }: Pro
           else if (targetAnchor) scrollToHeading(targetAnchor);
         }}
       />
+      </div>
 
       {/* On this page — heading outline with scroll-spy, like the website's
           sidebar. top-12 clears the sticky arc tab bar above it. */}

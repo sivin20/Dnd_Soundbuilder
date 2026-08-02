@@ -7,8 +7,11 @@ export default {
         parchment: '#f5e6c8',
         'parchment-dark': '#e8d5a3',
       },
+      // Stacks live in :root in index.css so the CSS can reference them too.
       fontFamily: {
-        serif: ['Palatino Linotype', 'Book Antiqua', 'Palatino', 'Georgia', 'serif'],
+        sans: ['var(--font-ui)'],
+        serif: ['var(--font-display)'],
+        body: ['var(--font-body)'],
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

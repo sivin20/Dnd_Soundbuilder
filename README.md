@@ -30,21 +30,53 @@ the library is empty.
 playlists, saved scenes, a one-button Combat mode (ducks ambience, restores the
 previous track on exit, plays a victory sting), and the party's HP from D&D Beyond.
 
-**Scene cues** — the payoff feature. Set up a music + ambience mix, then click the
-♪ next to any heading in the guide and save the board onto it. That heading now
-has a ▶: click it during play and the whole board crossfades. Each guide page
-grows a **cue sheet** in its sidebar — the compact run-list for the session — and
-arcs show a `▶n` prep count.
+**Scenes** — ready-made music + ambience mixes that ship with the app: 86 tuned to
+specific arc beats (Father Lucian and the empty reliquary, Volenta's ambush) plus
+30 generic ones for the situations that recur everywhere — travel, rest, an
+ambush, Strahd turning up. One click crossfades the whole board. Nothing to
+prepare; they're on the dashboard and inside each arc.
+
+**Search — `⌘K`** — one box over everything: the full text of all 39 guide pages,
+arcs, reference pages, NPCs, scenes, ambience, one-shots, and a few commands
+(silence everything, switch read-aloud language, resize text). Guide hits show the
+matching snippet and jump straight to that heading; 📢 marks a section that
+contains read-aloud text. The full-text index is built in the background a couple
+of seconds after launch.
 
 **Campaign** — the Reloaded guide rendered from the local mirror: typed callouts
-(combat, profile, lore, item…), read-aloud boxes styled distinctly, working
-wikilinks including `#Section` anchors, per-arc prep notes, arc status, a session
-log, and per-arc music suggestions.
+(combat, profile, lore, item…), read-aloud boxes styled for performing from,
+working wikilinks including `#Section` anchors, per-scene progress tracking, per-arc
+prep notes, arc status, a session log, and per-arc music suggestions.
 
 **NPCs** — every `[!profile]` dossier in the guide (~47 of them), parsed out into a
 searchable directory: Resonance, Emotions, Motivations, Inspirations, Persona,
 Morale, Relationships, plus portrait art and a jump back to the source page.
 Search covers the dossier text, not just names.
+
+## Reading the guide aloud in Danish
+
+Every guide page has a **Text** control (A−/A+) and, on pages with read-aloud
+text, an **English / Dansk** switch. It applies to the guide's `<div class="description">`
+boxes — the passages meant to be read to the players verbatim — and nothing else:
+DM instructions, stat blocks and design notes stay in English, because those are
+for you, not the table.
+
+Translations are cached in `translations/read-aloud.da.json`, which is git-tracked.
+There are 681 read-aloud boxes across the mirror (~61,000 words), so they're
+translated as you need them rather than all at once:
+
+- **Arc D is translated by hand** and works out of the box.
+- Any other page: hit **Oversæt N** and the remaining boxes on that page are
+  translated and saved. Requires `ANTHROPIC_API_KEY` in the dev server's
+  environment (`export ANTHROPIC_API_KEY=… && npm run dev`). Without it the
+  switch still shows whatever is already cached and says so.
+
+Each cached entry stores a fingerprint of the English it was translated from. If
+you re-download the mirror and a page gains or loses a box, mismatched entries are
+flagged stale and fall back to English rather than risk putting a different
+passage in your mouth mid-session.
+
+Commit the JSON as it fills up and the translations are permanent.
 
 ## Adding your own sounds
 

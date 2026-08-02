@@ -34,6 +34,9 @@ export interface Scene {
 
 export type View = 'dashboard' | 'campaign' | 'npcs' | 'music' | 'soundboard';
 
+/** Language for text that gets read to the players out loud. */
+export type ReadAloudLang = 'en' | 'da';
+
 // --- Campaign tracker (Curse of Strahd: Reloaded) ---------------------------
 
 export interface CampaignArc {
