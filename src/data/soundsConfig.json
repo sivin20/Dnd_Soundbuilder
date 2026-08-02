@@ -96,14 +96,6 @@
     "volume": 85
   },
   {
-    "id": "heartbeat",
-    "name": "Heartbeat",
-    "emoji": "💓",
-    "type": "oneshot",
-    "url": "/sounds/heartbeat.mp3",
-    "volume": 85
-  },
-  {
     "id": "scream",
     "name": "Scream",
     "emoji": "😱",

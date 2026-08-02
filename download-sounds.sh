@@ -2,7 +2,7 @@
 # Downloads the curated Barovia ambience + one-shot set defined in sound-sources.json.
 #
 # Ambience  → public/ambience/  (10-90 min loops, normalised to -20 LUFS)
-# One-shots → public/sounds/    (<= 90 s clips, silence-trimmed, -16 LUFS)
+# One-shots → public/sounds/    (<= 6 s clips, silence-trimmed, -16 LUFS)
 #
 # Each entry is fetched with a YouTube search; the first result matching the
 # duration filter for its category wins. Output filenames come from
@@ -37,6 +37,15 @@ mkdir -p "$AMBIENCE_DIR" "$SOUNDS_DIR"
 AMBIENCE_FILTER="loudnorm=I=-20:TP=-2:LRA=7"
 SOUNDS_FILTER="silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.05,loudnorm=I=-16:TP=-1.5:LRA=11"
 
+# A one-shot is a punctuation mark: you click it and it's over. The first pass of
+# this set allowed anything up to 90s, and search happily returned SFX
+# compilations and weather ambiences — thunder-crack came back three minutes
+# long. Two independent guards now:
+#   MAX_SOUND_DURATION  rejects the *search result* before downloading
+#   SOUND_HARD_CAP      truncates whatever does get through
+MAX_SOUND_DURATION=8
+SOUND_HARD_CAP=6
+
 DONE=0; SKIPPED=0; FAILED=0
 FAILED_LIST=()
 
@@ -49,7 +58,9 @@ fetch() {
     match="duration >= 600 & duration <= 5400"
   else
     dir="$SOUNDS_DIR"; filter="$SOUNDS_FILTER"
-    match="duration <= 90"
+    # duration > 0 also drops results whose duration is unknown, which are
+    # usually livestreams and would otherwise sail past a <= test.
+    match="duration > 0 & duration <= $MAX_SOUND_DURATION"
   fi
 
   local dest="$dir/$file"
@@ -64,12 +75,19 @@ fetch() {
   local line_file
   line_file="$(mktemp)"
 
+  # One-shots get a hard length cap with a short fade so a truncated tail doesn't
+  # click. Ambience is left whole.
+  local pp_args="ffmpeg:-af $filter"
+  if [[ "$kind" != "ambience" ]]; then
+    pp_args="ffmpeg:-af ${filter},afade=t=out:st=$(bc -l <<< "$SOUND_HARD_CAP - 0.15"):d=0.15 -t $SOUND_HARD_CAP"
+  fi
+
   # --max-downloads 1 stops after the first matching result and exits 101.
   yt-dlp \
     --extract-audio \
     --audio-format mp3 \
     --audio-quality 5 \
-    --postprocessor-args "ffmpeg:-af $filter" \
+    --postprocessor-args "$pp_args" \
     --match-filter "$match" \
     --playlist-end 10 \
     --max-downloads 1 \

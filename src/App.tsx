@@ -5,7 +5,6 @@ import Dashboard from './components/Dashboard/Dashboard';
 import CampaignView from './components/Campaign/CampaignView';
 import NpcView from './components/Npcs/NpcView';
 import MusicLibrary from './components/MusicLibrary/MusicLibrary';
-import Soundboard from './components/Soundboard/Soundboard';
 import type { View } from './types';
 import { MusicEngine } from './hooks/useMusicPlayer';
 import { useStoresHydrated } from './store/useHydrated';
@@ -102,7 +101,6 @@ export default function App() {
               />
             )}
             {view === 'music' && <MusicLibrary />}
-            {view === 'soundboard' && <Soundboard />}
           </>
         )}
       </main>

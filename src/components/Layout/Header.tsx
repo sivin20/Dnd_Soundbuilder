@@ -11,7 +11,6 @@ const navItems: { id: View; label: string; icon: string }[] = [
   { id: 'campaign', label: 'Campaign', icon: '🗺️' },
   { id: 'npcs', label: 'NPCs', icon: '🎭' },
   { id: 'music', label: 'Music Library', icon: '🎵' },
-  { id: 'soundboard', label: 'Soundboard', icon: '🔊' },
 ];
 
 export default function Header({ currentView, onViewChange, onOpenPalette }: Props) {

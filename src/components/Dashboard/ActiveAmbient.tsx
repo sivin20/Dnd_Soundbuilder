@@ -26,7 +26,7 @@ export default function ActiveAmbient() {
         <div className="text-center py-6 text-stone-600">
           <p className="text-3xl mb-2">🌬️</p>
           <p className="font-serif italic text-sm">No ambient sounds yet</p>
-          <p className="text-xs font-sans mt-1">Add them in the Soundboard</p>
+          <p className="text-xs font-sans mt-1">Start one from the tray below</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">

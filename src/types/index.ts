@@ -32,7 +32,7 @@ export interface Scene {
   ambients: { id: string; level: number; volume: number }[];
 }
 
-export type View = 'dashboard' | 'campaign' | 'npcs' | 'music' | 'soundboard';
+export type View = 'dashboard' | 'campaign' | 'npcs' | 'music';
 
 /** Language for text that gets read to the players out loud. */
 export type ReadAloudLang = 'en' | 'da';

@@ -3,7 +3,10 @@
     "Curated Barovia sound set. Source of truth for download-sounds.sh and register-sounds.js.",
     "Each entry names the exact output filename, so the generated configs are deterministic.",
     "'query' is a YouTube search — the downloader takes the first result matching the",
-    "duration filter for its category (ambience: 10-90 min loops, sounds: <= 90 s clips).",
+    "duration filter for its category (ambience: 10-90 min loops; one-shots: <= 8 s,",
+    "then hard-capped to 6 s). One-shots are punctuation: keep queries pointed at a",
+    "single short hit, and avoid 'ambience', 'loop', '1 hour' and 'compilation', which",
+    "is how the first pass ended up with a three-minute thunderstorm.",
     "Swap a query and re-run the script if a result is poor; delete the mp3 first to refetch."
   ],
   "ambience": [
@@ -13,18 +16,37 @@
       "emoji": "🌫️",
       "volume": 70,
       "levels": [
-        { "file": "mist-wind-calm.mp3", "query": "eerie soft wind ambience 1 hour" },
-        { "file": "mist-wind-howling.mp3", "query": "howling wind storm ambience 1 hour" }
+        {
+          "file": "mist-wind-calm.mp3",
+          "query": "eerie soft wind ambience 1 hour"
+        },
+        {
+          "file": "mist-wind-howling.mp3",
+          "query": "howling wind storm ambience 1 hour"
+        }
       ],
-      "sprinkles": ["/sounds/wind-gust.mp3", "/sounds/raven-caw.mp3", "/sounds/wolf-howl.mp3"]
+      "sprinkles": [
+        "/sounds/wind-gust.mp3",
+        "/sounds/raven-caw.mp3",
+        "/sounds/wolf-howl.mp3"
+      ]
     },
     {
       "id": "forest-night",
       "name": "Svalich Woods",
       "emoji": "🌲",
       "volume": 70,
-      "levels": [{ "file": "forest-night.mp3", "query": "dark forest night ambience 1 hour" }],
-      "sprinkles": ["/sounds/raven-caw.mp3", "/sounds/wolf-howl.mp3", "/sounds/wood-crack.mp3"]
+      "levels": [
+        {
+          "file": "forest-night.mp3",
+          "query": "dark forest night ambience 1 hour"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/raven-caw.mp3",
+        "/sounds/wolf-howl.mp3",
+        "/sounds/wood-crack.mp3"
+      ]
     },
     {
       "id": "wolves",
@@ -32,57 +54,114 @@
       "emoji": "🐺",
       "volume": 70,
       "levels": [
-        { "file": "wolves-distant.mp3", "query": "distant wolves howling night ambience 1 hour" },
-        { "file": "wolves-close.mp3", "query": "wolf pack growling snarling ambience 30 minutes" }
+        {
+          "file": "wolves-distant.mp3",
+          "query": "distant wolves howling night ambience 1 hour"
+        },
+        {
+          "file": "wolves-close.mp3",
+          "query": "wolf pack growling snarling ambience 30 minutes"
+        }
       ],
-      "sprinkles": ["/sounds/wolf-howl.mp3", "/sounds/wolf-growl.mp3"]
+      "sprinkles": [
+        "/sounds/wolf-howl.mp3",
+        "/sounds/wolf-growl.mp3"
+      ]
     },
     {
       "id": "village",
       "name": "Village of Barovia",
       "emoji": "🏘️",
       "volume": 70,
-      "levels": [{ "file": "village-murmur.mp3", "query": "medieval village ambience 1 hour" }],
-      "sprinkles": ["/sounds/church-bell.mp3", "/sounds/horse-whinny.mp3", "/sounds/raven-caw.mp3"]
+      "levels": [
+        {
+          "file": "village-murmur.mp3",
+          "query": "medieval village ambience 1 hour"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/church-bell.mp3",
+        "/sounds/horse-whinny.mp3",
+        "/sounds/raven-caw.mp3"
+      ]
     },
     {
       "id": "tavern",
       "name": "Blood of the Vine",
       "emoji": "🍺",
       "volume": 70,
-      "levels": [{ "file": "tavern.mp3", "query": "medieval tavern inn ambience 1 hour" }],
-      "sprinkles": ["/sounds/glass-shatter.mp3", "/sounds/coins-drop.mp3"]
+      "levels": [
+        {
+          "file": "tavern.mp3",
+          "query": "medieval tavern inn ambience 1 hour"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/glass-shatter.mp3",
+        "/sounds/coins-drop.mp3"
+      ]
     },
     {
       "id": "church",
       "name": "Church of St. Andral",
       "emoji": "⛪",
       "volume": 70,
-      "levels": [{ "file": "church.mp3", "query": "cathedral gregorian chant ambience 1 hour" }],
-      "sprinkles": ["/sounds/bell-toll.mp3", "/sounds/whispers.mp3"]
+      "levels": [
+        {
+          "file": "church.mp3",
+          "query": "cathedral gregorian chant ambience 1 hour"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/bell-toll.mp3",
+        "/sounds/whispers.mp3"
+      ]
     },
     {
       "id": "crypt",
       "name": "Crypts & Catacombs",
       "emoji": "💧",
       "volume": 70,
-      "levels": [{ "file": "crypt.mp3", "query": "dungeon dripping water cave ambience 1 hour" }],
-      "sprinkles": ["/sounds/bone-crack.mp3", "/sounds/chains-rattle.mp3", "/sounds/whispers.mp3"]
+      "levels": [
+        {
+          "file": "crypt.mp3",
+          "query": "dungeon dripping water cave ambience 1 hour"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/bone-crack.mp3",
+        "/sounds/chains-rattle.mp3",
+        "/sounds/whispers.mp3"
+      ]
     },
     {
       "id": "castle",
       "name": "Castle Ravenloft",
       "emoji": "🏰",
       "volume": 70,
-      "levels": [{ "file": "castle-halls.mp3", "query": "haunted castle hallway ambience 1 hour" }],
-      "sprinkles": ["/sounds/chains-rattle.mp3", "/sounds/whispers.mp3", "/sounds/gate-slam.mp3"]
+      "levels": [
+        {
+          "file": "castle-halls.mp3",
+          "query": "haunted castle hallway ambience 1 hour"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/chains-rattle.mp3",
+        "/sounds/whispers.mp3",
+        "/sounds/gate-slam.mp3"
+      ]
     },
     {
       "id": "fireplace",
       "name": "Hearth Fire",
       "emoji": "🔥",
       "volume": 70,
-      "levels": [{ "file": "fireplace.mp3", "query": "fireplace crackling fire 1 hour" }],
+      "levels": [
+        {
+          "file": "fireplace.mp3",
+          "query": "fireplace crackling fire 1 hour"
+        }
+      ],
       "sprinkles": []
     },
     {
@@ -90,70 +169,312 @@
       "name": "Graveyard",
       "emoji": "🪦",
       "volume": 70,
-      "levels": [{ "file": "graveyard.mp3", "query": "graveyard night creepy ambience 1 hour" }],
-      "sprinkles": ["/sounds/whispers.mp3", "/sounds/raven-caw.mp3", "/sounds/crow-flock.mp3"]
+      "levels": [
+        {
+          "file": "graveyard.mp3",
+          "query": "graveyard night creepy ambience 1 hour"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/whispers.mp3",
+        "/sounds/raven-caw.mp3",
+        "/sounds/crow-flock.mp3"
+      ]
     },
     {
       "id": "swamp",
       "name": "Berez Marshes",
       "emoji": "🐸",
       "volume": 70,
-      "levels": [{ "file": "swamp.mp3", "query": "swamp marsh night ambience 1 hour" }],
-      "sprinkles": ["/sounds/raven-caw.mp3", "/sounds/whispers.mp3"]
+      "levels": [
+        {
+          "file": "swamp.mp3",
+          "query": "swamp marsh night ambience 1 hour"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/raven-caw.mp3",
+        "/sounds/whispers.mp3"
+      ]
     },
     {
       "id": "blizzard",
       "name": "Tsolenka Pass",
       "emoji": "❄️",
       "volume": 70,
-      "levels": [{ "file": "blizzard.mp3", "query": "blizzard snowstorm mountain wind 1 hour" }],
-      "sprinkles": ["/sounds/wind-gust.mp3"]
+      "levels": [
+        {
+          "file": "blizzard.mp3",
+          "query": "blizzard snowstorm mountain wind 1 hour"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/wind-gust.mp3"
+      ]
     },
     {
       "id": "windmill",
       "name": "Old Bonegrinder",
       "emoji": "🌾",
       "volume": 70,
-      "levels": [{ "file": "windmill.mp3", "query": "creaking wooden windmill ambience 30 minutes" }],
-      "sprinkles": ["/sounds/bone-crack.mp3", "/sounds/baby-cry.mp3", "/sounds/wood-crack.mp3"]
+      "levels": [
+        {
+          "file": "windmill.mp3",
+          "query": "creaking wooden windmill ambience 30 minutes"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/bone-crack.mp3",
+        "/sounds/baby-cry.mp3",
+        "/sounds/wood-crack.mp3"
+      ]
     },
     {
       "id": "cart-road",
       "name": "Old Svalich Road",
       "emoji": "🐎",
       "volume": 70,
-      "levels": [{ "file": "cart-road.mp3", "query": "horse drawn cart wagon travel ambience 1 hour" }],
-      "sprinkles": ["/sounds/horse-whinny.mp3", "/sounds/raven-caw.mp3"]
+      "levels": [
+        {
+          "file": "cart-road.mp3",
+          "query": "horse drawn cart wagon travel ambience 1 hour"
+        }
+      ],
+      "sprinkles": [
+        "/sounds/horse-whinny.mp3",
+        "/sounds/raven-caw.mp3"
+      ]
     }
   ],
   "sounds": [
-    { "id": "church-bell",    "name": "Church Bells",     "emoji": "🔔",  "file": "church-bell.mp3",    "query": "church bells ringing sound effect" },
-    { "id": "bell-toll",      "name": "Single Bell Toll", "emoji": "🛎",  "file": "bell-toll.mp3",      "query": "single deep bell toll sound effect" },
-    { "id": "raven-caw",      "name": "Raven Caw",        "emoji": "🐦‍⬛", "file": "raven-caw.mp3",      "query": "raven crow caw sound effect" },
-    { "id": "crow-flock",     "name": "Flock Takes Off",  "emoji": "🕊",  "file": "crow-flock.mp3",     "query": "flock of birds taking off wings sound effect" },
-    { "id": "horse-whinny",   "name": "Horse Whinny",     "emoji": "🐴",  "file": "horse-whinny.mp3",   "query": "horse whinny neigh sound effect" },
-    { "id": "wolf-growl",     "name": "Wolf Growl",       "emoji": "🐺",  "file": "wolf-growl.mp3",     "query": "wolf growling snarl sound effect" },
-    { "id": "glass-shatter",  "name": "Glass Shatters",   "emoji": "🥃",  "file": "glass-shatter.mp3",  "query": "glass bottle shatter breaking sound effect" },
-    { "id": "heartbeat",      "name": "Heartbeat",        "emoji": "💓",  "file": "heartbeat.mp3",      "query": "heartbeat pounding sound effect" },
-    { "id": "scream",         "name": "Scream",           "emoji": "😱",  "file": "scream.mp3",         "query": "woman scream horror sound effect" },
-    { "id": "scream-man",     "name": "Man's Scream",     "emoji": "🗣",  "file": "scream-man.mp3",     "query": "man scream death horror sound effect" },
-    { "id": "bone-crack",     "name": "Bone Crunch",      "emoji": "🦴",  "file": "bone-crack.mp3",     "query": "bone crack crunch gore sound effect" },
-    { "id": "chains-rattle",  "name": "Chains Rattle",    "emoji": "⛓️",  "file": "chains-rattle.mp3",  "query": "chains rattling dragging sound effect" },
-    { "id": "coins-drop",     "name": "Coin Purse",       "emoji": "🪙",  "file": "coins-drop.mp3",     "query": "gold coins dropping purse sound effect" },
-    { "id": "arrow-shot",     "name": "Crossbow Bolt",    "emoji": "🏹",  "file": "arrow-shot.mp3",     "query": "crossbow bolt arrow shot whoosh sound effect" },
-    { "id": "spell-cast",     "name": "Spell Cast",       "emoji": "🔮",  "file": "spell-cast.mp3",     "query": "magic spell cast whoosh sound effect" },
-    { "id": "evil-laugh",     "name": "Strahd's Laugh",   "emoji": "😈",  "file": "evil-laugh.mp3",     "query": "evil man laugh echo sound effect" },
-    { "id": "wood-crack",     "name": "Wood Splinters",   "emoji": "🪵",  "file": "wood-crack.mp3",     "query": "wood breaking splintering crack sound effect" },
-    { "id": "gate-slam",      "name": "Gate Slams",       "emoji": "🚪",  "file": "gate-slam.mp3",      "query": "heavy iron gate slam clang sound effect" },
-    { "id": "stone-door",     "name": "Stone Door",       "emoji": "🪨",  "file": "stone-door.mp3",     "query": "stone door sliding grinding sound effect" },
-    { "id": "wind-gust",      "name": "Wind Gust",        "emoji": "💨",  "file": "wind-gust.mp3",      "query": "strong wind gust howl sound effect" },
-    { "id": "body-fall",      "name": "Body Drops",       "emoji": "🩸",  "file": "body-fall.mp3",      "query": "body falling thud on floor sound effect" },
-    { "id": "lightning",      "name": "Lightning Strike", "emoji": "⚡",  "file": "lightning.mp3",      "query": "lightning strike close thunder crack sound effect" },
-    { "id": "music-box",      "name": "Music Box",        "emoji": "🎶",  "file": "music-box.mp3",      "query": "creepy music box lullaby short" },
-    { "id": "baby-cry",       "name": "Child Crying",     "emoji": "👶",  "file": "baby-cry.mp3",       "query": "child crying distant creepy sound effect" },
-    { "id": "whispers",       "name": "Whispers",         "emoji": "👥",  "file": "whispers.mp3",       "query": "creepy whispering voices sound effect" },
-    { "id": "war-drums",      "name": "War Drums",        "emoji": "🥁",  "file": "war-drums.mp3",      "query": "war drums battle short loop sound effect" },
-    { "id": "zombie-groan",   "name": "Undead Groan",     "emoji": "🧟",  "file": "zombie-groan.mp3",   "query": "zombie groan undead moan sound effect" },
-    { "id": "candle-blow",    "name": "Candle Snuffed",   "emoji": "🕯",  "file": "candle-blow.mp3",    "query": "candle blow out puff sound effect" }
+    {
+      "id": "arrow-shot",
+      "name": "Crossbow Bolt",
+      "emoji": "🏹",
+      "file": "arrow-shot.mp3",
+      "query": "crossbow bolt arrow shot whoosh sound effect"
+    },
+    {
+      "id": "baby-cry",
+      "name": "Child Crying",
+      "emoji": "👶",
+      "file": "baby-cry.mp3",
+      "query": "child crying distant creepy sound effect"
+    },
+    {
+      "id": "bell-toll",
+      "name": "Single Bell Toll",
+      "emoji": "🛎",
+      "file": "bell-toll.mp3",
+      "query": "single bell toll short sound effect"
+    },
+    {
+      "id": "body-fall",
+      "name": "Body Drops",
+      "emoji": "🩸",
+      "file": "body-fall.mp3",
+      "query": "body falling thud on floor sound effect"
+    },
+    {
+      "id": "bone-crack",
+      "name": "Bone Crunch",
+      "emoji": "🦴",
+      "file": "bone-crack.mp3",
+      "query": "bone crack crunch gore sound effect"
+    },
+    {
+      "id": "candle-blow",
+      "name": "Candle Snuffed",
+      "emoji": "🕯",
+      "file": "candle-blow.mp3",
+      "query": "candle blow out puff sound effect"
+    },
+    {
+      "id": "chains-rattle",
+      "name": "Chains Rattle",
+      "emoji": "⛓️",
+      "file": "chains-rattle.mp3",
+      "query": "short chain rattle sound effect"
+    },
+    {
+      "id": "church-bell",
+      "name": "Church Bells",
+      "emoji": "🔔",
+      "file": "church-bell.mp3",
+      "query": "single church bell ring short sound effect"
+    },
+    {
+      "id": "coins-drop",
+      "name": "Coin Purse",
+      "emoji": "🪙",
+      "file": "coins-drop.mp3",
+      "query": "gold coins dropping purse sound effect"
+    },
+    {
+      "id": "crow-flock",
+      "name": "Flock Takes Off",
+      "emoji": "🕊",
+      "file": "crow-flock.mp3",
+      "query": "flock of birds taking off wings sound effect"
+    },
+    {
+      "id": "door-creak",
+      "name": "Door Creak",
+      "emoji": "🚪",
+      "volume": 80,
+      "file": "door-creak.mp3",
+      "query": "short wooden door creak sound effect"
+    },
+    {
+      "id": "dragon-roar",
+      "name": "Dragon Roar",
+      "emoji": "🐉",
+      "volume": 80,
+      "file": "dragon-roar.mp3",
+      "query": "short dragon roar sound effect"
+    },
+    {
+      "id": "evil-laugh",
+      "name": "Strahd's Laugh",
+      "emoji": "😈",
+      "file": "evil-laugh.mp3",
+      "query": "short evil laugh sound effect"
+    },
+    {
+      "id": "gate-slam",
+      "name": "Gate Slams",
+      "emoji": "🚪",
+      "file": "gate-slam.mp3",
+      "query": "heavy iron gate slam clang sound effect"
+    },
+    {
+      "id": "glass-shatter",
+      "name": "Glass Shatters",
+      "emoji": "🥃",
+      "file": "glass-shatter.mp3",
+      "query": "glass shatter short sound effect"
+    },
+    {
+      "id": "horse-whinny",
+      "name": "Horse Whinny",
+      "emoji": "🐴",
+      "file": "horse-whinny.mp3",
+      "query": "single horse whinny short sound effect"
+    },
+    {
+      "id": "lightning",
+      "name": "Lightning Strike",
+      "emoji": "⚡",
+      "file": "lightning.mp3",
+      "query": "lightning strike close thunder crack sound effect"
+    },
+    {
+      "id": "music-box",
+      "name": "Music Box",
+      "emoji": "🎶",
+      "file": "music-box.mp3",
+      "query": "music box sound effect"
+    },
+    {
+      "id": "raven-caw",
+      "name": "Raven Caw",
+      "emoji": "🐦‍⬛",
+      "file": "raven-caw.mp3",
+      "query": "single raven caw short sound effect"
+    },
+    {
+      "id": "scream-man",
+      "name": "Man's Scream",
+      "emoji": "🗣",
+      "file": "scream-man.mp3",
+      "query": "short man scream sound effect"
+    },
+    {
+      "id": "scream",
+      "name": "Scream",
+      "emoji": "😱",
+      "file": "scream.mp3",
+      "query": "short woman scream sound effect"
+    },
+    {
+      "id": "spell-cast",
+      "name": "Spell Cast",
+      "emoji": "🔮",
+      "file": "spell-cast.mp3",
+      "query": "short magic whoosh sound effect"
+    },
+    {
+      "id": "stone-door",
+      "name": "Stone Door",
+      "emoji": "🪨",
+      "file": "stone-door.mp3",
+      "query": "stone door grind short sound effect"
+    },
+    {
+      "id": "sword-clash",
+      "name": "Sword Clash",
+      "emoji": "⚔️",
+      "volume": 80,
+      "file": "sword-clash.mp3",
+      "query": "single sword clash short sound effect"
+    },
+    {
+      "id": "thunder-crack",
+      "name": "Thunder Crack",
+      "emoji": "⚡",
+      "volume": 80,
+      "file": "thunder-crack.mp3",
+      "query": "single thunder crack short sound effect"
+    },
+    {
+      "id": "war-drums",
+      "name": "War Drums",
+      "emoji": "🥁",
+      "file": "war-drums.mp3",
+      "query": "short war drum hit sound effect"
+    },
+    {
+      "id": "whispers",
+      "name": "Whispers",
+      "emoji": "👥",
+      "file": "whispers.mp3",
+      "query": "short creepy whisper sound effect"
+    },
+    {
+      "id": "wind-gust",
+      "name": "Wind Gust",
+      "emoji": "💨",
+      "file": "wind-gust.mp3",
+      "query": "single wind gust short sound effect"
+    },
+    {
+      "id": "wolf-growl",
+      "name": "Wolf Growl",
+      "emoji": "🐺",
+      "file": "wolf-growl.mp3",
+      "query": "short wolf growl sound effect"
+    },
+    {
+      "id": "wolf-howl",
+      "name": "Wolf Howl",
+      "emoji": "🐺",
+      "volume": 80,
+      "file": "wolf-howl.mp3",
+      "query": "single wolf howl short sound effect"
+    },
+    {
+      "id": "wood-crack",
+      "name": "Wood Splinters",
+      "emoji": "🪵",
+      "file": "wood-crack.mp3",
+      "query": "wood breaking splintering crack sound effect"
+    },
+    {
+      "id": "zombie-groan",
+      "name": "Undead Groan",
+      "emoji": "🧟",
+      "file": "zombie-groan.mp3",
+      "query": "zombie groan undead moan sound effect"
+    }
   ]
 }

@@ -51,7 +51,6 @@ const VIEWS: { view: View; label: string; icon: string }[] = [
   { view: 'campaign', label: 'Campaign', icon: '📖' },
   { view: 'npcs', label: 'NPCs', icon: '🎭' },
   { view: 'music', label: 'Music Library', icon: '🎵' },
-  { view: 'soundboard', label: 'Soundboard', icon: '🔊' },
 ];
 
 /**
